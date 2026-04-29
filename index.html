@@ -6,23 +6,25 @@
     <title>Ixra · Turkish Minecraft Mod Developer | Arda's Sculks Creator</title>
     
     <meta name="description" content="Ixra (Ixranium) is a Turkish Minecraft mod developer. Creator of popular mods like Arda's Sculks, Arda's Ores, and more for Forge and NeoForge.">
-    <meta name="keywords" content="Ixra, Ixranium, IxraPlayer, Turkish Minecraft mod developer, Minecraft mod, Arda's Sculks, Forge, NeoForge, Turkish modder, Minecraft Turkey">
+    <meta name="keywords" content="Ixra, Ixranium, IxraPlayer, Arda Aydoğdu, Turkish Minecraft mod developer, Minecraft mod, Arda's Sculks, Forge, NeoForge, Turkish modder, Minecraft Turkey, Arda's Ultimate Golem, Shadow of the Soul, Arda's Ores, Arda's Hammers, Arda's Backpack, Arda's Advanced Items, Arda's Special Abilities, Arda's Uncrafting Table, Arda's Cobblestone Generator, Minecraft Türk geliştirici, Minecraft modları, Ixra mod">
     
-    <!-- Favicon GitHub'dan alındı -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://ixraplayer.github.io/sitelogo.ico">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://ixraplayer.github.io/sitelogo.png">
+    <link rel="icon" type="image/x-icon" href="https://ixraplayer.github.io/sitelogo.ico">
     <link rel="shortcut icon" type="image/png" href="https://ixraplayer.github.io/sitelogo.png">
+    <link rel="apple-touch-icon" href="https://ixraplayer.github.io/sitelogo.png">
     
     <meta property="og:title" content="Ixra - Turkish Minecraft Mod Developer">
     <meta property="og:description" content="Creator of Arda's Sculks. Turkish Minecraft Modder.">
     <meta property="og:image" content="https://ixraplayer.github.io/sitelogo.png">
     <meta property="og:type" content="website">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
 
     <style>
-        /* Aynı stil kodları */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -133,7 +135,7 @@
 
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: 1fr;
             gap: 28px;
             margin-bottom: 24px;
         }
@@ -164,6 +166,13 @@
             font-family: inherit;
             border-bottom: 2px solid transparent;
             margin-bottom: -1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn i {
+            color: white;
+            font-size: 1em;
         }
         .tab-btn:hover {
             color: var(--text-primary);
@@ -172,6 +181,9 @@
         .tab-btn.active {
             color: var(--accent);
             border-bottom-color: var(--accent);
+        }
+        .tab-btn.active i {
+            color: var(--accent);
         }
 
         .tab-content {
@@ -185,13 +197,16 @@
             display: block;
         }
 
-        .links-list {
+        .links-list, .projects-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
+
         .link-btn {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             background: #1b2532;
             border: 1px solid rgba(255,255,255,0.04);
             padding: 14px 20px;
@@ -204,11 +219,10 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             backdrop-filter: blur(5px);
         }
-        .link-btn::after {
-            content: "→";
-            float: right;
-            opacity: 0.6;
-            transition: opacity 0.2s, transform 0.2s;
+        .link-btn i {
+            width: 24px;
+            text-align: center;
+            font-size: 1.2em;
         }
         .link-btn:hover {
             background: #222f3e;
@@ -217,10 +231,78 @@
             transform: translateY(-1px);
             color: white;
         }
-        .link-btn:hover::after {
-            opacity: 1;
-            transform: translateX(4px);
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1b2532;
+            border: 1px solid rgba(255,255,255,0.04);
+            padding: 12px 20px;
+            border-radius: 18px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .project-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        .project-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #0f1620;
+            border: 1px solid #2a3f50;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .project-name {
+            font-weight: 600;
+            color: white;
+            font-size: 15px;
+        }
+        .project-downloads {
+            margin-left: auto;
+            font-size: 14px;
+            font-weight: 500;
             color: var(--accent);
+            background: var(--accent-soft);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--accent-border);
+            white-space: nowrap;
+        }
+        .project-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .project-link {
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: #1e2a38;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border: 1px solid #2d3e50;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .project-link:hover {
+            background: #263746;
+            border-color: var(--accent);
+            color: white;
+        }
+        .project-desc {
+            margin-left: 48px;
+            margin-top: -6px;
+            color: var(--text-muted);
+            font-size: 13px;
+            padding-right: 20px;
         }
 
         .about-text {
@@ -240,142 +322,6 @@
         }
         .about-text a:hover {
             text-decoration: underline;
-        }
-
-        .sculks-card {
-            background: #0f1620;
-            border: 1.5px solid rgba(74, 155, 181, 0.3);
-            border-radius: 28px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 26px 18px 22px;
-            box-shadow: 0 25px 40px -12px #000000, 0 0 0 1px rgba(74, 155, 181, 0.2);
-            backdrop-filter: blur(12px);
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-right: -8px;
-            position: relative;
-            z-index: 5;
-            height: fit-content;
-        }
-        .sculks-card:hover {
-            box-shadow: 0 30px 50px -12px #000000, 0 0 0 1px var(--accent);
-            transform: translateY(-4px) translateX(-2px);
-        }
-
-        .sculks-mod-img-wrap {
-            position: relative;
-            margin-bottom: 16px;
-        }
-
-        .sculks-mod-img {
-            width: 88px;
-            height: 88px;
-            border-radius: 22px;
-            object-fit: cover;
-            border: 3px solid #2a3f50;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            background: #1b2a38;
-        }
-
-        .sculks-badge {
-            position: absolute;
-            bottom: -4px;
-            right: -4px;
-            width: 24px;
-            height: 24px;
-            background: var(--accent);
-            border-radius: 30px;
-            border: 3px solid #0f1620;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #0a121c;
-            box-shadow: 0 2px 8px #00000055;
-            font-weight: bold;
-        }
-
-        .sculks-name {
-            font-size: 19px;
-            font-weight: 600;
-            color: white;
-            text-align: center;
-            margin-bottom: 2px;
-        }
-
-        .sculks-sub {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 22px;
-        }
-
-        .sculks-stats {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 22px;
-        }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
-            background: #1a2532;
-            border-radius: 14px;
-            border: 1px solid #283544;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            font-weight: 500;
-            color: var(--text-muted);
-            letter-spacing: 0.3px;
-        }
-
-        .stat-value {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--accent);
-        }
-
-        .stat-row.total-row {
-            background: var(--accent-soft);
-            border-color: var(--accent-border);
-        }
-        .stat-row.total-row .stat-value {
-            color: #7fc1d9;
-        }
-
-        .sculks-links {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .sculks-link {
-            flex: 1;
-            text-align: center;
-            padding: 10px 6px;
-            background: #1e2a38;
-            border-radius: 40px;
-            color: #cbdae6;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight:500;
-            transition: all 0.15s;
-            border: 1px solid #2d3e50;
-        }
-
-        .sculks-link:hover {
-            background: #263746;
-            border-color: var(--accent);
-            color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transform: translateY(-1px);
         }
 
         .footer {
@@ -399,11 +345,12 @@
         @media (max-width: 700px) {
             .profile-header { flex-direction: column; text-align: center; }
             .bio-row { justify-content: center; }
-            .main-content { grid-template-columns: 1fr; }
             .profile-card { padding: 24px 18px; }
             .avatar { width: 90px; height: 90px; }
-            .sculks-card { margin-right: 0; }
             .tab-btn { padding: 12px 16px; font-size: 14px; }
+            .project-item { flex-direction: column; align-items: flex-start; }
+            .project-links { align-self: flex-end; }
+            .project-downloads { margin-left: 0; align-self: flex-start; }
         }
     </style>
 </head>
@@ -432,67 +379,38 @@
     <div class="main-content">
         <div class="tabs-panel">
             <div class="tab-buttons">
-                <button class="tab-btn active" data-tab="links">Links</button>
-                <button class="tab-btn" data-tab="about">About</button>
-                <button class="tab-btn" data-tab="projects">Projects</button>
+                <button class="tab-btn active" data-tab="links"><i class="fas fa-link"></i> Links</button>
+                <button class="tab-btn" data-tab="about"><i class="fas fa-user"></i> About</button>
+                <button class="tab-btn" data-tab="projects"><i class="fas fa-folder"></i> Projects</button>
             </div>
             <div class="tab-content">
                 <div class="tab-pane active" id="links">
                     <div class="links-list">
-                        <a href="https://github.com/IxraPlayer" class="link-btn" target="_blank" rel="me">GitHub</a>
-                        <a href="https://modrinth.com/user/Ixra" class="link-btn" target="_blank" rel="me">Modrinth</a>
-                        <a href="https://www.curseforge.com/members/ixra/projects" class="link-btn" target="_blank" rel="me">CurseForge</a>
-                        <a href="https://x.com/IxraPlayer" class="link-btn" target="_blank" rel="me">X / Twitter</a>
-                        <a href="https://www.instagram.com/ixranium/" class="link-btn" target="_blank" rel="me">Instagram</a>
-                        <a href="https://www.tiktok.com/@ixraplayer" class="link-btn" target="_blank" rel="me">TikTok</a>
-                        <a href="https://www.reddit.com/user/Ixraplayer/" class="link-btn" target="_blank" rel="me">Reddit</a>
-                        <a href="https://www.youtube.com/@Ixraplayer" class="link-btn" target="_blank" rel="me">YouTube</a>
+                        <a href="https://github.com/IxraPlayer" class="link-btn" target="_blank" rel="me"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://modrinth.com/user/Ixra" class="link-btn" target="_blank" rel="me"><i class="fas fa-cube"></i> Modrinth</a>
+                        <a href="https://www.curseforge.com/members/ixra/projects" class="link-btn" target="_blank" rel="me"><i class="fas fa-fire"></i> CurseForge</a>
+                        <a href="https://x.com/IxraPlayer" class="link-btn" target="_blank" rel="me"><i class="fab fa-twitter"></i> X / Twitter</a>
+                        <a href="https://www.instagram.com/ixranium/" class="link-btn" target="_blank" rel="me"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://www.tiktok.com/@ixraplayer" class="link-btn" target="_blank" rel="me"><i class="fab fa-tiktok"></i> TikTok</a>
+                        <a href="https://www.reddit.com/user/Ixraplayer/" class="link-btn" target="_blank" rel="me"><i class="fab fa-reddit"></i> Reddit</a>
+                        <a href="https://www.youtube.com/@Ixraplayer" class="link-btn" target="_blank" rel="me"><i class="fab fa-youtube"></i> YouTube</a>
+                        <a href="https://mcreator.net/user/756781/ixraultimate" class="link-btn" target="_blank" rel="me"><i class="fas fa-puzzle-piece"></i> MCreator</a>
                     </div>
                 </div>
                 <div class="tab-pane" id="about">
                     <div class="about-text">
-                        <p>Hey there! I'm <strong>Ixra</strong> (also known as IxraPlayer / Ixranium), a <strong>Turkish Minecraft mod developer</strong>.</p>
-                        <p>I specialize in creating unique and immersive mods for both <strong>Forge</strong> and <strong>NeoForge</strong>. My journey started with a passion for expanding Minecraft's boundaries, and it led to the creation of my most popular project: <strong><a href="https://modrinth.com/mod/ardas-sculks" target="_blank">Arda's Sculks</a></strong>.</p>
-                        <p>Arda's Sculks is a content-rich mod that adds new sculk-related blocks, items, and mechanics to the deep dark. It's my pride and joy, and seeing the community's response has been incredible. Beyond that, I've released over 10 other mods, ranging from new ores and tools to backpacks and golem variants.</p>
-                        <p>I'm always working on something new, so feel free to check out my projects on Modrinth and CurseForge, or connect with me on social media.</p>
-                        <p style="margin-top: 16px;">— Ixra (Turkish Minecraft Modder)</p>
+                        <p>Hey! I'm <strong>Ixra</strong> (IxraPlayer / Ixranium), a <strong>Turkish Minecraft mod developer</strong> living in Istanbul. I've been playing Minecraft since I was <strong>6 years old</strong> — it's more than a game to me, it's the universe where I can turn my imagination into reality.</p>
+                        <p>Over the years I haven't just played; I've <strong>built massive structures, drawn textures and pixel art, and developed mods</strong> that change how the game feels. I'm an ordinary high school student who loves creating, expanding, and always adding something new on top of what already exists. When I truly have the passion for an idea, I commit to it and deliver quality — I usually work alone and I'm not open to direct requests, because I believe creative freedom brings the best results.</p>
+                        <p><strong>Why I make mods:</strong> Whenever I watch a movie, play a game, or read a book, I can't stop imagining different scenarios, alternate fates, and possibilities that never made it into the original. I constantly want to add those visions. Minecraft is the only place where I can actually build them and share them with the world.</p>
+                        <p>My most popular project is <strong><a href="https://modrinth.com/mod/ardas-sculks" target="_blank">Arda's Sculks</a></strong>, a deep dark expansion that adds new blocks, mechanics, and a boss. But I've released over 10 mods for Forge and NeoForge, ranging from ores and tools to golems and psychological horror.</p>
+                        <p>If you enjoy my work, check out my Projects tab or find me on the links — I'm always working on something new.</p>
+                        <p style="margin-top: 24px;">— Ixra (Turkish Minecraft Modder)</p>
                     </div>
                 </div>
                 <div class="tab-pane" id="projects">
+                    <div class="projects-list" id="projects-container">
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="sculks-card">
-            <div class="sculks-mod-img-wrap">
-                <img class="sculks-mod-img"
-                     id="sculks-icon"
-                     src="https://raw.githubusercontent.com/IxraPlayer/ixraplayer.github.io/refs/heads/main/sitelogo.png"
-                     alt="Arda's Sculks"
-                     onerror="this.src='https://ui-avatars.com/api/?name=AS&background=4a9bb5&color=fff&size=88&rounded=true'">
-                <div class="sculks-badge">✦</div>
-            </div>
-            <div class="sculks-name">Arda's Sculks</div>
-            <div class="sculks-sub">by Ixra · Forge / NeoForge</div>
-
-            <div class="sculks-stats">
-                <div class="stat-row">
-                    <span class="stat-label">MODRINTH</span>
-                    <span class="stat-value" id="modrinth-downloads"><span class="loading-val">···</span></span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">CURSEFORGE</span>
-                    <span class="stat-value" id="curseforge-downloads"><span class="loading-val">···</span></span>
-                </div>
-                <div class="stat-row total-row">
-                    <span class="stat-label">TOTAL</span>
-                    <span class="stat-value" id="ardas-total">···</span>
-                </div>
-            </div>
-
-            <div class="sculks-links">
-                <a href="https://modrinth.com/mod/ardas-sculks" class="sculks-link" target="_blank">Modrinth</a>
-                <a href="https://www.curseforge.com/minecraft/mc-mods/ardas-sculks" class="sculks-link" target="_blank">CurseForge</a>
             </div>
         </div>
     </div>
@@ -506,28 +424,162 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "mainEntity": {
-    "@type": "Person",
-    "name": "Ixra",
-    "alternateName": ["IxraPlayer", "Ixranium"],
-    "description": "Turkish Minecraft mod developer, creator of Arda's Sculks and other mods.",
-    "url": "https://ixraplayer.github.io/",
-    "nationality": {
-      "@type": "Country",
-      "name": "Turkey"
+  "@graph": [
+    {
+      "@type": "Person",
+      "name": "Ixra",
+      "alternateName": ["IxraPlayer", "Ixranium"],
+      "description": "Turkish Minecraft mod developer, creator of Arda's Sculks and other mods.",
+      "url": "https://ixraplayer.github.io/",
+      "nationality": { "@type": "Country", "name": "Turkey" },
+      "knowsAbout": ["Minecraft Modding", "Java", "Forge", "NeoForge"],
+      "sameAs": [
+        "https://x.com/IxraPlayer",
+        "https://github.com/IxraPlayer",
+        "https://modrinth.com/user/Ixra",
+        "https://www.instagram.com/ixranium/",
+        "https://www.tiktok.com/@ixraplayer",
+        "https://www.reddit.com/user/Ixraplayer/",
+        "https://www.youtube.com/@Ixraplayer"
+      ]
     },
-    "knowsAbout": ["Minecraft Modding", "Java", "Forge", "NeoForge"],
-    "sameAs": [
-      "https://x.com/IxraPlayer",
-      "https://github.com/IxraPlayer",
-      "https://modrinth.com/user/Ixra",
-      "https://www.instagram.com/ixranium/",
-      "https://www.tiktok.com/@ixraplayer",
-      "https://www.reddit.com/user/Ixraplayer/",
-      "https://www.youtube.com/@Ixraplayer"
-    ]
-  }
+    {
+      "@type": "SoftwareApplication",
+      "name": "Arda's Sculks",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "Deep Dark expansion with new blocks, boss, and mechanics.",
+      "url": "https://ixraplayer.github.io/",
+      "author": { "@type": "Person", "name": "Ixra" },
+      "offers": { "@type": "Offer", "price": "0" },
+      "downloadUrl": [
+        "https://modrinth.com/mod/ardas-sculks",
+        "https://www.curseforge.com/minecraft/mc-mods/ardas-sculks"
+      ],
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/DownloadAction",
+        "userInteractionCount": "85000"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Arda's Ultimate Golem",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "Powerful golem companion for boss fights.",
+      "url": "https://ixraplayer.github.io/",
+      "author": { "@type": "Person", "name": "Ixra" },
+      "downloadUrl": [
+        "https://modrinth.com/mod/ardas-ultimate-golem",
+        "https://www.curseforge.com/minecraft/mc-mods/ardas-ultimate-golem"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Arda's Ores",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "New ores, armor, and tools.",
+      "url": "https://ixraplayer.github.io/",
+      "author": { "@type": "Person", "name": "Ixra" },
+      "downloadUrl": [
+        "https://modrinth.com/mod/ardas-ores",
+        "https://www.curseforge.com/minecraft/mc-mods/ardas-ores"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Shadow of the Soul",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "Psychological horror mod with stalking AI.",
+      "url": "https://ixraplayer.github.io/",
+      "author": { "@type": "Person", "name": "Ixra" },
+      "downloadUrl": [
+        "https://modrinth.com/mod/shadow-of-the-soul",
+        "https://www.curseforge.com/minecraft/mc-mods/shadow-of-the-soul"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Arda's Hammers",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "3x3 mining hammers.",
+      "url": "https://ixraplayer.github.io/",
+      "author": { "@type": "Person", "name": "Ixra" },
+      "downloadUrl": [
+        "https://modrinth.com/mod/ardas-hammer",
+        "https://www.curseforge.com/minecraft/mc-mods/ardas-hammer"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Arda's Uncrafting Table",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "Recycle items into their components.",
+      "url": "https://ixraplayer.github.io/",
+      "author": { "@type": "Person", "name": "Ixra" },
+      "downloadUrl": [
+        "https://modrinth.com/mod/ardas-uncrafting-table",
+        "https://www.curseforge.com/minecraft/mc-mods/ardas-uncrafting-table"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Arda's Cobblestone Generator",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "Automatic cobblestone generator.",
+      "url": "https://ixraplayer.github.io/",
+      "author": { "@type": "Person", "name": "Ixra" },
+      "downloadUrl": [
+        "https://modrinth.com/mod/ardas-cobblestone-generator",
+        "https://www.curseforge.com/minecraft/mc-mods/ardas-cobblestone-generator"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Arda's Backpack",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "Portable storage backpack.",
+      "url": "https://ixraplayer.github.io/",
+      "author": { "@type": "Person", "name": "Ixra" },
+      "downloadUrl": [
+        "https://modrinth.com/mod/ardas-backpack",
+        "https://www.curseforge.com/minecraft/mc-mods/ardas-backpack"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Arda's Advanced Items",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "Advanced items and special abilities.",
+      "url": "https://ixraplayer.github.io/",
+      "author": { "@type": "Person", "name": "Ixra" },
+      "downloadUrl": [
+        "https://modrinth.com/mod/ardas-advanced-items",
+        "https://www.curseforge.com/minecraft/mc-mods/ardas-advanced-items"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Arda's Special Abilities",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Linux",
+      "description": "Unique player abilities.",
+      "url": "https://ixraplayer.github.io/",
+      "author": { "@type": "Person", "name": "Ixra" },
+      "downloadUrl": [
+        "https://modrinth.com/mod/ardas-special-abilities",
+        "https://www.curseforge.com/minecraft/mc-mods/ardas-special-abilities"
+      ]
+    }
+  ]
 }
 </script>
 
@@ -543,38 +595,29 @@
     function switchTab(tabId) {
         tabBtns.forEach(btn => {
             btn.classList.remove('active');
-            if (btn.dataset.tab === tabId) {
-                btn.classList.add('active');
-            }
+            if (btn.dataset.tab === tabId) btn.classList.add('active');
         });
         Object.values(panes).forEach(pane => pane.classList.remove('active'));
         panes[tabId].classList.add('active');
     }
 
     tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            switchTab(btn.dataset.tab);
-        });
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 })();
 
-(async function () {
-    const MR_USERNAME = 'Ixra';
-    const MR_SLUG_AS = 'ardas-sculks';
-    const CF_SLUG_AS = 'ardas-sculks';
-    
-    const CF_ALL_PROJECT_SLUGS = [
-        'ardas-sculks',
-        'ardas-uncrafting-table',
-        'shadow-of-the-soul',
-        'ardas-omega-golem',
-        'ardas-cobblestone-generator',
-        'ardas-hammer',
-        'ardas-advanced-items',
-        'ardas-backpack',
-        'ardas-special-abilities',
-        'ardas-ores',
-        'ardas-ultimate-golem'
+(async () => {
+    const projectsData = [
+        { name: "Arda's Sculks", slug: 'ardas-sculks', desc: 'Deep Dark expansion with new blocks, boss, and mechanics.' },
+        { name: "Arda's Ultimate Golem", slug: 'ardas-ultimate-golem', desc: 'Powerful golem companion for boss fights.' },
+        { name: "Arda's Ores", slug: 'ardas-ores', desc: 'New ores, armor, and tools.' },
+        { name: "Shadow of the Soul", slug: 'shadow-of-the-soul', desc: 'Psychological horror mod with stalking AI.' },
+        { name: "Arda's Hammers", slug: 'ardas-hammer', desc: '3x3 mining hammers.' },
+        { name: "Arda's Uncrafting Table", slug: 'ardas-uncrafting-table', desc: 'Recycle items into their components.' },
+        { name: "Arda's Cobblestone Generator", slug: 'ardas-cobblestone-generator', desc: 'Automatic cobblestone generator.' },
+        { name: "Arda's Backpack", slug: 'ardas-backpack', desc: 'Portable storage backpack.' },
+        { name: "Arda's Advanced Items", slug: 'ardas-advanced-items', desc: 'Advanced items and special abilities.' },
+        { name: "Arda's Special Abilities", slug: 'ardas-special-abilities', desc: 'Unique player abilities.' }
     ];
 
     function fmt(n) {
@@ -584,72 +627,78 @@
         return n.toString();
     }
 
-    function setEl(id, text, isError = false) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (isError) {
-            el.innerHTML = '<span class="error-val">N/A</span>';
-        } else {
-            el.textContent = text;
-        }
-    }
-
     async function fetchModrinthProject(slug) {
-        const r = await fetch(`https://api.modrinth.com/v2/project/${slug}`);
-        if (!r.ok) throw new Error(`MR ${slug} ${r.status}`);
-        const d = await r.json();
-        if (d.icon_url) {
-            const img = document.getElementById('sculks-icon');
-            if (img) {
-                const test = new Image();
-                test.onload = () => { img.src = d.icon_url; };
-                test.onerror = () => {};
-                test.src = d.icon_url;
-            }
-        }
-        return d.downloads || 0;
+        const res = await fetch(`https://api.modrinth.com/v2/project/${slug}`);
+        if (!res.ok) return { downloads: 0, icon_url: null };
+        const data = await res.json();
+        return { downloads: data.downloads || 0, icon_url: data.icon_url || null };
     }
 
+    async function fetchCurseForgeDownloads(slug) {
+        const res = await fetch(`https://api.cfwidget.com/minecraft/mc-mods/${slug}`);
+        if (!res.ok) return 0;
+        const data = await res.json();
+        return data.downloads?.total ?? data.downloadCount ?? 0;
+    }
+
+    const container = document.getElementById('projects-container');
+    container.innerHTML = projectsData.map(p => `
+        <div class="project-item" data-slug="${p.slug}">
+            <div class="project-info">
+                <img class="project-icon" src="" alt="" style="display:none;">
+                <span class="project-name">${p.name}</span>
+            </div>
+            <span class="project-downloads">...</span>
+            <div class="project-links">
+                <a href="https://modrinth.com/mod/${p.slug}" class="project-link" target="_blank">Modrinth</a>
+                <a href="https://www.curseforge.com/minecraft/mc-mods/${p.slug}" class="project-link" target="_blank">CurseForge</a>
+            </div>
+            <div class="project-desc">${p.desc}</div>
+        </div>
+    `).join('');
+
+    const promises = projectsData.map(async (p, index) => {
+        const item = container.children[index];
+        const iconImg = item.querySelector('.project-icon');
+        const downloadsSpan = item.querySelector('.project-downloads');
+        try {
+            const [mrData, cfDownloads] = await Promise.all([
+                fetchModrinthProject(p.slug),
+                fetchCurseForgeDownloads(p.slug).catch(() => 0)
+            ]);
+            const total = mrData.downloads + cfDownloads;
+            downloadsSpan.textContent = fmt(total);
+            if (mrData.icon_url) {
+                iconImg.src = mrData.icon_url;
+                iconImg.style.display = 'block';
+            } else {
+                iconImg.style.display = 'none';
+            }
+        } catch (e) {
+            downloadsSpan.textContent = '?';
+        }
+    });
+
+    await Promise.all(promises);
+
+    const MR_USERNAME = 'Ixra';
+    const CF_ALL_SLUGS = projectsData.map(p => p.slug);
     async function fetchModrinthUserTotal(username) {
         const r = await fetch(`https://api.modrinth.com/v2/user/${username}/projects`);
-        if (!r.ok) throw new Error(`MR user ${r.status}`);
+        if (!r.ok) return 0;
         const projects = await r.json();
         return projects.reduce((sum, p) => sum + (p.downloads || 0), 0);
     }
-
-    async function fetchCFWidget(slug) {
-        const r = await fetch(`https://api.cfwidget.com/minecraft/mc-mods/${slug}`);
-        if (!r.ok) throw new Error(`CF ${slug} ${r.status}`);
-        const d = await r.json();
-        return d.downloads?.total ?? d.downloadCount ?? 0;
-    }
-
-    async function fetchCFAllTotal(slugs) {
-        const results = await Promise.allSettled(slugs.map(s => fetchCFWidget(s)));
+    async function fetchCFWidgetAll(slugs) {
+        const results = await Promise.allSettled(slugs.map(s => fetchCurseForgeDownloads(s)));
         return results.reduce((sum, r) => r.status === 'fulfilled' ? sum + r.value : sum, 0);
     }
-
-    const [mrAS, cfAS, mrTotal, cfTotal] = await Promise.all([
-        fetchModrinthProject(MR_SLUG_AS).catch(e => {
-            console.warn(e);
-            setEl('modrinth-downloads', '', true);
-            return 0;
-        }),
-        fetchCFWidget(CF_SLUG_AS).catch(e => {
-            console.warn(e);
-            setEl('curseforge-downloads', '', true);
-            return 0;
-        }),
+    const [mrTotal, cfTotal] = await Promise.all([
         fetchModrinthUserTotal(MR_USERNAME).catch(() => 0),
-        fetchCFAllTotal(CF_ALL_PROJECT_SLUGS).catch(() => 0)
+        fetchCFWidgetAll(CF_ALL_SLUGS).catch(() => 0)
     ]);
-
-    setEl('modrinth-downloads', fmt(mrAS));
-    setEl('curseforge-downloads', fmt(cfAS));
-    setEl('ardas-total', fmt(mrAS + cfAS));
-
     const grandTotal = mrTotal + cfTotal;
-    setEl('total-downloads', grandTotal > 0 ? fmt(grandTotal) + '+' : '...');
+    document.getElementById('total-downloads').textContent = grandTotal > 0 ? fmt(grandTotal) + '+' : '176K+';
 })();
 </script>
 
