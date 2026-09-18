@@ -1183,10 +1183,10 @@
    PROJECTS + LIVE DOWNLOAD TOTALS (Modrinth + CurseForge)
    ========================================================= */
 (async () => {
-    const CACHE_KEY = 'ixra_stats_v5';
+    const CACHE_KEY = 'ixra_stats_v6';
     const CACHE_TTL = 6 * 60 * 60 * 1000; // 6 saat
 
-    // ⬇ İNDİRME SAYISINA GÖRE SIRALI (en yüksek → en düşük)
+    // ⬇ TOPLAM İNDİRMEYE GÖRE SIRALI (en yüksek → en düşük)
     // Modrinth + CurseForge toplam indirmeleri baz alınmıştır.
     const projectsData = [
         {
@@ -1261,7 +1261,7 @@
         {
             name: "Uyghur Language Pack",
             modrinthSlug: 'uyghur-language-pack',
-            curseforgeSlug: 'uyghur-language-pack',
+            curseforgeSlug: null,
             desc: 'Adds Uyghur language support to Minecraft.'
         }
     ];
@@ -1300,12 +1300,14 @@
         }
     }
 
+    // cfwidget API — CurseForge indirme sayıları için (Modrinth'teki gibi canlı)
     async function fetchCurseForgeDownloads(slug) {
         if (!slug) return 0;
         try {
             const res = await fetch(`https://api.cfwidget.com/minecraft/mc-mods/${slug}`);
             if (!res.ok) return 0;
             const data = await res.json();
+            // cfwidget bazen "downloads" altında obje döner: { total: N, monthly: N }
             return data.downloads?.total ?? data.downloadCount ?? 0;
         } catch {
             return 0;
@@ -1325,18 +1327,16 @@
     const container = document.getElementById('projects-container');
     container.innerHTML = projectsData.map(p => {
         let badgeHtml = '';
-        if (p.slug === 'ardas-sculks') {
+        if (p.isSculks) {
             badgeHtml = '<span class="project-badge badge-popular">MOST POPULAR</span>';
         } else if (p.isTrending) {
             badgeHtml = '<span class="project-badge badge-trending">TRENDING</span>';
         }
 
-        // Dinamik link oluşturma
+        // Dinamik link oluşturma — CurseForge'da olmayan modlar için "disabled"
         const links = [];
         if (p.modrinthSlug) {
             links.push(`<a href="https://modrinth.com/mod/${p.modrinthSlug}" class="project-link" target="_blank">Modrinth</a>`);
-        } else {
-            links.push(`<span class="project-link disabled">Modrinth</span>`);
         }
         if (p.curseforgeSlug) {
             links.push(`<a href="https://www.curseforge.com/minecraft/mc-mods/${p.curseforgeSlug}" class="project-link" target="_blank">CurseForge</a>`);
