@@ -7,10 +7,9 @@
 
     <meta name="title" content="Ixra - Minecraft Mod Developer | Arda's Sculks Creator">
     <meta name="description" content="Ixra (Ixranium / IxraPlayer) is a Minecraft mod developer from Istanbul. Creator of Arda's Sculks, Arda's Ores, Arda's Ultimate Golem, Omega Golem, Shadow of the Soul, and 10+ mods for Forge & NeoForge.">
-    <meta name="keywords" content="Ixra, Ixranium, IxraPlayer, Arda Aydoğdu, Turkish Minecraft mod developer, Minecraft mod, Arda's Sculks, Forge, NeoForge, Turkish modder, Minecraft Turkey, Arda's Ultimate Golem, Omega Golem, Shadow of the Soul, Arda's Ores, Arda's Hammers, Arda's Backpack, Arda's Advanced Items, Arda's Special Abilities, Arda's Uncrafting Table, Arda's Cobblestone Generator, ixra minecraft, ixra mod developer, ardask sculks mod, minecraft deep dark mod, sculk expansion mod">
+    <meta name="keywords" content="Ixra, Ixranium, IxraPlayer, Arda Aydoğdu, Minecraft mod developer, Minecraft mod, Arda's Sculks, Forge, NeoForge, Turkish modder, Arda's Ultimate Golem, Omega Golem, Shadow of the Soul, Arda's Ores, Arda's Hammers, Arda's Backpack, Arda's Advanced Items, Arda's Special Abilities, Arda's Uncrafting Table, Arda's Cobblestone Generator">
     <meta name="author" content="Ixra (IxraPlayer)">
     <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
     <meta name="theme-color" content="#070a10">
     <link rel="canonical" href="https://ixraplayer.github.io/">
 
@@ -21,24 +20,18 @@
     <meta property="og:image" content="https://ixraplayer.github.io/sitelogo.png">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
-    <meta property="og:image:alt" content="Ixra Logo">
     <meta property="og:site_name" content="Ixra - Minecraft Mod Developer">
-    <meta property="og:locale" content="en_US">
-    <meta property="profile:first_name" content="Arda">
-    <meta property="profile:username" content="IxraPlayer">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://ixraplayer.github.io/">
     <meta name="twitter:title" content="Ixra - Minecraft Mod Developer | Arda's Sculks Creator">
     <meta name="twitter:description" content="Creator of Arda's Sculks & 10+ Minecraft mods. Modder for Forge & NeoForge.">
     <meta name="twitter:image" content="https://ixraplayer.github.io/sitelogo.png">
-    <meta name="twitter:image:alt" content="Ixra Logo">
     <meta name="twitter:site" content="@IxraPlayer">
     <meta name="twitter:creator" content="@IxraPlayer">
 
     <link rel="icon" type="image/png" sizes="192x192" href="https://ixraplayer.github.io/sitelogo.png">
     <link rel="icon" type="image/x-icon" href="https://ixraplayer.github.io/sitelogo.ico">
-    <link rel="shortcut icon" type="image/png" href="https://ixraplayer.github.io/sitelogo.png">
     <link rel="apple-touch-icon" href="https://ixraplayer.github.io/sitelogo.png">
 
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -67,7 +60,6 @@
             --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03);
             --shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--accent-border);
             --radius-card: 28px;
-            --radius-element: 18px;
         }
 
         i.fab, i.fas, i.far { color: var(--text-primary) !important; }
@@ -76,15 +68,11 @@
             from { opacity: 0; transform: translateY(20px) scale(0.96); }
             to   { opacity: 1; transform: translateY(0) scale(1); }
         }
-        @keyframes overlayFadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
+        @keyframes overlayFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         body {
             min-height: 100vh;
             font-family: 'Inter', sans-serif;
-            font-weight: 400;
             padding: 24px 18px;
             background:
                 radial-gradient(ellipse 70% 70% at -20% -30%, rgba(74, 155, 181, 0.07) 0%, transparent 70%),
@@ -100,7 +88,6 @@
             max-width: 980px;
             width: 100%;
             margin: 0 auto;
-            display: block;
         }
 
         .profile-card {
@@ -110,8 +97,6 @@
             padding: 36px 32px;
             box-shadow: var(--shadow-md);
             border: 1px solid var(--card-border);
-            position: relative;
-            z-index: 1;
             margin-top: 10px;
         }
 
@@ -149,18 +134,9 @@
             margin-bottom: 4px;
         }
 
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 15px;
-            margin-bottom: 10px;
-        }
+        .subtitle { color: var(--text-secondary); font-size: 15px; margin-bottom: 10px; }
 
-        .bio-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px;
-        }
+        .bio-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 
         .bio-tag {
             font-size: 13px;
@@ -170,7 +146,6 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-secondary);
             box-shadow: var(--shadow-sm);
-            font-weight: 450;
         }
 
         .bio-downloads-tag {
@@ -181,18 +156,12 @@
             border: 2px solid var(--accent-border);
             color: var(--accent-bright);
             font-weight: 700;
-            letter-spacing: 0.02em;
             box-shadow: 0 0 16px rgba(74, 155, 181, 0.25), inset 0 0 8px rgba(255, 255, 255, 0.03);
             text-shadow: 0 0 12px rgba(125, 216, 240, 0.5);
         }
         .bio-downloads-tag #total-downloads { font-size: 16px; }
 
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 28px;
-            margin-bottom: 24px;
-        }
+        .main-content { display: grid; grid-template-columns: 1fr; gap: 28px; margin-bottom: 24px; }
 
         .tabs-panel {
             background: #0d131c;
@@ -233,26 +202,18 @@
         }
 
         .tab-content { padding: 24px 22px; }
-
         .tab-pane { display: none; }
         .tab-pane.active { display: block; animation: modalFadeIn 0.3s ease-out; }
 
-        .links-list, .projects-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .links-list, .projects-list { display: flex; flex-direction: column; gap: 10px; }
 
-        /* ============ LINK BUTTONS (canlı markalı) ============ */
+        /* ============ LINK BUTTONS ============ */
         .link-btn {
             --brand-rgb: 74, 155, 181;
             display: flex;
             align-items: center;
             gap: 12px;
-            background: linear-gradient(90deg,
-                rgba(var(--brand-rgb), 0.08) 0%,
-                #1b2532 40%,
-                #1b2532 100%);
+            background: linear-gradient(90deg, rgba(var(--brand-rgb), 0.08) 0%, #1b2532 40%, #1b2532 100%);
             border: 1px solid rgba(var(--brand-rgb), 0.15);
             padding: 15px 22px 15px 26px;
             border-radius: 18px;
@@ -267,25 +228,18 @@
             isolation: isolate;
         }
 
-        /* Sol renk şeridi */
         .link-btn::before {
             content: '';
             position: absolute;
             left: 0; top: 0; bottom: 0;
             width: 4px;
-            background: linear-gradient(180deg,
-                rgba(var(--brand-rgb), 1) 0%,
-                rgba(var(--brand-rgb), 0.4) 100%);
+            background: linear-gradient(180deg, rgba(var(--brand-rgb), 1) 0%, rgba(var(--brand-rgb), 0.4) 100%);
             transition: width 0.25s, box-shadow 0.25s;
             pointer-events: none;
             z-index: 1;
         }
-        .link-btn:hover::before {
-            width: 6px;
-            box-shadow: 0 0 12px rgba(var(--brand-rgb), 0.7);
-        }
+        .link-btn:hover::before { width: 6px; box-shadow: 0 0 12px rgba(var(--brand-rgb), 0.7); }
 
-        /* Shimmer */
         .link-btn::after {
             content: '';
             position: absolute;
@@ -300,14 +254,9 @@
         .link-btn:hover::after { transform: translateX(280%) skewX(-25deg); }
 
         .link-btn:hover {
-            background: linear-gradient(90deg,
-                rgba(var(--brand-rgb), 0.22) 0%,
-                #222f3e 40%,
-                #1b2532 100%);
+            background: linear-gradient(90deg, rgba(var(--brand-rgb), 0.22) 0%, #222f3e 40%, #1b2532 100%);
             border-color: rgba(var(--brand-rgb), 0.55);
-            box-shadow: var(--shadow-hover),
-                        0 0 24px rgba(var(--brand-rgb), 0.22),
-                        inset 0 0 0 1px rgba(var(--brand-rgb), 0.12);
+            box-shadow: var(--shadow-hover), 0 0 24px rgba(var(--brand-rgb), 0.22), inset 0 0 0 1px rgba(var(--brand-rgb), 0.12);
             transform: translateY(-2px);
             color: white;
         }
@@ -319,7 +268,6 @@
             height: 22px;
             flex-shrink: 0;
             object-fit: contain;
-            display: inline-block;
             filter: brightness(0) invert(1);
             opacity: 0.95;
             transition: opacity 0.2s, transform 0.25s, filter 0.25s;
@@ -331,11 +279,7 @@
             filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(var(--brand-rgb), 0.9));
         }
 
-        .link-name {
-            font-weight: 600;
-            letter-spacing: 0.01em;
-        }
-
+        .link-name { font-weight: 600; letter-spacing: 0.01em; }
         .link-handle {
             font-size: 12px;
             color: var(--text-muted);
@@ -344,20 +288,10 @@
             transition: color 0.25s;
             white-space: nowrap;
         }
-        .link-btn:hover .link-handle {
-            color: rgba(var(--brand-rgb), 1);
-            text-shadow: 0 0 8px rgba(var(--brand-rgb), 0.5);
-        }
+        .link-btn:hover .link-handle { color: rgba(var(--brand-rgb), 1); text-shadow: 0 0 8px rgba(var(--brand-rgb), 0.5); }
 
-        /* Sağdaki stat rozetleri */
-        .link-stats {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-            flex-shrink: 0;
-        }
+        .link-stats { margin-left: auto; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+
         .gh-stat {
             display: inline-flex;
             align-items: center;
@@ -370,24 +304,16 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text-secondary);
             white-space: nowrap;
-            letter-spacing: 0.01em;
             transition: background 0.2s, border-color 0.2s, color 0.2s;
         }
-        .gh-stat i {
-            color: var(--text-muted) !important;
-            font-size: 11px;
-            width: auto !important;
-        }
+        .gh-stat i { color: var(--text-muted) !important; font-size: 11px; width: auto !important; }
         .link-btn:hover .gh-stat {
             background: rgba(var(--brand-rgb), 0.15);
             border-color: rgba(var(--brand-rgb), 0.35);
             color: rgb(var(--brand-rgb));
         }
-        .link-btn:hover .gh-stat i {
-            color: rgb(var(--brand-rgb)) !important;
-        }
+        .link-btn:hover .gh-stat i { color: rgb(var(--brand-rgb)) !important; }
 
-        /* CurseForge follower badge — özel */
         .cf-followers {
             margin-left: auto;
             display: inline-flex;
@@ -401,34 +327,23 @@
             border: 1px solid rgba(255, 140, 0, 0.3);
             color: #ffb066;
             white-space: nowrap;
-            letter-spacing: 0.01em;
             transition: background 0.2s, border-color 0.2s, color 0.2s;
         }
-        .cf-followers i {
-            color: #ffb066 !important;
-            font-size: 12px;
-            width: auto !important;
-        }
+        .cf-followers i { color: #ffb066 !important; font-size: 12px; width: auto !important; }
         .link-btn:hover .cf-followers {
             background: rgba(255, 140, 0, 0.2);
             border-color: rgba(255, 140, 0, 0.5);
             color: #ffc78a;
         }
-        .link-btn:hover .cf-followers i {
-            color: #ffc78a !important;
-        }
+        .link-btn:hover .cf-followers i { color: #ffc78a !important; }
 
-        /* ============ PROJECT ITEM ============ */
+        /* ============ PROJECT ITEMS ============ */
         .project-item {
             --project-color: 74, 155, 181;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background:
-                linear-gradient(135deg,
-                    rgba(var(--project-color), 0.22) 0%,
-                    rgba(var(--project-color), 0.07) 45%,
-                    #1b2532 100%);
+            background: linear-gradient(135deg, rgba(var(--project-color), 0.22) 0%, rgba(var(--project-color), 0.07) 45%, #1b2532 100%);
             border: 1px solid rgba(var(--project-color), 0.28);
             padding: 14px 20px;
             border-radius: 18px;
@@ -443,21 +358,15 @@
         .project-item::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 45%;
-            height: 200%;
-            background: radial-gradient(circle at center,
-                rgba(var(--project-color), 0.18) 0%,
-                transparent 70%);
+            top: -50%; right: -10%;
+            width: 45%; height: 200%;
+            background: radial-gradient(circle at center, rgba(var(--project-color), 0.18) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
-            transition: opacity 0.35s;
         }
         .project-item:hover {
             border-color: rgba(var(--project-color), 0.55);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4),
-                        0 0 24px rgba(var(--project-color), 0.18);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 24px rgba(var(--project-color), 0.18);
         }
         .project-item > * { position: relative; z-index: 1; }
 
@@ -482,8 +391,7 @@
         }
         .project-item:hover .project-icon {
             transform: scale(1.04);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5),
-                        0 0 16px rgba(var(--project-color), 0.4);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5), 0 0 16px rgba(var(--project-color), 0.4);
         }
 
         .project-name {
@@ -503,20 +411,11 @@
             border-radius: 12px;
             font-weight: 700;
             letter-spacing: 0.4px;
-            margin-left: 0;
             white-space: nowrap;
             flex-shrink: 0;
         }
-        .badge-popular {
-            background: rgba(255, 193, 7, 0.18);
-            color: #ffc107;
-            border: 1px solid rgba(255, 193, 7, 0.35);
-        }
-        .badge-trending {
-            background: rgba(255, 87, 34, 0.18);
-            color: #ff5722;
-            border: 1px solid rgba(255, 87, 34, 0.35);
-        }
+        .badge-popular { background: rgba(255, 193, 7, 0.18); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.35); }
+        .badge-trending { background: rgba(255, 87, 34, 0.18); color: #ff5722; border: 1px solid rgba(255, 87, 34, 0.35); }
 
         .project-downloads {
             font-size: 14px;
@@ -531,12 +430,7 @@
             flex-shrink: 0;
         }
 
-        .project-links {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+        .project-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
         .project-link {
             font-size: 13px;
@@ -568,14 +462,8 @@
             background: linear-gradient(135deg, #263748 0%, #30455a 100%);
             border-color: rgba(var(--project-color), 0.7);
             color: #fff;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4),
-                        0 0 18px rgba(var(--project-color), 0.3);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), 0 0 18px rgba(var(--project-color), 0.3);
             transform: translateY(-2px);
-        }
-        .project-link.disabled {
-            opacity: 0.4;
-            pointer-events: none;
-            filter: grayscale(0.5);
         }
 
         .project-desc {
@@ -587,14 +475,8 @@
             width: 100%;
         }
 
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-left: 88px;
-            margin-top: 4px;
-            width: 100%;
-        }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-left: 88px; margin-top: 4px; width: 100%; }
+
         .version-tag {
             font-size: 9px;
             font-weight: 600;
@@ -603,7 +485,6 @@
             background: rgba(93, 184, 212, 0.15);
             border: 1px solid rgba(93, 184, 212, 0.3);
             color: var(--accent-bright);
-            letter-spacing: 0.02em;
             white-space: nowrap;
         }
         .loader-tag {
@@ -614,21 +495,11 @@
             background: rgba(74, 222, 128, 0.12);
             border: 1px solid rgba(74, 222, 128, 0.3);
             color: #4ade80;
-            letter-spacing: 0.02em;
             white-space: nowrap;
         }
-        .loader-tag.forge {
-            background: rgba(249, 115, 22, 0.12);
-            border-color: rgba(249, 115, 22, 0.3);
-            color: #fb923c;
-        }
+        .loader-tag.forge { background: rgba(249, 115, 22, 0.12); border-color: rgba(249, 115, 22, 0.3); color: #fb923c; }
 
-        .project-extra-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-shrink: 0;
-        }
+        .project-extra-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
 
         .detail-popup-btn {
             background: linear-gradient(135deg, #1a2a38 0%, #223545 100%);
@@ -640,10 +511,9 @@
             border-radius: 22px;
             font-weight: 600;
             font-family: inherit;
-            transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+            transition: all 0.2s;
             white-space: nowrap;
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
-            letter-spacing: 0.02em;
         }
         .detail-popup-btn:hover {
             background: linear-gradient(135deg, #243848 0%, #2e4a5a 100%);
@@ -661,13 +531,11 @@
             font-size: 11px;
             padding: 8px 12px;
             border-radius: 22px;
-            font-weight: 500;
             font-family: inherit;
-            white-space: nowrap;
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s;
+            transition: all 0.2s;
         }
         .progress-btn:hover {
             border-color: var(--accent-border);
@@ -676,19 +544,14 @@
             box-shadow: 0 0 14px rgba(74, 155, 181, 0.2);
         }
         .progress-bar-mini {
-            width: 40px;
-            height: 4px;
+            width: 40px; height: 4px;
             background: rgba(255, 255, 255, 0.08);
             border-radius: 10px;
             overflow: hidden;
         }
-        .progress-bar-mini-fill {
-            width: 55%;
-            height: 100%;
-            background: var(--accent);
-            border-radius: 10px;
-        }
+        .progress-bar-mini-fill { width: 55%; height: 100%; background: var(--accent); border-radius: 10px; }
 
+        /* ============ MODALS ============ */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -710,9 +573,8 @@
             width: 100%;
             max-height: 82vh;
             overflow-y: auto;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             animation: modalFadeIn 0.3s ease-out;
-            position: relative;
             overscroll-behavior: contain;
         }
         .modal-header {
@@ -732,16 +594,15 @@
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.12);
             color: white;
-            width: 36px;
-            height: 36px;
+            width: 36px; height: 36px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 18px;
-            transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            transition: all 0.2s;
         }
         .modal-close-btn:hover {
             background: rgba(255, 70, 70, 0.2);
@@ -764,25 +625,35 @@
         .mod-detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
         .mod-detail-icon {
             width: 76px; height: 76px;
-            border-radius: 14px; object-fit: cover;
-            background: #0f1620; border: 1px solid #2a3f50;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); flex-shrink: 0;
+            border-radius: 14px;
+            object-fit: cover;
+            background: #0f1620;
+            border: 1px solid #2a3f50;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            flex-shrink: 0;
         }
         .mod-detail-title { font-size: 22px; font-weight: 700; color: white; margin-bottom: 4px; }
         .mod-detail-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
         .mod-detail-desc { font-size: 15px; color: var(--text-secondary); margin-bottom: 18px; line-height: 1.6; }
         .mod-detail-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
         .mod-detail-link {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 10px 20px; border-radius: 22px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 22px;
             background: linear-gradient(135deg, #1e2a38 0%, #253344 100%);
-            color: #d0dce8; text-decoration: none;
-            border: 1px solid #2d3e50; font-weight: 600; font-size: 14px;
+            color: #d0dce8;
+            text-decoration: none;
+            border: 1px solid #2d3e50;
+            font-weight: 600;
+            font-size: 14px;
             transition: all 0.25s;
         }
         .mod-detail-link:hover {
             background: linear-gradient(135deg, #263748 0%, #30455a 100%);
-            border-color: var(--accent); color: #fff;
+            border-color: var(--accent);
+            color: #fff;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), 0 0 18px rgba(74, 155, 181, 0.2);
             transform: translateY(-2px);
         }
@@ -790,14 +661,22 @@
 
         .progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
         .progress-label {
-            width: 120px; font-size: 13px; font-weight: 500; color: var(--text-secondary);
-            flex-shrink: 0; display: flex; align-items: center; gap: 6px;
+            width: 120px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .progress-label i { font-size: 12px; width: 16px; text-align: center; }
         .progress-bar-wrap {
-            flex: 1; height: 8px;
+            flex: 1;
+            height: 8px;
             background: rgba(255, 255, 255, 0.06);
-            border-radius: 10px; overflow: hidden; position: relative;
+            border-radius: 10px;
+            overflow: hidden;
         }
         .progress-bar-fill { height: 100%; border-radius: 10px; transition: width 0.8s ease; }
         .progress-bar-fill.language { background: linear-gradient(90deg, #facc15, #f59e0b); width: 20%; }
@@ -806,10 +685,15 @@
         .progress-bar-fill.quality  { background: linear-gradient(90deg, #60a5fa, #3b82f6); width: 50%; }
         .progress-value { width: 40px; text-align: right; font-size: 13px; font-weight: 600; color: white; flex-shrink: 0; }
         .progress-avg {
-            margin-top: 14px; padding-top: 12px;
+            margin-top: 14px;
+            padding-top: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
-            display: flex; align-items: center; gap: 12px;
-            font-weight: 600; color: var(--accent-bright); font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--accent-bright);
+            font-size: 14px;
         }
         .progress-avg .progress-bar-wrap { height: 10px; flex: 1; }
         .progress-avg .progress-bar-fill {
@@ -817,6 +701,7 @@
             width: 55%;
         }
 
+        /* ============ ABOUT ============ */
         .about-text { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
         .about-text p { margin-bottom: 16px; }
         .about-text strong { color: white; }
@@ -829,59 +714,67 @@
             padding-top: 24px;
         }
         .qa-section h3 {
-            color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;
-            display: flex; align-items: center; gap: 8px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .qa-scroll { max-height: 420px; overflow-y: auto; padding-right: 8px; overscroll-behavior: contain; }
         .qa-bubble {
-            background: #1b2532; border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px; padding: 16px 18px; margin-bottom: 12px;
+            background: #1b2532;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 16px 18px;
+            margin-bottom: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .qa-bubble:hover {
-            border-color: var(--accent-border);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-        }
+        .qa-bubble:hover { border-color: var(--accent-border); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
         .qa-question { font-weight: 600; color: white; font-size: 15px; margin-bottom: 6px; }
         .qa-answer { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
 
-        .video-showcase {
-            margin-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 24px;
-        }
+        .video-showcase { margin-top: 32px; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 24px; }
         .video-showcase h3 { color: white; font-size: 18px; font-weight: 600; margin-bottom: 12px; }
-        .video-wrapper {
-            background: #111922; border-radius: 18px; padding: 12px;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
-        }
+        .video-wrapper { background: #111922; border-radius: 18px; padding: 12px; box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5); }
         .video-embed {
-            position: relative; padding-bottom: 56.25%;
-            height: 0; overflow: hidden; border-radius: 12px; background: #000;
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #000;
         }
         .video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .video-caption { color: var(--text-secondary); font-size: 13px; margin-top: 8px; }
 
-        .extra-info-section {
-            margin-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 16px;
-        }
+        .extra-info-section { margin-top: 32px; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 16px; }
         .extra-info-toggle {
-            background: none; border: none; color: var(--text-muted);
-            font-size: 14px; font-family: inherit; cursor: pointer;
-            padding: 6px 14px; border-radius: 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 6px 14px;
+            border-radius: 20px;
             transition: color 0.2s, background 0.2s;
-            display: flex; align-items: center; gap: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .extra-info-toggle:hover { color: var(--accent-bright); background: rgba(74, 155, 181, 0.08); }
         .extra-info-content {
-            margin-top: 12px; color: var(--text-secondary);
-            font-size: 14px; line-height: 1.7;
+            margin-top: 12px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
             background: rgba(20, 28, 40, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 16px; padding: 16px;
+            border-radius: 16px;
+            padding: 16px;
         }
         .extra-info-content p { margin-bottom: 12px; }
         .extra-info-content strong { color: white; }
@@ -889,9 +782,12 @@
         .extra-info-content a:hover { text-decoration: underline; }
 
         .footer {
-            text-align: center; font-size: 13px; color: var(--text-muted);
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
             border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 20px; margin-top: 6px;
+            padding-top: 20px;
+            margin-top: 6px;
         }
         .footer a { color: var(--accent-bright); text-decoration: none; font-weight: 500; }
         .footer a:hover { text-decoration: underline; }
@@ -958,6 +854,8 @@
                         <button class="tab-btn" data-tab="projects"><i class="fas fa-folder"></i> Projects</button>
                     </div>
                     <div class="tab-content">
+
+                        <!-- ============ LINKS ============ -->
                         <div class="tab-pane active" id="links">
                             <div class="links-list">
                                 <a href="https://github.com/IxraPlayer" class="link-btn" style="--brand-rgb: 200, 200, 200;" target="_blank" rel="me">
@@ -1019,6 +917,8 @@
                                 </a>
                             </div>
                         </div>
+
+                        <!-- ============ ABOUT ============ -->
                         <div class="tab-pane" id="about">
                             <div class="about-text">
                                 <p>My most popular project is <strong><a href="https://modrinth.com/mod/ardas-sculks" target="_blank">Arda's Sculks</a></strong>, a deep dark expansion that adds new blocks, mechanics, and a boss. But I've released over 10 mods for Forge and NeoForge, ranging from ores and tools to golems and psychological horror.</p>
@@ -1067,6 +967,7 @@
                                 </div>
                                 <p class="video-caption">Shadow Hunter boss fight in action — abilities, arena, and atmosphere.</p>
                             </div>
+
                             <div class="extra-info-section">
                                 <button class="extra-info-toggle" id="extra-toggle">
                                     <span>▸ A bit more about me…</span>
@@ -1080,9 +981,12 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- ============ PROJECTS ============ -->
                         <div class="tab-pane" id="projects">
                             <div class="projects-list" id="projects-container"></div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -1094,6 +998,7 @@
         </div>
     </div>
 
+    <!-- Arda's Sculks Detail Modal (özel) -->
     <div class="modal-overlay" id="ardas-detail-modal">
         <div class="modal-dialog">
             <div class="modal-header">
@@ -1104,6 +1009,7 @@
         </div>
     </div>
 
+    <!-- Generic Mod Modal -->
     <div class="modal-overlay" id="generic-mod-modal">
         <div class="modal-dialog">
             <div class="modal-header">
@@ -1114,6 +1020,7 @@
         </div>
     </div>
 
+    <!-- Progress Modal -->
     <div class="modal-overlay" id="progress-modal">
         <div class="modal-dialog" style="max-width: 480px;">
             <div class="modal-header">
@@ -1151,9 +1058,10 @@
             </div>
         </div>
     </div>
-
-    <script>
-    /* TAB SWITCHING + LAZY IFRAME */
+        <script>
+    /* =========================================================
+       TAB SWITCHING + LAZY IFRAME
+       ========================================================= */
     (function () {
         const tabBtns = document.querySelectorAll('.tab-btn');
         const panes = {
@@ -1171,6 +1079,7 @@
                 if (src && !f.src) { f.src = src; loadedIframes.add(f); }
             });
         }
+
         function switchTab(tabId) {
             tabBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
             Object.entries(panes).forEach(([id, pane]) => {
@@ -1179,7 +1088,9 @@
             });
             loadIframesIn(panes[tabId]);
         }
+
         tabBtns.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+
         if ('requestIdleCallback' in window) {
             requestIdleCallback(() => loadIframesIn(panes.about), { timeout: 3000 });
         } else {
@@ -1187,20 +1098,24 @@
         }
     })();
 
-    /* EXTRA INFO TOGGLE */
+    /* =========================================================
+       EXTRA INFO TOGGLE
+       ========================================================= */
     (function () {
-        const extraToggle = document.getElementById('extra-toggle');
-        const extraContent = document.getElementById('extra-content');
-        if (!extraToggle || !extraContent) return;
-        extraToggle.addEventListener('click', function () {
-            const isVisible = extraContent.style.display === 'block';
-            extraContent.style.display = isVisible ? 'none' : 'block';
-            extraToggle.querySelector('span').textContent =
-                isVisible ? '▸ A bit more about me…' : '▾ A bit more about me…';
+        const t = document.getElementById('extra-toggle');
+        const c = document.getElementById('extra-content');
+        if (!t || !c) return;
+        t.addEventListener('click', function () {
+            const visible = c.style.display === 'block';
+            c.style.display = visible ? 'none' : 'block';
+            t.querySelector('span').textContent =
+                visible ? '▸ A bit more about me…' : '▾ A bit more about me…';
         });
     })();
 
-    /* NUMBER FORMATTER */
+    /* =========================================================
+       NUMBER FORMATTER
+       ========================================================= */
     function ghFmt(n) {
         if (n === null || n === undefined || isNaN(n)) return '?';
         if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
@@ -1208,44 +1123,45 @@
         return String(n);
     }
 
-    /* GITHUB STATS */
+    /* =========================================================
+       GITHUB STATS
+       ========================================================= */
     (async () => {
         const GH_USER = 'IxraPlayer';
-        const GH_CACHE_KEY = 'ixra_github_stats_v1';
-        const GH_TTL = 6 * 60 * 60 * 1000;
+        const KEY = 'ixra_github_stats_v1';
+        const TTL = 6 * 60 * 60 * 1000;
         const reposEl = document.getElementById('gh-repos');
         const starsEl = document.getElementById('gh-stars');
         const followersEl = document.getElementById('gh-followers');
         if (!reposEl || !starsEl || !followersEl) return;
 
         try {
-            const raw = localStorage.getItem(GH_CACHE_KEY);
+            const raw = localStorage.getItem(KEY);
             if (raw) {
-                const parsed = JSON.parse(raw);
-                if (parsed && Date.now() - parsed.t < GH_TTL) {
-                    reposEl.textContent = ghFmt(parsed.d.repos);
-                    starsEl.textContent = ghFmt(parsed.d.stars);
-                    followersEl.textContent = ghFmt(parsed.d.followers);
+                const p = JSON.parse(raw);
+                if (p && Date.now() - p.t < TTL) {
+                    reposEl.textContent = ghFmt(p.d.repos);
+                    starsEl.textContent = ghFmt(p.d.stars);
+                    followersEl.textContent = ghFmt(p.d.followers);
                     return;
                 }
             }
         } catch {}
 
         try {
-            const [userRes, reposRes] = await Promise.all([
+            const [uRes, rRes] = await Promise.all([
                 fetch(`https://api.github.com/users/${GH_USER}`),
                 fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`)
             ]);
-            if (!userRes.ok || !reposRes.ok) throw new Error();
-            const user = await userRes.json();
-            const repos = await reposRes.json();
-            const stars = Array.isArray(repos)
-                ? repos.reduce((s, r) => s + (r.stargazers_count || 0), 0) : 0;
-            const data = { repos: user.public_repos || 0, followers: user.followers || 0, stars };
+            if (!uRes.ok || !rRes.ok) throw new Error();
+            const u = await uRes.json();
+            const r = await rRes.json();
+            const stars = Array.isArray(r) ? r.reduce((s, x) => s + (x.stargazers_count || 0), 0) : 0;
+            const data = { repos: u.public_repos || 0, followers: u.followers || 0, stars };
             reposEl.textContent = ghFmt(data.repos);
             starsEl.textContent = ghFmt(data.stars);
             followersEl.textContent = ghFmt(data.followers);
-            try { localStorage.setItem(GH_CACHE_KEY, JSON.stringify({ t: Date.now(), d: data })); } catch {}
+            try { localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d: data })); } catch {}
         } catch {
             reposEl.textContent = '?';
             starsEl.textContent = '?';
@@ -1253,65 +1169,71 @@
         }
     })();
 
-    /* MODRINTH USER STATS */
+    /* =========================================================
+       MODRINTH USER STATS
+       ========================================================= */
     (async () => {
-        const MR_USER = 'Ixra';
-        const CACHE_KEY = 'ixra_modrinth_stats_v1';
+        const USER = 'Ixra';
+        const KEY = 'ixra_modrinth_stats_v1';
         const TTL = 6 * 60 * 60 * 1000;
-        const projectsEl = document.getElementById('mr-projects');
-        const downloadsEl = document.getElementById('mr-downloads');
-        if (!projectsEl || !downloadsEl) return;
+        const pEl = document.getElementById('mr-projects');
+        const dEl = document.getElementById('mr-downloads');
+        if (!pEl || !dEl) return;
 
         try {
-            const raw = localStorage.getItem(CACHE_KEY);
+            const raw = localStorage.getItem(KEY);
             if (raw) {
-                const parsed = JSON.parse(raw);
-                if (parsed && Date.now() - parsed.t < TTL) {
-                    projectsEl.textContent = ghFmt(parsed.d.projects);
-                    downloadsEl.textContent = ghFmt(parsed.d.downloads);
+                const p = JSON.parse(raw);
+                if (p && Date.now() - p.t < TTL) {
+                    pEl.textContent = ghFmt(p.d.projects);
+                    dEl.textContent = ghFmt(p.d.downloads);
                     return;
                 }
             }
         } catch {}
 
         try {
-            const res = await fetch(`https://api.modrinth.com/v2/user/${MR_USER}/projects`);
+            const res = await fetch(`https://api.modrinth.com/v2/user/${USER}/projects`);
             if (!res.ok) throw new Error();
             const projects = await res.json();
-            const downloads = Array.isArray(projects)
-                ? projects.reduce((s, p) => s + (p.downloads || 0), 0) : 0;
+            const downloads = Array.isArray(projects) ? projects.reduce((s, x) => s + (x.downloads || 0), 0) : 0;
             const data = { projects: projects.length, downloads };
-            projectsEl.textContent = ghFmt(data.projects);
-            downloadsEl.textContent = ghFmt(data.downloads);
-            try { localStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), d: data })); } catch {}
+            pEl.textContent = ghFmt(data.projects);
+            dEl.textContent = ghFmt(data.downloads);
+            try { localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d: data })); } catch {}
         } catch {
-            projectsEl.textContent = '?';
-            downloadsEl.textContent = '?';
+            pEl.textContent = '?';
+            dEl.textContent = '?';
         }
     })();
 
-    /* CURSEFORGE FOLLOWERS (manual) */
+    /* =========================================================
+       CURSEFORGE FOLLOWERS (manual)
+       ========================================================= */
     (function () {
         const CF_FOLLOWERS = 0; // 👈 CurseForge profilinden güncelle
-        const cfCountEl = document.getElementById('cf-follower-count');
-        if (!cfCountEl) return;
+        const el = document.getElementById('cf-follower-count');
+        if (!el) return;
         if (CF_FOLLOWERS > 0) {
-            cfCountEl.textContent = CF_FOLLOWERS.toLocaleString('en-US');
+            el.textContent = CF_FOLLOWERS.toLocaleString('en-US');
         } else {
-            cfCountEl.textContent = '—';
-            cfCountEl.parentElement.style.display = 'none';
+            el.textContent = '—';
+            el.parentElement.style.display = 'none';
         }
     })();
 
-    /* AVERAGE COLOR FROM IMAGE */
+    /* =========================================================
+       AVERAGE COLOR FROM IMAGE
+       ========================================================= */
     async function getAverageColorFromUrl(url) {
         if (!url) return null;
         return new Promise((resolve) => {
             const img = new Image();
             img.crossOrigin = 'anonymous';
             let settled = false;
-            const finish = (val) => { if (!settled) { settled = true; resolve(val); } };
+            const finish = (v) => { if (!settled) { settled = true; resolve(v); } };
             const timer = setTimeout(() => finish(null), 4000);
+
             img.onload = () => {
                 try {
                     const size = 24;
@@ -1320,80 +1242,85 @@
                     const ctx = canvas.getContext('2d', { willReadFrequently: true });
                     ctx.drawImage(img, 0, 0, size, size);
                     const data = ctx.getImageData(0, 0, size, size).data;
-                    let r = 0, g = 0, b = 0, count = 0;
+                    let r = 0, g = 0, b = 0, n = 0;
                     for (let i = 0; i < data.length; i += 4) {
                         if (data[i + 3] < 128) continue;
-                        const rr = data[i], gg = data[i+1], bb = data[i+2];
+                        const rr = data[i], gg = data[i + 1], bb = data[i + 2];
                         const br = (rr + gg + bb) / 3;
                         if (br < 25 || br > 230) continue;
-                        r += rr; g += gg; b += bb; count++;
+                        r += rr; g += gg; b += bb; n++;
                     }
                     clearTimeout(timer);
-                    if (count === 0) return finish(null);
-                    resolve([Math.round(r/count), Math.round(g/count), Math.round(b/count)]);
+                    if (n === 0) return finish(null);
+                    resolve([Math.round(r / n), Math.round(g / n), Math.round(b / n)]);
                 } catch { clearTimeout(timer); finish(null); }
             };
             img.onerror = () => { clearTimeout(timer); finish(null); };
             img.src = url;
         });
     }
+
     const colorCache = new Map();
-    async function applyProjectColor(projectItem, iconUrl) {
-        if (!projectItem || !iconUrl) return;
-        if (colorCache.has(iconUrl)) {
-            const c = colorCache.get(iconUrl);
-            if (c) projectItem.style.setProperty('--project-color', c);
+    async function applyProjectColor(item, url) {
+        if (!item || !url) return;
+        if (colorCache.has(url)) {
+            const c = colorCache.get(url);
+            if (c) item.style.setProperty('--project-color', c);
             return;
         }
-        const rgb = await getAverageColorFromUrl(iconUrl);
+        const rgb = await getAverageColorFromUrl(url);
         if (rgb) {
             const str = `${rgb[0]}, ${rgb[1]}, ${rgb[2]}`;
-            colorCache.set(iconUrl, str);
-            projectItem.style.setProperty('--project-color', str);
-        } else colorCache.set(iconUrl, null);
+            colorCache.set(url, str);
+            item.style.setProperty('--project-color', str);
+        } else {
+            colorCache.set(url, null);
+        }
     }
 
-    /* MODALS */
+    /* =========================================================
+       MODALS
+       ========================================================= */
     (function () {
-        const detailModalOverlay = document.getElementById('ardas-detail-modal');
-        const detailModalBody = document.getElementById('detail-modal-body');
-        const closeDetailBtn = document.getElementById('modal-close-detail');
-        const genericModalOverlay = document.getElementById('generic-mod-modal');
-        const genericModalTitle = document.getElementById('generic-modal-title');
-        const genericModalBody = document.getElementById('generic-modal-body');
-        const closeGenericBtn = document.getElementById('modal-close-generic');
-        const progressModalOverlay = document.getElementById('progress-modal');
-        const closeProgressBtn = document.getElementById('modal-close-progress');
+        const dOverlay = document.getElementById('ardas-detail-modal');
+        const dBody = document.getElementById('detail-modal-body');
+        const dClose = document.getElementById('modal-close-detail');
 
-        function openDetailModal(content) {
-            detailModalBody.innerHTML = content;
-            detailModalBody.querySelectorAll('img').forEach(img => {
-                img.loading = 'lazy'; img.decoding = 'async'; if (!img.alt) img.alt = '';
-            });
-            detailModalBody.querySelectorAll('iframe').forEach(f => f.loading = 'lazy');
-            detailModalOverlay.classList.add('active');
+        const gOverlay = document.getElementById('generic-mod-modal');
+        const gTitle = document.getElementById('generic-modal-title');
+        const gBody = document.getElementById('generic-modal-body');
+        const gClose = document.getElementById('modal-close-generic');
+
+        const pOverlay = document.getElementById('progress-modal');
+        const pClose = document.getElementById('modal-close-progress');
+
+        function openDetail(html) {
+            dBody.innerHTML = html;
+            dBody.querySelectorAll('img').forEach(i => { i.loading = 'lazy'; i.decoding = 'async'; if (!i.alt) i.alt = ''; });
+            dBody.querySelectorAll('iframe').forEach(f => f.loading = 'lazy');
+            dOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-        function closeDetailModal() {
-            detailModalOverlay.classList.remove('active');
+        function closeDetail() {
+            dOverlay.classList.remove('active');
             document.body.style.overflow = '';
-            detailModalBody.innerHTML = '';
+            dBody.innerHTML = '';
         }
-        function openGenericModal(title, html) {
-            genericModalTitle.textContent = title;
-            genericModalBody.innerHTML = html;
-            genericModalOverlay.classList.add('active');
+        function openGeneric(title, html) {
+            gTitle.textContent = title;
+            gBody.innerHTML = html;
+            gOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-        function closeGenericModal() {
-            genericModalOverlay.classList.remove('active');
+        function closeGeneric() {
+            gOverlay.classList.remove('active');
             document.body.style.overflow = '';
-            genericModalBody.innerHTML = '';
+            gBody.innerHTML = '';
         }
-        function openProgressModal() {
-            progressModalOverlay.classList.add('active');
+        function openProgress() {
+            pOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
-            progressModalOverlay.querySelectorAll('.progress-bar-fill').forEach(bar => {
+            pOverlay.querySelectorAll('.progress-bar-fill').forEach(bar => {
                 const fw = bar.dataset.finalWidth || bar.style.width || getComputedStyle(bar).width;
                 bar.dataset.finalWidth = fw;
                 bar.style.transition = 'none';
@@ -1404,26 +1331,27 @@
                 }));
             });
         }
-        function closeProgressModal() {
-            progressModalOverlay.classList.remove('active');
+        function closeProgress() {
+            pOverlay.classList.remove('active');
             document.body.style.overflow = '';
         }
 
-        closeDetailBtn.addEventListener('click', closeDetailModal);
-        detailModalOverlay.addEventListener('click', e => { if (e.target === detailModalOverlay) closeDetailModal(); });
-        closeGenericBtn.addEventListener('click', closeGenericModal);
-        genericModalOverlay.addEventListener('click', e => { if (e.target === genericModalOverlay) closeGenericModal(); });
-        closeProgressBtn.addEventListener('click', closeProgressModal);
-        progressModalOverlay.addEventListener('click', e => { if (e.target === progressModalOverlay) closeProgressModal(); });
+        dClose.addEventListener('click', closeDetail);
+        dOverlay.addEventListener('click', e => { if (e.target === dOverlay) closeDetail(); });
+        gClose.addEventListener('click', closeGeneric);
+        gOverlay.addEventListener('click', e => { if (e.target === gOverlay) closeGeneric(); });
+        pClose.addEventListener('click', closeProgress);
+        pOverlay.addEventListener('click', e => { if (e.target === pOverlay) closeProgress(); });
+
         document.addEventListener('keydown', e => {
             if (e.key !== 'Escape') return;
-            if (detailModalOverlay.classList.contains('active')) closeDetailModal();
-            if (genericModalOverlay.classList.contains('active')) closeGenericModal();
-            if (progressModalOverlay.classList.contains('active')) closeProgressModal();
+            if (dOverlay.classList.contains('active')) closeDetail();
+            if (gOverlay.classList.contains('active')) closeGeneric();
+            if (pOverlay.classList.contains('active')) closeProgress();
         });
 
         window.openArdasDetailModal = function () {
-            const detailHTML = `
+            const html = `
             <p><img style="display:block;margin-left:auto;margin-right:auto;" src="https://media.forgecdn.net/attachments/description/953793/description_4b27a9e4-8414-4d22-bb39-268eebd99129.png" alt="" width="1082" height="137"></p>
             <p><iframe style="width:100%;max-width:793px;display:table;margin-left:auto;margin-right:auto;" data-src="https://www.youtube-nocookie.com/embed/QW3HqoWXRFg?t=21s" width="793" height="464" allowfullscreen></iframe></p>
             <p style="text-align:center;"><strong><img src="https://media.forgecdn.net/attachments/description/953793/description_8f44d6cd-1169-4d2d-9511-b5ef389b18a4.png" width="850" height="106" alt=""></strong></p>
@@ -1582,47 +1510,48 @@
             <p style="text-align:center;">You can use my mod in modpacks.</p>
             <p style="text-align:center;">For more detailed information about the mod: "https://github.com/IxraPlayer/Ardas-Sculks"</p>
             `;
-            openDetailModal(detailHTML);
+            openDetail(html);
             requestAnimationFrame(() => {
-                detailModalBody.querySelectorAll('iframe[data-src]').forEach(f => {
+                dBody.querySelectorAll('iframe[data-src]').forEach(f => {
                     if (!f.src) f.src = f.dataset.src;
                 });
             });
         };
 
-        window.openProgressModal = openProgressModal;
+        window.openProgressModal = openProgress;
 
         window.openGenericModDetail = function (slug) {
-            const p = projectsData.find(item => (item.modrinthSlug || item.curseforgeSlug) === slug);
+            const p = projectsData.find(x => (x.modrinthSlug || x.curseforgeSlug) === slug);
             if (!p) return;
-            const versionTags = (p.versions || []).map(v => `<span class="version-tag">${v}</span>`).join('');
-            const loaderTags = (p.loaders || []).map(l => `<span class="loader-tag ${l.toLowerCase() === 'forge' ? 'forge' : ''}">${l}</span>`).join('');
+            const vt = (p.versions || []).map(v => `<span class="version-tag">${v}</span>`).join('');
+            const lt = (p.loaders || []).map(l => `<span class="loader-tag ${l.toLowerCase() === 'forge' ? 'forge' : ''}">${l}</span>`).join('');
             const links = [];
             if (p.modrinthSlug) {
-                const mrCat = p.modrinthSlug === 'uyghur-language-pack' ? 'resourcepack' : 'mod';
-                links.push(`<a href="https://modrinth.com/${mrCat}/${p.modrinthSlug}" class="mod-detail-link" target="_blank"><img class="brand-icon" src="https://cdn.simpleicons.org/modrinth/white" alt=""> Modrinth</a>`);
+                const cat = p.modrinthSlug === 'uyghur-language-pack' ? 'resourcepack' : 'mod';
+                links.push(`<a href="https://modrinth.com/${cat}/${p.modrinthSlug}" class="mod-detail-link" target="_blank"><img class="brand-icon" src="https://cdn.simpleicons.org/modrinth/white" alt=""> Modrinth</a>`);
             }
             if (p.curseforgeSlug) {
-                const cfCat = p.curseforgeSlug === 'uyghur-language-pack' ? 'texture-packs' : 'mc-mods';
-                links.push(`<a href="https://www.curseforge.com/minecraft/${cfCat}/${p.curseforgeSlug}" class="mod-detail-link" target="_blank"><img class="brand-icon" src="https://cdn.simpleicons.org/curseforge/white" alt=""> CurseForge</a>`);
+                const cat = p.curseforgeSlug === 'uyghur-language-pack' ? 'texture-packs' : 'mc-mods';
+                links.push(`<a href="https://www.curseforge.com/minecraft/${cat}/${p.curseforgeSlug}" class="mod-detail-link" target="_blank"><img class="brand-icon" src="https://cdn.simpleicons.org/curseforge/white" alt=""> CurseForge</a>`);
             }
             const iconUrl = p.fallbackIcon || `https://cdn.modrinth.com/data/${p.modrinthSlug}/icon.png`;
-            const html = `
+            openGeneric(`📦 ${p.name}`, `
                 <div class="mod-detail-header">
                     <img class="mod-detail-icon" src="${iconUrl}" alt="${p.name}" onerror="this.style.display='none'">
                     <div>
                         <div class="mod-detail-title">${p.name}</div>
-                        <div class="mod-detail-tags">${versionTags}${loaderTags}</div>
+                        <div class="mod-detail-tags">${vt}${lt}</div>
                     </div>
                 </div>
                 <div class="mod-detail-desc">${p.desc}</div>
                 <div class="mod-detail-actions">${links.join('')}</div>
-            `;
-            openGenericModal(`📦 ${p.name}`, html);
+            `);
         };
     })();
 
-    /* PROJECTS + LIVE DOWNLOAD TOTALS */
+    /* =========================================================
+       PROJECTS + LIVE DOWNLOAD TOTALS
+       ========================================================= */
     let projectsData = [];
 
     (async () => {
@@ -1646,4 +1575,177 @@
 
         function fmt(n) {
             if (n === null || n === undefined || isNaN(n)) return '?';
-            if (n >= 1_000_000) return (n / 1_000_000).toFixed(1
+            if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
+            if (n >= 1_000) return (n / 1_000).toFixed(1) + 'K';
+            return n.toString();
+        }
+
+        function readCache() {
+            try {
+                const raw = localStorage.getItem(CACHE_KEY);
+                if (!raw) return null;
+                const p = JSON.parse(raw);
+                if (!p || Date.now() - p.timestamp > CACHE_TTL) return null;
+                return p.data;
+            } catch { return null; }
+        }
+        function writeCache(data) {
+            try { localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data })); } catch {}
+        }
+
+        async function fetchModrinthProject(slug) {
+            if (!slug) return { downloads: 0, icon_url: null };
+            try {
+                const res = await fetch(`https://api.modrinth.com/v2/project/${slug}`);
+                if (!res.ok) return { downloads: 0, icon_url: null };
+                const d = await res.json();
+                return { downloads: d.downloads || 0, icon_url: d.icon_url || null };
+            } catch { return { downloads: 0, icon_url: null }; }
+        }
+
+        async function fetchCurseForgeDownloads(slug, attempt = 0) {
+            if (!slug) return 0;
+            try {
+                const res = await fetch(`https://api.cfwidget.com/minecraft/mc-mods/${slug}`);
+                if (!res.ok) {
+                    if (res.status === 404) return 0;
+                    if (attempt < 2) {
+                        await new Promise(r => setTimeout(r, 500 * (attempt + 1)));
+                        return fetchCurseForgeDownloads(slug, attempt + 1);
+                    }
+                    return 0;
+                }
+                const d = await res.json();
+                const total = d.downloads?.total ?? d.downloadCount ?? 0;
+                if (total === 0 && attempt < 2) {
+                    await new Promise(r => setTimeout(r, 600 * (attempt + 1)));
+                    return fetchCurseForgeDownloads(slug, attempt + 1);
+                }
+                return total;
+            } catch {
+                if (attempt < 2) {
+                    await new Promise(r => setTimeout(r, 500 * (attempt + 1)));
+                    return fetchCurseForgeDownloads(slug, attempt + 1);
+                }
+                return 0;
+            }
+        }
+
+        const container = document.getElementById('projects-container');
+        container.innerHTML = projectsData.map(p => {
+            let badge = '';
+            if (p.isSculks) badge = '<span class="project-badge badge-popular">MOST POPULAR</span>';
+            else if (p.isTrending) badge = '<span class="project-badge badge-trending">TRENDING</span>';
+
+            const links = [];
+            if (p.modrinthSlug) {
+                const cat = p.modrinthSlug === 'uyghur-language-pack' ? 'resourcepack' : 'mod';
+                links.push(`<a href="https://modrinth.com/${cat}/${p.modrinthSlug}" class="project-link" target="_blank">Modrinth</a>`);
+            }
+            if (p.curseforgeSlug) {
+                const cat = p.curseforgeSlug === 'uyghur-language-pack' ? 'texture-packs' : 'mc-mods';
+                links.push(`<a href="https://www.curseforge.com/minecraft/${cat}/${p.curseforgeSlug}" class="project-link" target="_blank">CurseForge</a>`);
+            }
+
+            const vt = (p.versions || []).map(v => `<span class="version-tag">${v}</span>`).join('');
+            const lt = (p.loaders || []).map(l => `<span class="loader-tag ${l.toLowerCase() === 'forge' ? 'forge' : ''}">${l}</span>`).join('');
+
+            let extra = `
+                <div class="project-extra-actions">
+                  <button class="detail-popup-btn" onclick="openGenericModDetail('${p.modrinthSlug || p.curseforgeSlug}')" title="View details">
+                    <i class="fas fa-info-circle"></i> Details
+                  </button>
+                </div>`;
+            if (p.isSculks) {
+                extra = `
+                <div class="project-extra-actions">
+                  <button class="detail-popup-btn" onclick="openArdasDetailModal()" title="View full details">
+                    <i class="fas fa-info-circle"></i> Details
+                  </button>
+                  <button class="progress-btn" onclick="openProgressModal()" title="Development progress">
+                    <i class="fas fa-tasks"></i> Progress
+                    <div class="progress-bar-mini">
+                      <div class="progress-bar-mini-fill"></div>
+                    </div>
+                    <span style="font-size:10px;">55%</span>
+                  </button>
+                </div>`;
+            }
+
+            return `
+            <div class="project-item" data-slug="${p.modrinthSlug || p.curseforgeSlug}">
+              <div class="project-info">
+                <img class="project-icon" src="${p.fallbackIcon || ''}" alt="" width="76" height="76" loading="lazy" decoding="async" style="${p.fallbackIcon ? '' : 'display:none;'}">
+                <span class="project-name">${p.name}${badge}</span>
+              </div>
+              <span class="project-downloads">...</span>
+              <div class="project-links">${links.join('')}</div>
+              ${extra}
+              <div class="project-tags">${vt}${lt}</div>
+              <div class="project-desc">${p.desc}</div>
+            </div>`;
+        }).join('');
+
+        const totalEl = document.getElementById('total-downloads');
+
+        function applyProjectData(perProject) {
+            projectsData.forEach((p, i) => {
+                const item = container.children[i];
+                if (!item) return;
+                const iconImg = item.querySelector('.project-icon');
+                const dl = item.querySelector('.project-downloads');
+                const key = p.modrinthSlug || p.curseforgeSlug;
+                const d = perProject[key];
+                if (!d) { dl.textContent = '?'; return; }
+                const total = (d.mr || 0) + (d.cf || 0);
+                dl.textContent = fmt(total);
+                const iconUrl = d.icon || p.fallbackIcon;
+                if (iconUrl) {
+                    iconImg.src = iconUrl;
+                    iconImg.style.display = 'block';
+                    applyProjectColor(item, iconUrl);
+                } else {
+                    iconImg.style.display = 'none';
+                }
+            });
+        }
+
+        function applyTotal(total) {
+            totalEl.textContent = total > 0 ? fmt(total) + '+' : '—';
+            totalEl.classList.remove('loading-val');
+        }
+
+        const cache = readCache();
+        if (cache && cache.perProject) {
+            applyProjectData(cache.perProject);
+            applyTotal(cache.total || 0);
+            return;
+        }
+
+        const results = await Promise.all(
+            projectsData.map(async p => {
+                const [mr, cf] = await Promise.all([
+                    fetchModrinthProject(p.modrinthSlug),
+                    fetchCurseForgeDownloads(p.curseforgeSlug)
+                ]);
+                return { key: p.modrinthSlug || p.curseforgeSlug, mr: mr.downloads, cf, icon: mr.icon_url };
+            })
+        );
+
+        const perProject = {};
+        let mrSum = 0, cfSum = 0;
+        results.forEach(r => {
+            perProject[r.key] = { mr: r.mr, cf: r.cf, icon: r.icon };
+            mrSum += r.mr;
+            cfSum += r.cf;
+        });
+
+        const grandTotal = mrSum + cfSum;
+
+        applyProjectData(perProject);
+        applyTotal(grandTotal);
+        writeCache({ perProject, total: grandTotal });
+    })();
+    </script>
+</body>
+</html>
