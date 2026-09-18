@@ -280,7 +280,6 @@
             color: white;
         }
 
-        /* ===== Original brand icons ===== */
         .link-btn .brand-icon {
             width: 22px;
             height: 22px;
@@ -297,7 +296,6 @@
             transform: scale(1.08);
         }
 
-        /* ===== GitHub stats ===== */
         .github-stats {
             margin-left: auto;
             display: flex;
@@ -335,7 +333,6 @@
             color: var(--accent-bright) !important;
         }
 
-        /* ===== CurseForge follower badge ===== */
         .cf-followers {
             margin-left: auto;
             display: inline-flex;
@@ -366,30 +363,58 @@
             color: #ffc78a !important;
         }
 
+        /* ===== PROJECT ITEM (artık logo ortalaması renk alıyor) ===== */
         .project-item {
+            --project-color: 74, 155, 181; /* default accent (fallback) */
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #1b2532;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            background:
+                linear-gradient(135deg,
+                    rgba(var(--project-color), 0.22) 0%,
+                    rgba(var(--project-color), 0.07) 45%,
+                    #1b2532 100%);
+            border: 1px solid rgba(var(--project-color), 0.28);
             padding: 14px 20px;
             border-radius: 18px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: border-color 0.35s, box-shadow 0.35s, background 0.35s;
             gap: 14px;
             flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .project-item::before {
+            /* Sağ üstte yumuşak, logo renginde ambient glow */
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 45%;
+            height: 200%;
+            background: radial-gradient(circle at center,
+                rgba(var(--project-color), 0.18) 0%,
+                transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.35s;
         }
         .project-item:hover {
-            border-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: rgba(var(--project-color), 0.55);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4),
+                        0 0 24px rgba(var(--project-color), 0.18);
         }
+        .project-item > * { position: relative; z-index: 1; }
 
+        /* ===== PROJECT INFO (wrap ile badge taşması önlendi) ===== */
         .project-info {
             display: flex;
             align-items: center;
             gap: 12px;
-            flex: 1;
-            min-width: 160px;
+            flex: 1 1 240px;
+            min-width: 0;
+            flex-wrap: wrap;
         }
         .project-icon {
             width: 76px;
@@ -397,19 +422,37 @@
             border-radius: 12px;
             object-fit: cover;
             background: #0f1620;
-            border: 1px solid #2a3f50;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--project-color), 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             flex-shrink: 0;
+            transition: border-color 0.35s, transform 0.25s, box-shadow 0.35s;
         }
-        .project-name { font-weight: 600; color: white; font-size: 15px; }
+        .project-item:hover .project-icon {
+            transform: scale(1.04);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5),
+                        0 0 16px rgba(var(--project-color), 0.4);
+        }
+
+        .project-name {
+            font-weight: 600;
+            color: white;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            min-width: 0;
+        }
+
         .project-badge {
             font-size: 10px;
             padding: 2px 8px;
             border-radius: 12px;
             font-weight: 700;
             letter-spacing: 0.4px;
-            margin-left: 6px;
+            margin-left: 0;
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .badge-popular {
             background: rgba(255, 193, 7, 0.18);
@@ -432,6 +475,7 @@
             border: 1px solid var(--accent-border);
             white-space: nowrap;
             text-shadow: 0 0 8px rgba(125, 216, 240, 0.3);
+            flex-shrink: 0;
         }
 
         .project-links {
@@ -469,9 +513,10 @@
         .project-link:hover::before { transform: translateX(230%) skewX(-20deg); }
         .project-link:hover {
             background: linear-gradient(135deg, #263748 0%, #30455a 100%);
-            border-color: var(--accent);
+            border-color: rgba(var(--project-color), 0.7);
             color: #fff;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), 0 0 18px rgba(74, 155, 181, 0.2);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4),
+                        0 0 18px rgba(var(--project-color), 0.3);
             transform: translateY(-2px);
         }
         .project-link.disabled {
@@ -481,7 +526,7 @@
         }
 
         .project-desc {
-            margin-left: 50px;
+            margin-left: 88px; /* ikon 76px + gap 12px */
             margin-top: -4px;
             color: var(--text-muted);
             font-size: 13px;
@@ -489,12 +534,11 @@
             width: 100%;
         }
 
-        /* ===== Version & Loader Tags ===== */
         .project-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 4px;
-            margin-left: 50px;
+            margin-left: 88px;
             margin-top: 4px;
             width: 100%;
         }
@@ -664,7 +708,6 @@
         .modal-body a { color: var(--accent-bright); text-decoration: none; }
         .modal-body a:hover { text-decoration: underline; }
 
-        /* ===== Generic Mod Detail Modal ===== */
         .mod-detail-header {
             display: flex;
             align-items: center;
@@ -892,6 +935,7 @@
             .link-btn-github { flex-wrap: wrap; }
             .github-stats { margin-left: 0; width: 100%; margin-top: 8px; }
             .project-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .project-info { flex: 1 1 auto; width: 100%; }
             .project-links { align-self: flex-end; }
             .project-downloads { align-self: flex-start; }
             .project-extra-actions { align-self: flex-end; }
@@ -999,7 +1043,6 @@
                                 <p style="margin-top: 24px;">— Ixra (Minecraft Modder)</p>
                             </div>
 
-                            <!-- ===== GENERAL FAQ ===== -->
                             <div class="qa-section">
                                 <h3>❓ General FAQ</h3>
                                 <div class="qa-scroll">
@@ -1015,7 +1058,6 @@
                                 </div>
                             </div>
 
-                            <!-- ===== SCULKS Q&A ===== -->
                             <div class="qa-section">
                                 <h3>❓ Arda's Sculks – Developer Q&A</h3>
                                 <div class="qa-scroll">
@@ -1069,7 +1111,6 @@
         </div>
     </div>
 
-    <!-- ===== Arda's Sculks Detail Modal (özel) ===== -->
     <div class="modal-overlay" id="ardas-detail-modal">
         <div class="modal-dialog">
             <div class="modal-header">
@@ -1080,7 +1121,6 @@
         </div>
     </div>
 
-    <!-- ===== Generic Mod Detail Modal ===== -->
     <div class="modal-overlay" id="generic-mod-modal">
         <div class="modal-dialog">
             <div class="modal-header">
@@ -1091,7 +1131,6 @@
         </div>
     </div>
 
-    <!-- ===== Progress Modal ===== -->
     <div class="modal-overlay" id="progress-modal">
         <div class="modal-dialog" style="max-width: 480px;">
             <div class="modal-header">
@@ -1273,6 +1312,77 @@
             cfCountEl.parentElement.style.display = 'none';
         }
     })();
+
+    /* =========================================================
+       🎨 AVERAGE COLOR FROM IMAGE
+       ========================================================= */
+    async function getAverageColorFromUrl(url) {
+        if (!url) return null;
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            let settled = false;
+            const finish = (val) => { if (!settled) { settled = true; resolve(val); } };
+
+            const timer = setTimeout(() => finish(null), 4000);
+
+            img.onload = () => {
+                try {
+                    const size = 24;
+                    const canvas = document.createElement('canvas');
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+                    ctx.drawImage(img, 0, 0, size, size);
+                    const data = ctx.getImageData(0, 0, size, size).data;
+
+                    let r = 0, g = 0, b = 0, count = 0;
+                    for (let i = 0; i < data.length; i += 4) {
+                        const a = data[i + 3];
+                        if (a < 128) continue;
+                        const rr = data[i], gg = data[i + 1], bb = data[i + 2];
+                        const brightness = (rr + gg + bb) / 3;
+                        // Çok koyu veya çok açık (muhtemelen arka plan) pikselleri atla
+                        if (brightness < 25 || brightness > 230) continue;
+                        // Aşırı doygun olmayan (gri) pikselleri yarı ağırlıkla al
+                        r += rr; g += gg; b += bb; count++;
+                    }
+                    clearTimeout(timer);
+                    if (count === 0) return finish(null);
+                    resolve([
+                        Math.round(r / count),
+                        Math.round(g / count),
+                        Math.round(b / count)
+                    ]);
+                } catch (e) {
+                    clearTimeout(timer);
+                    finish(null);
+                }
+            };
+            img.onerror = () => { clearTimeout(timer); finish(null); };
+            img.src = url;
+        });
+    }
+
+    // Cache: URL → renk (session boyunca)
+    const colorCache = new Map();
+
+    async function applyProjectColor(projectItem, iconUrl) {
+        if (!projectItem || !iconUrl) return;
+        if (colorCache.has(iconUrl)) {
+            const c = colorCache.get(iconUrl);
+            if (c) projectItem.style.setProperty('--project-color', c);
+            return;
+        }
+        const rgb = await getAverageColorFromUrl(iconUrl);
+        if (rgb) {
+            const str = `${rgb[0]}, ${rgb[1]}, ${rgb[2]}`;
+            colorCache.set(iconUrl, str);
+            projectItem.style.setProperty('--project-color', str);
+        } else {
+            colorCache.set(iconUrl, null);
+        }
+    }
 
     /* =========================================================
        MODALS
@@ -1534,9 +1644,6 @@
 
         window.openProgressModal = openProgressModal;
 
-        /* =========================================================
-           GENERIC MOD DETAIL
-           ========================================================= */
         window.openGenericModDetail = function (slug) {
             const p = projectsData.find(item => (item.modrinthSlug || item.curseforgeSlug) === slug);
             if (!p) return;
@@ -1583,112 +1690,25 @@
     /* =========================================================
        PROJECTS + LIVE DOWNLOAD TOTALS
        ========================================================= */
-    let projectsData = []; // global
+    let projectsData = [];
 
     (async () => {
-        const CACHE_KEY = 'ixra_stats_v10';
+        const CACHE_KEY = 'ixra_stats_v11';
         const CACHE_TTL = 6 * 60 * 60 * 1000;
 
         projectsData = [
-            {
-                name: "Arda's Sculks",
-                modrinthSlug: 'ardas-sculks',
-                curseforgeSlug: 'ardas-sculks',
-                desc: 'Deep Dark expansion with new blocks, boss, and mechanics.',
-                isSculks: true,
-                versions: ['1.21.1', '1.20.1'],
-                loaders: ['NeoForge', 'Forge']
-            },
-            {
-                name: "Arda's Uncrafting Table",
-                modrinthSlug: 'ardas-uncrafting-table',
-                curseforgeSlug: 'ardas-uncrafting-table',
-                desc: 'Recycle items into their components.',
-                isTrending: true,
-                versions: ['1.21.1', '1.20.1'],
-                loaders: ['NeoForge', 'Forge']
-            },
-            {
-                name: "Arda's Ultimate Golem",
-                modrinthSlug: 'ardas-ultimate-golem',
-                curseforgeSlug: 'ardas-ultimate-golem',
-                desc: 'Powerful golem companion for boss fights.',
-                versions: ['1.21.1', '1.20.1', '1.18.2'],
-                loaders: ['NeoForge', 'Forge']
-            },
-            {
-                name: "Arda's Hammers",
-                modrinthSlug: 'ardas-hammer',
-                curseforgeSlug: 'ardas-hammer',
-                desc: '3x3 mining hammers.',
-                versions: ['1.21.1', '1.21.4', '1.21.8'],
-                loaders: ['NeoForge']
-            },
-            {
-                name: "Arda's Ores",
-                modrinthSlug: 'ardas-ores',
-                curseforgeSlug: 'ardas-ores',
-                desc: 'New ores, armor, and tools.',
-                versions: ['1.21.1', '1.20.1'],
-                loaders: ['NeoForge', 'Forge']
-            },
-            {
-                name: "Arda's Backpack",
-                modrinthSlug: 'ardas-backpack',
-                curseforgeSlug: 'ardas-backpack',
-                desc: 'Portable storage backpack.',
-                versions: ['1.16.5', '1.20.1', '1.21.1'],
-                loaders: ['Forge', 'NeoForge']
-            },
-            {
-                name: "Shadow of the Soul",
-                modrinthSlug: 'shadow-of-the-soul',
-                curseforgeSlug: 'shadow-of-the-soul',
-                desc: 'Psychological horror mod with stalking AI.',
-                versions: ['1.21.1'],
-                loaders: ['NeoForge']
-            },
-            {
-                name: "Arda's Omega Golem",
-                modrinthSlug: 'ardas-omega-golem',
-                curseforgeSlug: 'ardas-omega-golem',
-                desc: 'The ultimate golem evolution — massive power, new abilities.',
-                fallbackIcon: 'https://cdn.modrinth.com/data/1gQ5hWPl/b3377cb90bc5093a0e06fd689b24e1487cdeb199_96.webp',
-                versions: ['1.21.1'],
-                loaders: ['NeoForge']
-            },
-            {
-                name: "Arda's Advanced Items",
-                modrinthSlug: 'ardas-advanced-items',
-                curseforgeSlug: 'ardas-advanced-items',
-                desc: 'Advanced items and special abilities.',
-                versions: ['1.21.1'],
-                loaders: ['NeoForge']
-            },
-            {
-                name: "Arda's Cobblestone Generator",
-                modrinthSlug: 'ardas-cobblestone-generator',
-                curseforgeSlug: 'ardas-cobblestone-generator',
-                desc: 'Automatic cobblestone generator.',
-                versions: ['1.20.1'],
-                loaders: ['Forge']
-            },
-            {
-                name: "Arda's Special Abilities",
-                modrinthSlug: 'ardas-special-abilities',
-                curseforgeSlug: 'ardas-special-abilities',
-                desc: 'Unique player abilities.',
-                versions: ['1.21.1', '1.20.1'],
-                loaders: ['NeoForge', 'Forge']
-            },
-            {
-                name: "Uyghur Language Pack",
-                modrinthSlug: 'uyghur-language-pack',
-                curseforgeSlug: 'uyghur-language-pack',
-                desc: 'Adds Uyghur language support to Minecraft.',
-                versions: ['1.13 - 1.26.2'],
-                loaders: ['Resource Pack']
-            }
+            { name: "Arda's Sculks", modrinthSlug: 'ardas-sculks', curseforgeSlug: 'ardas-sculks', desc: 'Deep Dark expansion with new blocks, boss, and mechanics.', isSculks: true, versions: ['1.21.1', '1.20.1'], loaders: ['NeoForge', 'Forge'] },
+            { name: "Arda's Uncrafting Table", modrinthSlug: 'ardas-uncrafting-table', curseforgeSlug: 'ardas-uncrafting-table', desc: 'Recycle items into their components.', isTrending: true, versions: ['1.21.1', '1.20.1'], loaders: ['NeoForge', 'Forge'] },
+            { name: "Arda's Ultimate Golem", modrinthSlug: 'ardas-ultimate-golem', curseforgeSlug: 'ardas-ultimate-golem', desc: 'Powerful golem companion for boss fights.', versions: ['1.21.1', '1.20.1', '1.18.2'], loaders: ['NeoForge', 'Forge'] },
+            { name: "Arda's Hammers", modrinthSlug: 'ardas-hammer', curseforgeSlug: 'ardas-hammer', desc: '3x3 mining hammers.', versions: ['1.21.1', '1.21.4', '1.21.8'], loaders: ['NeoForge'] },
+            { name: "Arda's Ores", modrinthSlug: 'ardas-ores', curseforgeSlug: 'ardas-ores', desc: 'New ores, armor, and tools.', versions: ['1.21.1', '1.20.1'], loaders: ['NeoForge', 'Forge'] },
+            { name: "Arda's Backpack", modrinthSlug: 'ardas-backpack', curseforgeSlug: 'ardas-backpack', desc: 'Portable storage backpack.', versions: ['1.16.5', '1.20.1', '1.21.1'], loaders: ['Forge', 'NeoForge'] },
+            { name: "Shadow of the Soul", modrinthSlug: 'shadow-of-the-soul', curseforgeSlug: 'shadow-of-the-soul', desc: 'Psychological horror mod with stalking AI.', versions: ['1.21.1'], loaders: ['NeoForge'] },
+            { name: "Arda's Omega Golem", modrinthSlug: 'ardas-omega-golem', curseforgeSlug: 'ardas-omega-golem', desc: 'The ultimate golem evolution — massive power, new abilities.', fallbackIcon: 'https://cdn.modrinth.com/data/1gQ5hWPl/b3377cb90bc5093a0e06fd689b24e1487cdeb199_96.webp', versions: ['1.21.1'], loaders: ['NeoForge'] },
+            { name: "Arda's Advanced Items", modrinthSlug: 'ardas-advanced-items', curseforgeSlug: 'ardas-advanced-items', desc: 'Advanced items and special abilities.', versions: ['1.21.1'], loaders: ['NeoForge'] },
+            { name: "Arda's Cobblestone Generator", modrinthSlug: 'ardas-cobblestone-generator', curseforgeSlug: 'ardas-cobblestone-generator', desc: 'Automatic cobblestone generator.', versions: ['1.20.1'], loaders: ['Forge'] },
+            { name: "Arda's Special Abilities", modrinthSlug: 'ardas-special-abilities', curseforgeSlug: 'ardas-special-abilities', desc: 'Unique player abilities.', versions: ['1.21.1', '1.20.1'], loaders: ['NeoForge', 'Forge'] },
+            { name: "Uyghur Language Pack", modrinthSlug: 'uyghur-language-pack', curseforgeSlug: 'uyghur-language-pack', desc: 'Adds Uyghur language support to Minecraft.', versions: ['1.13 - 1.26.2'], loaders: ['Resource Pack'] }
         ];
 
         function fmt(n) {
@@ -1835,6 +1855,8 @@
                 if (iconUrl) {
                     iconImg.src = iconUrl;
                     iconImg.style.display = 'block';
+                    // 🎨 Kartın arka planına ikonun ortalama rengini uygula
+                    applyProjectColor(item, iconUrl);
                 } else {
                     iconImg.style.display = 'none';
                 }
