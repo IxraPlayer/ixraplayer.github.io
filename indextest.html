@@ -41,19 +41,17 @@
     <link rel="shortcut icon" type="image/png" href="https://ixraplayer.github.io/sitelogo.png">
     <link rel="apple-touch-icon" href="https://ixraplayer.github.io/sitelogo.png">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Font Awesome: non-blocking load -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"></noscript>
 
     <style>
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --bg-body: #070a10;
@@ -66,7 +64,6 @@
             --text-primary: #eef3f8;
             --text-secondary: #b8c9db;
             --text-muted: #7f92a5;
-            --glow-accent: rgba(93, 184, 212, 0.5);
             --shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.3);
             --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03);
             --shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--accent-border);
@@ -74,82 +71,18 @@
             --radius-element: 18px;
         }
 
-        i.fab,
-        i.fas,
-        i.far {
-            color: var(--text-primary) !important;
-        }
-
-        @keyframes bgPulse {
-            0%,
-            100% {
-                opacity: 0.35;
-                transform: scale(1);
-            }
-            25% {
-                opacity: 0.55;
-                transform: scale(1.08);
-            }
-            50% {
-                opacity: 0.3;
-                transform: scale(0.95);
-            }
-            75% {
-                opacity: 0.5;
-                transform: scale(1.05);
-            }
-        }
-
-        @keyframes bgPulse2 {
-            0%,
-            100% {
-                opacity: 0.2;
-                transform: scale(1);
-            }
-            30% {
-                opacity: 0.45;
-                transform: scale(1.12);
-            }
-            60% {
-                opacity: 0.25;
-                transform: scale(0.92);
-            }
-            85% {
-                opacity: 0.5;
-                transform: scale(1.06);
-            }
-        }
-
-        @keyframes glowShimmer {
-            0%,
-            100% {
-                text-shadow: 0 0 12px var(--glow-accent), 0 0 24px var(--glow-accent), 0 0 36px rgba(93, 184, 212, 0.3);
-            }
-            50% {
-                text-shadow: 0 0 20px var(--glow-accent), 0 0 40px rgba(125, 216, 240, 0.6), 0 0 60px rgba(93, 184, 212, 0.4);
-            }
-        }
+        i.fab, i.fas, i.far { color: var(--text-primary) !important; }
 
         @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(20px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
-
         @keyframes overlayFadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to   { opacity: 1; }
         }
 
+        /* Static ambient glow — no animation, GPU-cheap */
         body {
             min-height: 100vh;
             display: flex;
@@ -158,52 +91,24 @@
             font-family: 'Inter', sans-serif;
             font-weight: 400;
             padding: 24px 18px;
-            background: var(--bg-body);
-            position: relative;
+            background:
+                radial-gradient(ellipse 70% 70% at -20% -30%, rgba(74, 155, 181, 0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 60% at 115% 125%, rgba(30, 100, 140, 0.06) 0%, transparent 70%),
+                var(--bg-body);
+            background-attachment: fixed;
             color: var(--text-primary);
             line-height: 1.5;
             overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: -30%;
-            left: -20%;
-            width: 70%;
-            height: 70%;
-            background: radial-gradient(ellipse at center, rgba(74, 155, 181, 0.07) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            animation: bgPulse 8s ease-in-out infinite;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: -25%;
-            right: -15%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(ellipse at center, rgba(30, 100, 140, 0.06) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            animation: bgPulse2 10s ease-in-out infinite;
         }
 
         .profile-card {
             max-width: 980px;
             width: 100%;
             background: var(--card-bg);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
             border-radius: var(--radius-card);
             padding: 36px 32px;
             box-shadow: var(--shadow-md);
             border: 1px solid var(--card-border);
-            transition: box-shadow 0.3s;
             position: relative;
             z-index: 1;
             margin-top: 10px;
@@ -265,8 +170,6 @@
             color: var(--text-secondary);
             box-shadow: var(--shadow-sm);
             font-weight: 450;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
         }
 
         .bio-downloads-tag {
@@ -278,14 +181,11 @@
             color: var(--accent-bright);
             font-weight: 700;
             letter-spacing: 0.02em;
-            animation: glowShimmer 3s ease-in-out infinite;
+            /* Static glow — no animation */
             box-shadow: 0 0 16px rgba(74, 155, 181, 0.25), inset 0 0 8px rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            text-shadow: 0 0 12px rgba(125, 216, 240, 0.5);
         }
-        .bio-downloads-tag #total-downloads {
-            font-size: 16px;
-        }
+        .bio-downloads-tag #total-downloads { font-size: 16px; }
 
         .main-content {
             display: grid;
@@ -295,10 +195,8 @@
         }
 
         .tabs-panel {
-            background: rgba(16, 24, 36, 0.6);
+            background: #0d131c;
             border-radius: 24px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.04);
             overflow: hidden;
         }
@@ -318,7 +216,7 @@
             font-weight: 500;
             padding: 16px 18px;
             cursor: pointer;
-            transition: all 0.25s;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
             font-family: inherit;
             border-bottom: 2px solid transparent;
             margin-bottom: -1px;
@@ -327,30 +225,19 @@
             gap: 8px;
             white-space: nowrap;
         }
-        .tab-btn:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.03);
-        }
+        .tab-btn:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.03); }
         .tab-btn.active {
             color: var(--accent-bright);
             border-bottom-color: var(--accent-bright);
             font-weight: 600;
         }
 
-        .tab-content {
-            padding: 24px 22px;
-        }
+        .tab-content { padding: 24px 22px; }
 
-        .tab-pane {
-            display: none;
-        }
-        .tab-pane.active {
-            display: block;
-            animation: modalFadeIn 0.3s ease-out;
-        }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; animation: modalFadeIn 0.3s ease-out; }
 
-        .links-list,
-        .projects-list {
+        .links-list, .projects-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -368,33 +255,23 @@
             text-decoration: none;
             font-weight: 500;
             font-size: 16px;
-            transition: all 0.25s ease;
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
             position: relative;
             overflow: hidden;
         }
-        .link-btn i {
-            width: 24px;
-            text-align: center;
-            font-size: 1.3em;
-            flex-shrink: 0;
-        }
+        .link-btn i { width: 24px; text-align: center; font-size: 1.3em; flex-shrink: 0; }
         .link-btn::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -100%;
-            width: 80%;
-            height: 200%;
+            top: -50%; left: -100%;
+            width: 80%; height: 200%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
             transform: skewX(-25deg);
-            transition: left 0.6s;
+            transition: transform 0.6s;
+            pointer-events: none;
         }
-        .link-btn:hover::after {
-            left: 200%;
-        }
+        .link-btn:hover::after { transform: translateX(250%) skewX(-25deg); }
         .link-btn:hover {
             background: #222f3e;
             border-color: var(--accent);
@@ -412,7 +289,7 @@
             padding: 14px 20px;
             border-radius: 18px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.25s ease;
+            transition: border-color 0.2s, box-shadow 0.2s;
             gap: 14px;
             flex-wrap: wrap;
         }
@@ -438,11 +315,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             flex-shrink: 0;
         }
-        .project-name {
-            font-weight: 600;
-            color: white;
-            font-size: 15px;
-        }
+        .project-name { font-weight: 600; color: white; font-size: 15px; }
         .project-badge {
             font-size: 10px;
             padding: 2px 8px;
@@ -490,7 +363,7 @@
             color: #d0dce8;
             text-decoration: none;
             border: 1px solid #2d3e50;
-            transition: all 0.25s;
+            transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
             font-weight: 600;
             letter-spacing: 0.02em;
             position: relative;
@@ -500,17 +373,14 @@
         .project-link::before {
             content: '';
             position: absolute;
-            top: -30%;
-            left: -60%;
-            width: 60%;
-            height: 160%;
+            top: -30%; left: -60%;
+            width: 60%; height: 160%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
             transform: skewX(-20deg);
-            transition: left 0.5s;
+            transition: transform 0.5s;
+            pointer-events: none;
         }
-        .project-link:hover::before {
-            left: 180%;
-        }
+        .project-link:hover::before { transform: translateX(230%) skewX(-20deg); }
         .project-link:hover {
             background: linear-gradient(135deg, #263748 0%, #30455a 100%);
             border-color: var(--accent);
@@ -545,7 +415,7 @@
             border-radius: 22px;
             font-weight: 600;
             font-family: inherit;
-            transition: all 0.25s;
+            transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
             white-space: nowrap;
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
             letter-spacing: 0.02em;
@@ -558,6 +428,7 @@
             transform: translateY(-2px);
         }
 
+        /* Static glow, no pulsing animation */
         .progress-btn {
             background: transparent;
             border: 1px dashed rgba(255, 255, 255, 0.2);
@@ -572,8 +443,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.25s;
-            animation: progressPulse 3s ease-in-out infinite;
+            transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s;
         }
         .progress-btn:hover {
             border-color: var(--accent-border);
@@ -595,35 +465,18 @@
             border-radius: 10px;
         }
 
-        @keyframes progressPulse {
-            0%,
-            100% {
-                box-shadow: 0 0 6px rgba(125, 216, 240, 0.2);
-            }
-            50% {
-                box-shadow: 0 0 14px rgba(125, 216, 240, 0.5);
-            }
-        }
-
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
             z-index: 9999;
             justify-content: center;
             align-items: center;
             padding: 20px;
             animation: overlayFadeIn 0.25s ease-out;
         }
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal-dialog {
             background: #141c28;
@@ -636,6 +489,7 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
             animation: modalFadeIn 0.3s ease-out;
             position: relative;
+            overscroll-behavior: contain;
         }
         .modal-header {
             position: sticky;
@@ -649,11 +503,7 @@
             z-index: 2;
             border-radius: 20px 20px 0 0;
         }
-        .modal-header h3 {
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-        }
+        .modal-header h3 { color: white; font-size: 18px; font-weight: 600; }
         .modal-close-btn {
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -663,7 +513,7 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 18px;
-            transition: all 0.2s;
+            transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -681,39 +531,13 @@
             font-size: 14px;
             line-height: 1.7;
         }
-        .modal-body img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin: 10px 0;
-        }
-        .modal-body iframe {
-            max-width: 100%;
-            border-radius: 10px;
-            display: block;
-            margin: 0 auto;
-        }
-        .modal-body h1,
-        .modal-body h2,
-        .modal-body h3 {
-            color: white;
-            margin-top: 18px;
-            margin-bottom: 8px;
-        }
-        .modal-body a {
-            color: var(--accent-bright);
-            text-decoration: none;
-        }
-        .modal-body a:hover {
-            text-decoration: underline;
-        }
+        .modal-body img { max-width: 100%; height: auto; border-radius: 10px; margin: 10px 0; }
+        .modal-body iframe { max-width: 100%; border-radius: 10px; display: block; margin: 0 auto; }
+        .modal-body h1, .modal-body h2, .modal-body h3 { color: white; margin-top: 18px; margin-bottom: 8px; }
+        .modal-body a { color: var(--accent-bright); text-decoration: none; }
+        .modal-body a:hover { text-decoration: underline; }
 
-        .progress-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
+        .progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
         .progress-label {
             width: 120px;
             font-size: 13px;
@@ -724,11 +548,7 @@
             align-items: center;
             gap: 6px;
         }
-        .progress-label i {
-            font-size: 12px;
-            width: 16px;
-            text-align: center;
-        }
+        .progress-label i { font-size: 12px; width: 16px; text-align: center; }
         .progress-bar-wrap {
             flex: 1;
             height: 8px;
@@ -737,27 +557,11 @@
             overflow: hidden;
             position: relative;
         }
-        .progress-bar-fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.8s ease;
-        }
-        .progress-bar-fill.language {
-            background: linear-gradient(90deg, #facc15, #f59e0b);
-            width: 20%;
-        }
-        .progress-bar-fill.gameplay {
-            background: linear-gradient(90deg, #4ade80, #22c55e);
-            width: 90%;
-        }
-        .progress-bar-fill.bugfix {
-            background: linear-gradient(90deg, #fb923c, #f97316);
-            width: 60%;
-        }
-        .progress-bar-fill.quality {
-            background: linear-gradient(90deg, #60a5fa, #3b82f6);
-            width: 50%;
-        }
+        .progress-bar-fill { height: 100%; border-radius: 10px; transition: width 0.8s ease; }
+        .progress-bar-fill.language { background: linear-gradient(90deg, #facc15, #f59e0b); width: 20%; }
+        .progress-bar-fill.gameplay { background: linear-gradient(90deg, #4ade80, #22c55e); width: 90%; }
+        .progress-bar-fill.bugfix   { background: linear-gradient(90deg, #fb923c, #f97316); width: 60%; }
+        .progress-bar-fill.quality  { background: linear-gradient(90deg, #60a5fa, #3b82f6); width: 50%; }
         .progress-value {
             width: 40px;
             text-align: right;
@@ -777,33 +581,17 @@
             color: var(--accent-bright);
             font-size: 14px;
         }
-        .progress-avg .progress-bar-wrap {
-            height: 10px;
-            flex: 1;
-        }
+        .progress-avg .progress-bar-wrap { height: 10px; flex: 1; }
         .progress-avg .progress-bar-fill {
             background: linear-gradient(90deg, var(--accent), var(--accent-bright));
             width: 55%;
         }
 
-        .about-text {
-            color: var(--text-secondary);
-            font-size: 15px;
-            line-height: 1.6;
-        }
-        .about-text p {
-            margin-bottom: 16px;
-        }
-        .about-text strong {
-            color: white;
-        }
-        .about-text a {
-            color: var(--accent-bright);
-            text-decoration: none;
-        }
-        .about-text a:hover {
-            text-decoration: underline;
-        }
+        .about-text { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
+        .about-text p { margin-bottom: 16px; }
+        .about-text strong { color: white; }
+        .about-text a { color: var(--accent-bright); text-decoration: none; }
+        .about-text a:hover { text-decoration: underline; }
 
         .qa-section {
             margin-top: 32px;
@@ -819,11 +607,7 @@
             align-items: center;
             gap: 8px;
         }
-        .qa-scroll {
-            max-height: 420px;
-            overflow-y: auto;
-            padding-right: 8px;
-        }
+        .qa-scroll { max-height: 420px; overflow-y: auto; padding-right: 8px; overscroll-behavior: contain; }
         .qa-bubble {
             background: #1b2532;
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -831,36 +615,21 @@
             padding: 16px 18px;
             margin-bottom: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: all 0.25s ease;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
         .qa-bubble:hover {
             border-color: var(--accent-border);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-            transform: translateY(-1px);
         }
-        .qa-question {
-            font-weight: 600;
-            color: white;
-            font-size: 15px;
-            margin-bottom: 6px;
-        }
-        .qa-answer {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
-        }
+        .qa-question { font-weight: 600; color: white; font-size: 15px; margin-bottom: 6px; }
+        .qa-answer { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
 
         .video-showcase {
             margin-top: 32px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             padding-top: 24px;
         }
-        .video-showcase h3 {
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
+        .video-showcase h3 { color: white; font-size: 18px; font-weight: 600; margin-bottom: 12px; }
         .video-wrapper {
             background: #111922;
             border-radius: 18px;
@@ -873,20 +642,15 @@
             height: 0;
             overflow: hidden;
             border-radius: 12px;
+            background: #000;
         }
         .video-embed iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             border: 0;
         }
-        .video-caption {
-            color: var(--text-secondary);
-            font-size: 13px;
-            margin-top: 8px;
-        }
+        .video-caption { color: var(--text-secondary); font-size: 13px; margin-top: 8px; }
 
         .extra-info-section {
             margin-top: 32px;
@@ -902,15 +666,12 @@
             cursor: pointer;
             padding: 6px 14px;
             border-radius: 20px;
-            transition: all 0.25s;
+            transition: color 0.2s, background 0.2s;
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        .extra-info-toggle:hover {
-            color: var(--accent-bright);
-            background: rgba(74, 155, 181, 0.08);
-        }
+        .extra-info-toggle:hover { color: var(--accent-bright); background: rgba(74, 155, 181, 0.08); }
         .extra-info-content {
             margin-top: 12px;
             color: var(--text-secondary);
@@ -921,19 +682,10 @@
             border-radius: 16px;
             padding: 16px;
         }
-        .extra-info-content p {
-            margin-bottom: 12px;
-        }
-        .extra-info-content strong {
-            color: white;
-        }
-        .extra-info-content a {
-            color: var(--accent-bright);
-            text-decoration: none;
-        }
-        .extra-info-content a:hover {
-            text-decoration: underline;
-        }
+        .extra-info-content p { margin-bottom: 12px; }
+        .extra-info-content strong { color: white; }
+        .extra-info-content a { color: var(--accent-bright); text-decoration: none; }
+        .extra-info-content a:hover { text-decoration: underline; }
 
         .x-feed-container {
             background: #0f1620;
@@ -949,29 +701,11 @@
             align-items: center;
             gap: 10px;
         }
-        .x-feed-header i {
-            font-size: 20px;
-        }
-        .x-feed-header span {
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-        }
-        .x-feed-iframe-wrap {
-            width: 100%;
-            height: 550px;
-            background: #000;
-        }
-        .x-feed-iframe-wrap iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .x-feed-fallback {
-            padding: 30px;
-            text-align: center;
-            color: var(--text-muted);
-        }
+        .x-feed-header i { font-size: 20px; }
+        .x-feed-header span { color: white; font-weight: 600; font-size: 16px; }
+        .x-feed-iframe-wrap { width: 100%; height: 550px; background: #000; }
+        .x-feed-iframe-wrap iframe { width: 100%; height: 100%; border: none; }
+        .x-feed-fallback { padding: 30px; text-align: center; color: var(--text-muted); }
         .x-feed-fallback a {
             color: var(--accent-bright);
             font-weight: 600;
@@ -987,68 +721,32 @@
             padding-top: 20px;
             margin-top: 6px;
         }
-        .footer a {
-            color: var(--accent-bright);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
+        .footer a { color: var(--accent-bright); text-decoration: none; font-weight: 500; }
+        .footer a:hover { text-decoration: underline; }
 
         @media (max-width: 700px) {
-            .profile-header {
-                flex-direction: column;
-                text-align: center;
-            }
-            .bio-row {
-                justify-content: center;
-            }
-            .profile-card {
-                padding: 24px 14px;
-            }
-            .avatar {
-                width: 85px;
-                height: 85px;
-            }
-            .tab-btn {
-                padding: 12px 12px;
-                font-size: 12px;
-            }
-            .project-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            .project-links {
-                align-self: flex-end;
-            }
-            .project-downloads {
-                align-self: flex-start;
-            }
-            .project-extra-actions {
-                align-self: flex-end;
-            }
-            .project-desc {
-                margin-left: 0;
-            }
-            .progress-row {
-                flex-wrap: wrap;
-            }
-            .progress-label {
-                width: 90px;
-                font-size: 11px;
-            }
-            .modal-dialog {
-                max-width: 95vw;
-                max-height: 88vh;
-                border-radius: 14px;
-            }
-            .modal-body {
-                padding: 14px 16px;
-            }
-            .x-feed-iframe-wrap {
-                height: 400px;
+            .profile-header { flex-direction: column; text-align: center; }
+            .bio-row { justify-content: center; }
+            .profile-card { padding: 24px 14px; }
+            .avatar { width: 85px; height: 85px; }
+            .tab-btn { padding: 12px 12px; font-size: 12px; }
+            .project-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .project-links { align-self: flex-end; }
+            .project-downloads { align-self: flex-start; }
+            .project-extra-actions { align-self: flex-end; }
+            .project-desc { margin-left: 0; }
+            .progress-row { flex-wrap: wrap; }
+            .progress-label { width: 90px; font-size: 11px; }
+            .modal-dialog { max-width: 95vw; max-height: 88vh; border-radius: 14px; }
+            .modal-body { padding: 14px 16px; }
+            .x-feed-iframe-wrap { height: 400px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
@@ -1061,6 +759,8 @@
                 <img class="avatar"
                 src="https://cdn.modrinth.com/data/znWHo5Qt/74c9971f4a948949d8531f79af1a81e8259a0fad.gif"
                 alt="Ixra Avatar"
+                width="100" height="100"
+                decoding="async"
                 onerror="this.src='https://ui-avatars.com/api/?name=Ixra&background=4a9bb5&color=0a0f16&size=100&rounded=true'">
             </div>
             <div class="header-text">
@@ -1126,7 +826,8 @@
                             <h3>🎬 Arda's Sculks – Boss Battle Showcase</h3>
                             <div class="video-wrapper">
                                 <div class="video-embed">
-                                    <iframe src="https://www.youtube.com/embed/QW3HqoWXRFg?t=21s" allowfullscreen loading="lazy"></iframe>
+                                    <!-- Lazy: sadece About sekmesi açılınca yüklenir -->
+                                    <iframe data-src="https://www.youtube-nocookie.com/embed/QW3HqoWXRFg?t=21s" title="Arda's Sculks Boss Battle" allowfullscreen loading="lazy"></iframe>
                                 </div>
                             </div>
                             <p class="video-caption">Shadow Hunter boss fight in action — abilities, arena, and atmosphere.</p>
@@ -1153,8 +854,9 @@
                                 <span>@IxraPlayer · Latest Posts on X</span>
                             </div>
                             <div class="x-feed-iframe-wrap">
+                                <!-- Lazy: sadece X Feed sekmesi açılınca yüklenir -->
                                 <iframe
-                                src="https://www.twitter.com/IxraPlayer?ref_src=twsrc%5Etfw"
+                                data-src="https://www.twitter.com/IxraPlayer?ref_src=twsrc%5Etfw"
                                 title="IxraPlayer on X"
                                 sandbox="allow-scripts allow-same-origin allow-popups"
                                 loading="lazy"
@@ -1196,30 +898,22 @@
         <div class="modal-body" id="progress-modal-body">
             <div class="progress-row">
                 <span class="progress-label"><i class="fas fa-language" style="color:#facc15;"></i> Language</span>
-                <div class="progress-bar-wrap">
-                    <div class="progress-bar-fill language"></div>
-                </div>
+                <div class="progress-bar-wrap"><div class="progress-bar-fill language"></div></div>
                 <span class="progress-value">20%</span>
             </div>
             <div class="progress-row">
                 <span class="progress-label"><i class="fas fa-gamepad" style="color:#4ade80;"></i> Gameplay</span>
-                <div class="progress-bar-wrap">
-                    <div class="progress-bar-fill gameplay"></div>
-                </div>
+                <div class="progress-bar-wrap"><div class="progress-bar-fill gameplay"></div></div>
                 <span class="progress-value">90%</span>
             </div>
             <div class="progress-row">
                 <span class="progress-label"><i class="fas fa-bug" style="color:#fb923c;"></i> Bug Fixing</span>
-                <div class="progress-bar-wrap">
-                    <div class="progress-bar-fill bugfix"></div>
-                </div>
+                <div class="progress-bar-wrap"><div class="progress-bar-fill bugfix"></div></div>
                 <span class="progress-value">60%</span>
             </div>
             <div class="progress-row">
                 <span class="progress-label"><i class="fas fa-star" style="color:#60a5fa;"></i> Quality</span>
-                <div class="progress-bar-wrap">
-                    <div class="progress-bar-fill quality"></div>
-                </div>
+                <div class="progress-bar-wrap"><div class="progress-bar-fill quality"></div></div>
                 <span class="progress-value">50%</span>
             </div>
             <div class="progress-avg">
@@ -1234,344 +928,399 @@
 </div>
 
 <script>
-    (function() {
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const panes = {
-            links: document.getElementById('links'),
-            about: document.getElementById('about'),
-            projects: document.getElementById('projects'),
-            xfeed: document.getElementById('xfeed')
-        };
+/* =========================================================
+   TAB SWITCHING + LAZY IFRAME LOADING
+   ========================================================= */
+(function () {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const panes = {
+        links: document.getElementById('links'),
+        about: document.getElementById('about'),
+        projects: document.getElementById('projects'),
+        xfeed: document.getElementById('xfeed')
+    };
+    const loadedIframes = new WeakSet();
 
-        function switchTab(tabId) {
-            tabBtns.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.tab === tabId) btn.classList.add('active');
-            });
-            Object.values(panes).forEach(pane => pane.classList.remove('active'));
-            if (panes[tabId]) panes[tabId].classList.add('active');
-        }
-
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-        });
-
-        const extraToggle = document.getElementById('extra-toggle');
-        const extraContent = document.getElementById('extra-content');
-        if (extraToggle) {
-            extraToggle.addEventListener('click', function() {
-                const isVisible = extraContent.style.display === 'block';
-                extraContent.style.display = isVisible ? 'none' : 'block';
-                extraToggle.querySelector('span').innerHTML = isVisible ?
-                    '▸ A bit more about me…' : '▾ A bit more about me…';
-            });
-        }
-
-        const detailModalOverlay = document.getElementById('ardas-detail-modal');
-        const detailModalBody = document.getElementById('detail-modal-body');
-        const closeDetailBtn = document.getElementById('modal-close-detail');
-
-        function openDetailModal(content) {
-            detailModalBody.innerHTML = content;
-            detailModalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDetailModal() {
-            detailModalOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        closeDetailBtn.addEventListener('click', closeDetailModal);
-        detailModalOverlay.addEventListener('click', function(e) {
-            if (e.target === detailModalOverlay) closeDetailModal();
-        });
-
-        const progressModalOverlay = document.getElementById('progress-modal');
-        const closeProgressBtn = document.getElementById('modal-close-progress');
-
-        function openProgressModal() {
-            progressModalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            const bars = progressModalOverlay.querySelectorAll('.progress-bar-fill');
-            bars.forEach(bar => {
-                const targetWidth = bar.style.width || getComputedStyle(bar).width;
-                bar.style.width = '0%';
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        bar.style.width = targetWidth;
-                    });
-                });
-            });
-        }
-
-        function closeProgressModal() {
-            progressModalOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        closeProgressBtn.addEventListener('click', closeProgressModal);
-        progressModalOverlay.addEventListener('click', function(e) {
-            if (e.target === progressModalOverlay) closeProgressModal();
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                if (detailModalOverlay.classList.contains('active')) closeDetailModal();
-                if (progressModalOverlay.classList.contains('active')) closeProgressModal();
+    function loadIframesIn(pane) {
+        if (!pane) return;
+        pane.querySelectorAll('iframe[data-src]').forEach(f => {
+            if (loadedIframes.has(f)) return;
+            const src = f.dataset.src;
+            if (src && !f.src) {
+                f.src = src;
+                loadedIframes.add(f);
             }
         });
+    }
 
-        window.openArdasDetailModal = function() {
-            const detailHTML = `
-            <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://media.forgecdn.net/attachments/description/953793/description_4b27a9e4-8414-4d22-bb39-268eebd99129.png" alt="" width="1082" height="137"></p>
-            <p><iframe style="width: 100%; max-width: 793px; display: table; margin-left: auto; margin-right: auto;" src="https://www.youtube.com/embed/QW3HqoWXRFg?t=21s" width="793" height="464" allowfullscreen="allowfullscreen"></iframe></p>
-            <p style="text-align: center;"><strong><img src="https://media.forgecdn.net/attachments/description/953793/description_8f44d6cd-1169-4d2d-9511-b5ef389b18a4.png" width="850" height="106"></strong></p>
-            <h2 style="text-align: center;"><strong>Arda's Sculk mod is a mod that allows you to make more powerful tools and items by improving the sculks in the game.</strong></h2>
-            <p style="text-align: center;"><strong>Versions 1.4 and above require&nbsp;</strong><a href="https://www.curseforge.com/minecraft/mc-mods/geckolib" rel="nofollow"><strong>GECKOLIB</strong></a><strong>.</strong></p>
-            <h1 style="text-align: center;"><strong>- Mod -</strong></h1>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_55965104-f602-4470-a603-b3ecb63ccd4a.png" width="850" height="106"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_6de15eb4-13de-4a66-b669-df765ce41cae.png"></p>
-            <h1 style="text-align: center;"><strong>New Portal</strong></h1>
-            <h3 style="text-align: center;">A new portal has been added to the game and you can make a portal igniter that will open this ancient portal with the new materials you collect from the ancient city.</h3>
-            <ul><li><strong>Ancient World:</strong> To access this dimension, the <strong>Ancient World Portal Igniter</strong> item is required.</li></ul>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_4d9c1c2c-050b-479c-8b5c-baa0426a7232.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Flowers</strong></h1>
-            <h3 style="text-align: center;">Many flowers and plants have been added that you can use as decoration and light sources in your game.</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53"></p>
-            <h3 style="text-align: center;"><strong><img src="https://media.forgecdn.net/attachments/description/953793/description_9e8b95fa-bb7f-4139-918b-726e60d17cd4.png"></strong></h3>
-            <h1><strong>Ancient City Ores</strong></h1>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_c5246a13-0b0d-46b1-a25f-08b2877a5b7b.png"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_34a701e5-29aa-47a2-a43e-fead4b9d5218.png"></p>
-            <h1 style="text-align: center;"><strong>New Loots</strong></h1>
-            <h3 style="text-align: center;">More new items have been added to the game, including the sculkerite upgrade template, which can be found in chests in the ancient city.</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1b69d7f7-8530-43b5-a645-10349e1fce22.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_e7154663-0921-4958-a706-e42c4dff2ccb.png" width="850" height="106"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_bc0c0567-3cdc-4ecb-ab65-228f525df182.png"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_23463e01-80c6-43fb-8951-85de0964145d.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Golem</strong></h1>
-            <h3 style="text-align: center;">In the new boss area, you can fight the Sculk Golem boss and craft the new sculkerite multi-tool with the sculk crystal he drops!</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53"></p>
-            <h1 style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_ff537b25-edec-407c-84ba-5e9a7ca026ce.png"></h1>
-            <p><img src="https://media.forgecdn.net/attachments/description/953793/description_fc741a09-dd2d-48cf-96fd-edab0890f7f5.png"></p>
-            <h1 style="text-align: center;"><strong>Shadow Hunter</strong></h1>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_44fc05ba-dd0b-410a-a13d-87fcf89a4d33.png"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_f00db0a4-80df-4f05-94d5-db9dcfbc0da5.png"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_93d053d1-63d9-410a-97bb-71701e28ded5.png"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_959ff98e-4c38-4cc1-8e59-364dba172f2b.png"></p>
-            <h1 style="text-align: center;"><strong>Radioactive Warden</strong></h1>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1b69d7f7-8530-43b5-a645-10349e1fce22.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_b40fdda4-6413-4979-bc77-18f3cf9a7cd6.png" width="850" height="106"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76fd5e0f-bfda-4bf5-a466-3630603d5623.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Arms</strong></h1>
-            <h3 style="text-align: center;">The newly added sculk arms will give you fists as powerful as the warden's, these sculk arms are crafted with materials obtained from chests and creatures in the ancient city.</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_b2a99088-58fa-4896-936a-eb1539792919.png"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1fc8c2bd-6f35-4e5f-b726-b38c1e41c56e.png"></p>
-            <h1 style="text-align: center;"><strong>Sculkerite items!</strong></h1>
-            <h3 style="text-align: center;">New powerful sculkerite tools after Netherite.</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1b69d7f7-8530-43b5-a645-10349e1fce22.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_9fd7e796-35b1-42bc-ac15-1b37312ec27a.png" width="850" height="106"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2c7d7561-842a-4854-9a5b-2a25e18da36e.png"></p>
-            <h1 style="text-align: center;"><strong>Soul Sculk Plains</strong></h1>
-            <h3 style="text-align: center;">Grass on the ground slows the creature down compared to normal sculk grass, and soul sensors located around it can slow the player down even further.</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53"></p>
-            <h1 style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_ec846fa0-ce1b-47e0-a044-940c96926477.png"></h1>
-            <h1 style="text-align: center;"><strong>Sculk Plains</strong></h1>
-            <h3 style="text-align: center;">They are flat places in a new dimension.</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_e6020889-c83c-4c99-bcde-eef4c0c761c1.png"></p>
-            <h1 style="text-align: center;"><strong>Black Birch Forest</strong></h1>
-            <h3 style="text-align: center;">It is a dangerous biome where a squeaking creature lives among the dense trees.</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_605904f1-61a8-4013-95c9-413b4960fce9.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Deserts</strong></h1>
-            <h3 style="text-align: center;">These are arid areas where there are no trees to produce materials. There are ancient portals around us that allow us to return to the normal world.</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_e3c8c116-1afb-45fe-b727-99c12dad42c1.png"></p>
-            <h1 style="text-align: center;"><strong>Wisterya Forest</strong></h1>
-            <h3 style="text-align: center;">It is a biome surrounded by rocks and where the trees are more beautiful and colorful than other biomes.</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_b7df097e-32a4-454f-96fe-4c1686b9676d.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Forest</strong></h1>
-            <h3 style="text-align: center;">Sculk Woods is a version of the Sculk Plains biome with more trees and less bones.</h3>
-            <p><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53"></p>
-            <h1><img src="https://media.forgecdn.net/attachments/description/953793/description_414f0aa3-7617-4e67-952c-ad94e85f4990.png"></h1>
-            <h1><strong>Radioactive Balsa Forest</strong></h1>
-            <h1><img src="https://media.forgecdn.net/attachments/description/953793/description_1b69d7f7-8530-43b5-a645-10349e1fce22.png" width="850" height="53"></h1>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_eda60703-423f-477f-b5dc-00d32d854590.png" width="850" height="106"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_fa8da897-79e7-499b-bfa8-5ef103658cc1.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Wood Set</strong></h1>
-            <h3 style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="1205" height="75"></h3>
-            <h1 style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1ac01893-6955-4624-b41f-fb1e1354280a.png"></h1>
-            <h1 style="text-align: center;"><strong>Black Birch Wood Set</strong></h1>
-            <h1 style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53"></h1>
-            <p><img src="https://media.forgecdn.net/attachments/description/953793/description_e8e70767-1c3b-45f4-b2ee-6eceaf3b058a.png"></p>
-            <h1 style="text-align: center;"><strong>&nbsp;Wisterya Wood Set</strong></h1>
-            <h1 style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53"></h1>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_a584f0bc-5591-42ea-898b-6099ace7d22b.png"></p>
-            <h1 style="text-align: center;"><strong>Radioactive Balsa Wood Set</strong></h1>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1b69d7f7-8530-43b5-a645-10349e1fce22.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_50598260-632b-4ae5-b744-689af583bb30.png" width="850" height="106"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_efe7618d-1b7b-45b4-90a9-f377145dd764.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Creeper</strong></h1>
-            <ul><li>Sculk-themed creeper, and when it explodes, it creates a darkness and slowing effect around it.</li></ul>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_4bfd2f4a-7b44-4423-874b-79d316c9b74f.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Skeleton</strong></h1>
-            <ul><li>Sculk-themed skeleton, it pushes away the creatures it hits and gives them a darkness effect.</li></ul>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53"></p>
-            <p style="text-align: center;"><strong><img src="https://media.forgecdn.net/attachments/description/953793/description_bc5c4e19-a4d5-4d56-a7d8-72de778c8d07.png"></strong></p>
-            <h1 style="text-align: center;"><strong>Sculk Enderman</strong></h1>
-            <ul><li>Sculk-themed enderman.</li></ul>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_dba77b96-6ee1-4f4b-a94b-fb73ec921c83.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Fish</strong></h1>
-            <ul><li style="text-align: center;">There's nothing going on.</li></ul>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_d501e0ce-da66-45fa-a1cf-61a2cba3fb59.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Fox</strong></h1>
-            <ul><li>Sculk-themed fox.</li></ul>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_9e356707-e327-4467-9bbf-da7fbe61cbdb.png"></p>
-            <h1><strong>Agile Slime</strong></h1>
-            <ul><li>It's a very fast and agile type of slime; when it dies, it splits in two, just like regular slime.</li></ul>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2ee022be-d3a9-4510-9982-d8499e0945c7.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Ghost</strong></h1>
-            <ul><li>Sculk Ghost is a flying enemy creature that attempts to kill the player.</li></ul>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_75909905-e438-492a-bf07-478b8dee2792.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Creaking</strong></h1>
-            <ul><li>A creaking enemy creature with a powerful arm.</li></ul>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2614dde6-c021-4fad-98ba-13f9edc2c3a3.png"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_6682982c-2205-4703-b1e5-4c3f33205bfe.png"></p>
-            <h1 style="text-align: center;"><strong>Sculk Villager</strong></h1>
-            <ul><li>A village merchant who sells items specific to the Ancient City and Deep Dark biome.</li></ul>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_c0a368e9-e92c-4bac-aebe-1a14d7c583e2.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_f1a8bcc5-63a3-418d-ac35-5b609c62cdbd.png" width="850" height="106"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_cee91609-8965-4784-9005-b7baa64607de.png"></p>
-            <h1 style="text-align: center;"><strong>Advanced Furnace</strong></h1>
-            <h3 style="text-align: center;">A molten iron bucket and a molten sculk bucket are added to the first two slots, then the item we will transform is taken to the 3rd slot and fuel is added under the 3rd slot, and the normal version of the 2 buckets and the transformed item are taken from the last 2 slots. Like the example seen in the photo above.</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_12e85be5-7ac2-44c6-ab2b-355ae19a3d8a.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_02b588a7-b8bc-4e4c-9239-0561f47fcfa4.png"></p>
-            <h1 style="text-align: center;"><strong>Advanced Furnace</strong></h1>
-            <h3 style="text-align: center;">This is what the Advanced Oven looks like!</h3>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_44046397-a602-4049-ac64-1d79431f2108.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_7d390d6c-8416-473f-a09f-8bde137412ba.png"></p>
-            <h1 style="text-align: center;"><strong>New Materials</strong></h1>
-            <h3 style="text-align: center;">The Advanced Furnace has been added to the game to help you take your netherite items to the next level and make things easier when you encounter difficulties.</h3>
-            <p><img src="https://media.forgecdn.net/attachments/description/953793/description_6bdf82b0-def1-49c4-ab2a-e7d17d1c1d43.png" width="850" height="53"></p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_979ca642-f91c-4541-8c86-4588214cd64c.png" width="850" height="53"></p>
-            <h1 style="text-align: center;"><strong>- Versions -</strong></h1>
-            <p style="text-align: center;">-1.21.1</p><hr>
-            <p style="text-align: center;">-1.20.1</p>
-            <blockquote><p style="text-align: center;">-This version is a downgrade of Arda's Sculks 1.4.3.3 from 1.21.1 to 1.20.1.</p><p style="text-align: center;">-There will be no chest loot in the structures and there may be many bugs.</p><p style="text-align: center;">-These bugs will not be fixed, the focus will be on the new version.</p></blockquote>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_979ca642-f91c-4541-8c86-4588214cd64c.png" width="850" height="53"></p>
-            <h1 style="text-align: center;"><strong>- Known Issues -</strong></h1>
-            <p>(If my mod is crashing on Minecraft servers, make sure you have geckolib installed, because if it's not installed the mod will crash instead of giving a warning!)<br><br>- Apart from a few texture errors, I couldn't find any bugs that affected the gameplay.<br><br>- If you are using version 1.20.1 you may encounter many errors because version 1.20.1 was added by downgrading version 1.21.1, I tried to fix the errors as much as I could.</p>
-            <p style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_979ca642-f91c-4541-8c86-4588214cd64c.png" width="850" height="53"></p>
-            <h1 style="text-align: center;"><strong>- Translations -</strong></h1>
-            <h1 style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_fe5a94ce-ebdd-42b1-a135-92ba73b9d529.png" width="50" height="50"> &nbsp;<strong>Arda Ayd. (Ixra) :&nbsp;</strong><a href="https://ixraplayer.github.io/" target="_blank" rel="nofollow noopener">https://ixraplayer.github.io/</a></h1>
-            <h1 style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_a2dea3a6-e9b8-4156-893d-ab1be0a5e019.png" width="50" height="50"><strong>&nbsp; Iago Emanuel</strong> :&nbsp; <a href="https://iagoemanuel.weebly.com/" target="_blank" rel="nofollow noopener">https://iagoemanuel.weebly.com/</a></h1>
-            <h1 style="text-align: center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_979ca642-f91c-4541-8c86-4588214cd64c.png" width="850" height="53"></h1>
-            <p style="text-align: center;">You can use my mod in modpacks.</p>
-            <p style="text-align: center;">For more detailed information about the mod: "https://github.com/IxraPlayer/Ardas-Sculks"</p>
-          `;
-            openDetailModal(detailHTML);
-        };
+    function switchTab(tabId) {
+        tabBtns.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tabId);
+        });
+        Object.entries(panes).forEach(([id, pane]) => {
+            if (!pane) return;
+            pane.classList.toggle('active', id === tabId);
+        });
+        loadIframesIn(panes[tabId]);
+    }
 
-        window.openProgressModal = function() {
-            openProgressModal();
-        };
-    })();
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
 
-    (async () => {
-        const projectsData = [{
-            name: "Arda's Sculks",
-            slug: 'ardas-sculks',
-            desc: 'Deep Dark expansion with new blocks, boss, and mechanics.',
-            isSculks: true
-        }, {
-            name: "Arda's Ultimate Golem",
-            slug: 'ardas-ultimate-golem',
-            desc: 'Powerful golem companion for boss fights.'
-        }, {
-            name: "Omega Golem",
-            slug: 'ardas-omega-golem',
-            desc: 'The ultimate golem evolution — massive power, new abilities.',
-            fallbackIcon: 'https://cdn.modrinth.com/data/1gQ5hWPl/b3377cb90bc5093a0e06fd689b24e1487cdeb199_96.webp'
-        }, {
-            name: "Arda's Ores",
-            slug: 'ardas-ores',
-            desc: 'New ores, armor, and tools.'
-        }, {
-            name: "Shadow of the Soul",
-            slug: 'shadow-of-the-soul',
-            desc: 'Psychological horror mod with stalking AI.'
-        }, {
-            name: "Arda's Hammers",
-            slug: 'ardas-hammer',
-            desc: '3x3 mining hammers.'
-        }, {
-            name: "Arda's Uncrafting Table",
-            slug: 'ardas-uncrafting-table',
-            desc: 'Recycle items into their components.'
-        }, {
-            name: "Arda's Cobblestone Generator",
-            slug: 'ardas-cobblestone-generator',
-            desc: 'Automatic cobblestone generator.'
-        }, {
-            name: "Arda's Backpack",
-            slug: 'ardas-backpack',
-            desc: 'Portable storage backpack.'
-        }, {
-            name: "Arda's Advanced Items",
-            slug: 'ardas-advanced-items',
-            desc: 'Advanced items and special abilities.'
-        }, {
-            name: "Arda's Special Abilities",
-            slug: 'ardas-special-abilities',
-            desc: 'Unique player abilities.'
-        }];
+    // About pane içindeki YouTube iframe'i, kullanıcı About'a tıklamasa bile
+    // idle olduğunda arka planda yükle (ilk tıklamada gecikme olmasın diye).
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => loadIframesIn(panes.about), { timeout: 3000 });
+    } else {
+        setTimeout(() => loadIframesIn(panes.about), 2500);
+    }
+})();
 
-        function fmt(n) {
-            if (n === null || n === undefined || isNaN(n)) return '?';
-            if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
-            if (n >= 1_000) return (n / 1_000).toFixed(1) + 'K';
-            return n.toString();
-        }
+/* =========================================================
+   EXTRA INFO TOGGLE
+   ========================================================= */
+(function () {
+    const extraToggle = document.getElementById('extra-toggle');
+    const extraContent = document.getElementById('extra-content');
+    if (!extraToggle || !extraContent) return;
+    extraToggle.addEventListener('click', function () {
+        const isVisible = extraContent.style.display === 'block';
+        extraContent.style.display = isVisible ? 'none' : 'block';
+        extraToggle.querySelector('span').textContent =
+            isVisible ? '▸ A bit more about me…' : '▾ A bit more about me…';
+    });
+})();
 
-        async function fetchModrinthProject(slug) {
+/* =========================================================
+   MODALS
+   ========================================================= */
+(function () {
+    const detailModalOverlay = document.getElementById('ardas-detail-modal');
+    const detailModalBody = document.getElementById('detail-modal-body');
+    const closeDetailBtn = document.getElementById('modal-close-detail');
+
+    const progressModalOverlay = document.getElementById('progress-modal');
+    const closeProgressBtn = document.getElementById('modal-close-progress');
+
+    function openDetailModal(content) {
+        detailModalBody.innerHTML = content;
+        // Defer image loading inside modal
+        detailModalBody.querySelectorAll('img').forEach(img => {
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            if (!img.alt) img.alt = '';
+        });
+        detailModalBody.querySelectorAll('iframe').forEach(f => {
+            f.loading = 'lazy';
+        });
+        detailModalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeDetailModal() {
+        detailModalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        // İçeriği temizleyerek iframe ve img'leri serbest bırak
+        detailModalBody.innerHTML = '';
+    }
+
+    function openProgressModal() {
+        progressModalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        const bars = progressModalOverlay.querySelectorAll('.progress-bar-fill');
+        bars.forEach(bar => {
+            const finalWidth = bar.dataset.finalWidth || bar.style.width || getComputedStyle(bar).width;
+            bar.dataset.finalWidth = finalWidth;
+            bar.style.transition = 'none';
+            bar.style.width = '0%';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    bar.style.transition = '';
+                    bar.style.width = finalWidth;
+                });
+            });
+        });
+    }
+    function closeProgressModal() {
+        progressModalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    closeDetailBtn.addEventListener('click', closeDetailModal);
+    detailModalOverlay.addEventListener('click', e => {
+        if (e.target === detailModalOverlay) closeDetailModal();
+    });
+    closeProgressBtn.addEventListener('click', closeProgressModal);
+    progressModalOverlay.addEventListener('click', e => {
+        if (e.target === progressModalOverlay) closeProgressModal();
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.key !== 'Escape') return;
+        if (detailModalOverlay.classList.contains('active')) closeDetailModal();
+        if (progressModalOverlay.classList.contains('active')) closeProgressModal();
+    });
+
+    window.openArdasDetailModal = function () {
+        const detailHTML = `
+        <p><img style="display:block;margin-left:auto;margin-right:auto;" src="https://media.forgecdn.net/attachments/description/953793/description_4b27a9e4-8414-4d22-bb39-268eebd99129.png" alt="" width="1082" height="137"></p>
+        <p><iframe style="width:100%;max-width:793px;display:table;margin-left:auto;margin-right:auto;" data-src="https://www.youtube-nocookie.com/embed/QW3HqoWXRFg?t=21s" width="793" height="464" allowfullscreen></iframe></p>
+        <p style="text-align:center;"><strong><img src="https://media.forgecdn.net/attachments/description/953793/description_8f44d6cd-1169-4d2d-9511-b5ef389b18a4.png" width="850" height="106" alt=""></strong></p>
+        <h2 style="text-align:center;"><strong>Arda's Sculk mod is a mod that allows you to make more powerful tools and items by improving the sculks in the game.</strong></h2>
+        <p style="text-align:center;"><strong>Versions 1.4 and above require&nbsp;</strong><a href="https://www.curseforge.com/minecraft/mc-mods/geckolib" rel="nofollow"><strong>GECKOLIB</strong></a><strong>.</strong></p>
+        <h1 style="text-align:center;"><strong>- Mod -</strong></h1>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_55965104-f602-4470-a603-b3ecb63ccd4a.png" width="850" height="106" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_6de15eb4-13de-4a66-b669-df765ce41cae.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>New Portal</strong></h1>
+        <h3 style="text-align:center;">A new portal has been added to the game and you can make a portal igniter that will open this ancient portal with the new materials you collect from the ancient city.</h3>
+        <ul><li><strong>Ancient World:</strong> To access this dimension, the <strong>Ancient World Portal Igniter</strong> item is required.</li></ul>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_4d9c1c2c-050b-479c-8b5c-baa0426a7232.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Flowers</strong></h1>
+        <h3 style="text-align:center;">Many flowers and plants have been added that you can use as decoration and light sources in your game.</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53" alt=""></p>
+        <h3 style="text-align:center;"><strong><img src="https://media.forgecdn.net/attachments/description/953793/description_9e8b95fa-bb7f-4139-918b-726e60d17cd4.png" alt=""></strong></h3>
+        <h1><strong>Ancient City Ores</strong></h1>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_c5246a13-0b0d-46b1-a25f-08b2877a5b7b.png" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_34a701e5-29aa-47a2-a43e-fead4b9d5218.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>New Loots</strong></h1>
+        <h3 style="text-align:center;">More new items have been added to the game, including the sculkerite upgrade template, which can be found in chests in the ancient city.</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1b69d7f7-8530-43b5-a645-10349e1fce22.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_e7154663-0921-4958-a706-e42c4dff2ccb.png" width="850" height="106" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_bc0c0567-3cdc-4ecb-ab65-228f525df182.png" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_23463e01-80c6-43fb-8951-85de0964145d.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Golem</strong></h1>
+        <h3 style="text-align:center;">In the new boss area, you can fight the Sculk Golem boss and craft the new sculkerite multi-tool with the sculk crystal he drops!</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53" alt=""></p>
+        <h1 style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_ff537b25-edec-407c-84ba-5e9a7ca026ce.png" alt=""></h1>
+        <p><img src="https://media.forgecdn.net/attachments/description/953793/description_fc741a09-dd2d-48cf-96fd-edab0890f7f5.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Shadow Hunter</strong></h1>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_44fc05ba-dd0b-410a-a13d-87fcf89a4d33.png" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_f00db0a4-80df-4f05-94d5-db9dcfbc0da5.png" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_93d053d1-63d9-410a-97bb-71701e28ded5.png" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_959ff98e-4c38-4cc1-8e59-364dba172f2b.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Radioactive Warden</strong></h1>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1b69d7f7-8530-43b5-a645-10349e1fce22.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_b40fdda4-6413-4979-bc77-18f3cf9a7cd6.png" width="850" height="106" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76fd5e0f-bfda-4bf5-a466-3630603d5623.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Arms</strong></h1>
+        <h3 style="text-align:center;">The newly added sculk arms will give you fists as powerful as the warden's, these sculk arms are crafted with materials obtained from chests and creatures in the ancient city.</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1f44b473-cc9d-4197-b6ee-7f21bfeb369f.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_b2a99088-58fa-4896-936a-eb1539792919.png" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1fc8c2bd-6f35-4e5f-b726-b38c1e41c56e.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculkerite items!</strong></h1>
+        <h3 style="text-align:center;">New powerful sculkerite tools after Netherite.</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1b69d7f7-8530-43b5-a645-10349e1fce22.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_9fd7e796-35b1-42bc-ac15-1b37312ec27a.png" width="850" height="106" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2c7d7561-842a-4854-9a5b-2a25e18da36e.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Soul Sculk Plains</strong></h1>
+        <h3 style="text-align:center;">Grass on the ground slows the creature down compared to normal sculk grass, and soul sensors located around it can slow the player down even further.</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53" alt=""></p>
+        <h1 style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_ec846fa0-ce1b-47e0-a044-940c96926477.png" alt=""></h1>
+        <h1 style="text-align:center;"><strong>Sculk Plains</strong></h1>
+        <h3 style="text-align:center;">They are flat places in a new dimension.</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_e6020889-c83c-4c99-bcde-eef4c0c761c1.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Black Birch Forest</strong></h1>
+        <h3 style="text-align:center;">It is a dangerous biome where a squeaking creature lives among the dense trees.</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_605904f1-61a8-4013-95c9-413b4960fce9.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Deserts</strong></h1>
+        <h3 style="text-align:center;">These are arid areas where there are no trees to produce materials. There are ancient portals around us that allow us to return to the normal world.</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_e3c8c116-1afb-45fe-b727-99c12dad42c1.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Wisterya Forest</strong></h1>
+        <h3 style="text-align:center;">It is a biome surrounded by rocks and where the trees are more beautiful and colorful than other biomes.</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_b7df097e-32a4-454f-96fe-4c1686b9676d.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Forest</strong></h1>
+        <h3 style="text-align:center;">Sculk Woods is a version of the Sculk Plains biome with more trees and less bones.</h3>
+        <p><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53" alt=""></p>
+        <h1><img src="https://media.forgecdn.net/attachments/description/953793/description_414f0aa3-7617-4e67-952c-ad94e85f4990.png" alt=""></h1>
+        <h1><strong>Radioactive Balsa Forest</strong></h1>
+        <h1><img src="https://media.forgecdn.net/attachments/description/953793/description_1b69d7f7-8530-43b5-a645-10349e1fce22.png" width="850" height="53" alt=""></h1>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_eda60703-423f-477f-b5dc-00d32d854590.png" width="850" height="106" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_fa8da897-79e7-499b-bfa8-5ef103658cc1.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Wood Set</strong></h1>
+        <h3 style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="1205" height="75" alt=""></h3>
+        <h1 style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1ac01893-6955-4624-b41f-fb1e1354280a.png" alt=""></h1>
+        <h1 style="text-align:center;"><strong>Black Birch Wood Set</strong></h1>
+        <h1 style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53" alt=""></h1>
+        <p><img src="https://media.forgecdn.net/attachments/description/953793/description_e8e70767-1c3b-45f4-b2ee-6eceaf3b058a.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>&nbsp;Wisterya Wood Set</strong></h1>
+        <h1 style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53" alt=""></h1>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_a584f0bc-5591-42ea-898b-6099ace7d22b.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Radioactive Balsa Wood Set</strong></h1>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_1b69d7f7-8530-43b5-a645-10349e1fce22.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_50598260-632b-4ae5-b744-689af583bb30.png" width="850" height="106" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_efe7618d-1b7b-45b4-90a9-f377145dd764.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Creeper</strong></h1>
+        <ul><li>Sculk-themed creeper, and when it explodes, it creates a darkness and slowing effect around it.</li></ul>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2d7b4e9e-d077-4951-8122-2e57a0b53897.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_4bfd2f4a-7b44-4423-874b-79d316c9b74f.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Skeleton</strong></h1>
+        <ul><li>Sculk-themed skeleton, it pushes away the creatures it hits and gives them a darkness effect.</li></ul>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><strong><img src="https://media.forgecdn.net/attachments/description/953793/description_bc5c4e19-a4d5-4d56-a7d8-72de778c8d07.png" alt=""></strong></p>
+        <h1 style="text-align:center;"><strong>Sculk Enderman</strong></h1>
+        <ul><li>Sculk-themed enderman.</li></ul>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_dba77b96-6ee1-4f4b-a94b-fb73ec921c83.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Fish</strong></h1>
+        <ul><li style="text-align:center;">There's nothing going on.</li></ul>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_d501e0ce-da66-45fa-a1cf-61a2cba3fb59.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Fox</strong></h1>
+        <ul><li>Sculk-themed fox.</li></ul>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_9e356707-e327-4467-9bbf-da7fbe61cbdb.png" alt=""></p>
+        <h1><strong>Agile Slime</strong></h1>
+        <ul><li>It's a very fast and agile type of slime; when it dies, it splits in two, just like regular slime.</li></ul>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2ee022be-d3a9-4510-9982-d8499e0945c7.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Ghost</strong></h1>
+        <ul><li>Sculk Ghost is a flying enemy creature that attempts to kill the player.</li></ul>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_75909905-e438-492a-bf07-478b8dee2792.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Creaking</strong></h1>
+        <ul><li>A creaking enemy creature with a powerful arm.</li></ul>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_76ec9cb8-0c86-459f-b3ee-9be94c69d8d2.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_2614dde6-c021-4fad-98ba-13f9edc2c3a3.png" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_6682982c-2205-4703-b1e5-4c3f33205bfe.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Sculk Villager</strong></h1>
+        <ul><li>A village merchant who sells items specific to the Ancient City and Deep Dark biome.</li></ul>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_c0a368e9-e92c-4bac-aebe-1a14d7c583e2.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_f1a8bcc5-63a3-418d-ac35-5b609c62cdbd.png" width="850" height="106" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_cee91609-8965-4784-9005-b7baa64607de.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Advanced Furnace</strong></h1>
+        <h3 style="text-align:center;">A molten iron bucket and a molten sculk bucket are added to the first two slots, then the item we will transform is taken to the 3rd slot and fuel is added under the 3rd slot, and the normal version of the 2 buckets and the transformed item are taken from the last 2 slots. Like the example seen in the photo above.</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_12e85be5-7ac2-44c6-ab2b-355ae19a3d8a.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_02b588a7-b8bc-4e4c-9239-0561f47fcfa4.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>Advanced Furnace</strong></h1>
+        <h3 style="text-align:center;">This is what the Advanced Oven looks like!</h3>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_44046397-a602-4049-ac64-1d79431f2108.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_7d390d6c-8416-473f-a09f-8bde137412ba.png" alt=""></p>
+        <h1 style="text-align:center;"><strong>New Materials</strong></h1>
+        <h3 style="text-align:center;">The Advanced Furnace has been added to the game to help you take your netherite items to the next level and make things easier when you encounter difficulties.</h3>
+        <p><img src="https://media.forgecdn.net/attachments/description/953793/description_6bdf82b0-def1-49c4-ab2a-e7d17d1c1d43.png" width="850" height="53" alt=""></p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_979ca642-f91c-4541-8c86-4588214cd64c.png" width="850" height="53" alt=""></p>
+        <h1 style="text-align:center;"><strong>- Versions -</strong></h1>
+        <p style="text-align:center;">-1.21.1</p><hr>
+        <p style="text-align:center;">-1.20.1</p>
+        <blockquote><p style="text-align:center;">-This version is a downgrade of Arda's Sculks 1.4.3.3 from 1.21.1 to 1.20.1.</p><p style="text-align:center;">-There will be no chest loot in the structures and there may be many bugs.</p><p style="text-align:center;">-These bugs will not be fixed, the focus will be on the new version.</p></blockquote>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_979ca642-f91c-4541-8c86-4588214cd64c.png" width="850" height="53" alt=""></p>
+        <h1 style="text-align:center;"><strong>- Known Issues -</strong></h1>
+        <p>(If my mod is crashing on Minecraft servers, make sure you have geckolib installed, because if it's not installed the mod will crash instead of giving a warning!)<br><br>- Apart from a few texture errors, I couldn't find any bugs that affected the gameplay.<br><br>- If you are using version 1.20.1 you may encounter many errors because version 1.20.1 was added by downgrading version 1.21.1, I tried to fix the errors as much as I could.</p>
+        <p style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_979ca642-f91c-4541-8c86-4588214cd64c.png" width="850" height="53" alt=""></p>
+        <h1 style="text-align:center;"><strong>- Translations -</strong></h1>
+        <h1 style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_fe5a94ce-ebdd-42b1-a135-92ba73b9d529.png" width="50" height="50" alt=""> &nbsp;<strong>Arda Ayd. (Ixra) :&nbsp;</strong><a href="https://ixraplayer.github.io/" target="_blank" rel="nofollow noopener">https://ixraplayer.github.io/</a></h1>
+        <h1 style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_a2dea3a6-e9b8-4156-893d-ab1be0a5e019.png" width="50" height="50" alt=""><strong>&nbsp; Iago Emanuel</strong> :&nbsp; <a href="https://iagoemanuel.weebly.com/" target="_blank" rel="nofollow noopener">https://iagoemanuel.weebly.com/</a></h1>
+        <h1 style="text-align:center;"><img src="https://media.forgecdn.net/attachments/description/953793/description_979ca642-f91c-4541-8c86-4588214cd64c.png" width="850" height="53" alt=""></h1>
+        <p style="text-align:center;">You can use my mod in modpacks.</p>
+        <p style="text-align:center;">For more detailed information about the mod: "https://github.com/IxraPlayer/Ardas-Sculks"</p>
+        `;
+        openDetailModal(detailHTML);
+
+        // Modal açıldıktan sonra lazy iframe'leri yükle
+        requestAnimationFrame(() => {
+            detailModalBody.querySelectorAll('iframe[data-src]').forEach(f => {
+                if (!f.src) f.src = f.dataset.src;
+            });
+        });
+    };
+
+    window.openProgressModal = openProgressModal;
+})();
+
+/* =========================================================
+   PROJECTS + API FETCHING (with localStorage cache)
+   ========================================================= */
+(async () => {
+    const CACHE_KEY = 'ixra_stats_v3';
+    const CACHE_TTL = 6 * 60 * 60 * 1000; // 6 saat
+
+    const projectsData = [
+        { name: "Arda's Sculks", slug: 'ardas-sculks', desc: 'Deep Dark expansion with new blocks, boss, and mechanics.', isSculks: true },
+        { name: "Arda's Ultimate Golem", slug: 'ardas-ultimate-golem', desc: 'Powerful golem companion for boss fights.' },
+        { name: "Omega Golem", slug: 'ardas-omega-golem', desc: 'The ultimate golem evolution — massive power, new abilities.', fallbackIcon: 'https://cdn.modrinth.com/data/1gQ5hWPl/b3377cb90bc5093a0e06fd689b24e1487cdeb199_96.webp' },
+        { name: "Arda's Ores", slug: 'ardas-ores', desc: 'New ores, armor, and tools.' },
+        { name: "Shadow of the Soul", slug: 'shadow-of-the-soul', desc: 'Psychological horror mod with stalking AI.' },
+        { name: "Arda's Hammers", slug: 'ardas-hammer', desc: '3x3 mining hammers.' },
+        { name: "Arda's Uncrafting Table", slug: 'ardas-uncrafting-table', desc: 'Recycle items into their components.' },
+        { name: "Arda's Cobblestone Generator", slug: 'ardas-cobblestone-generator', desc: 'Automatic cobblestone generator.' },
+        { name: "Arda's Backpack", slug: 'ardas-backpack', desc: 'Portable storage backpack.' },
+        { name: "Arda's Advanced Items", slug: 'ardas-advanced-items', desc: 'Advanced items and special abilities.' },
+        { name: "Arda's Special Abilities", slug: 'ardas-special-abilities', desc: 'Unique player abilities.' }
+    ];
+
+    function fmt(n) {
+        if (n === null || n === undefined || isNaN(n)) return '?';
+        if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
+        if (n >= 1_000) return (n / 1_000).toFixed(1) + 'K';
+        return n.toString();
+    }
+
+    function readCache() {
+        try {
+            const raw = localStorage.getItem(CACHE_KEY);
+            if (!raw) return null;
+            const parsed = JSON.parse(raw);
+            if (!parsed || Date.now() - parsed.timestamp > CACHE_TTL) return null;
+            return parsed.data;
+        } catch { return null; }
+    }
+    function writeCache(data) {
+        try {
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
+        } catch { /* quota veya private mode */ }
+    }
+
+    async function fetchModrinthProject(slug) {
+        try {
             const res = await fetch(`https://api.modrinth.com/v2/project/${slug}`);
             if (!res.ok) return { downloads: 0, icon_url: null };
             const data = await res.json();
             return { downloads: data.downloads || 0, icon_url: data.icon_url || null };
+        } catch {
+            return { downloads: 0, icon_url: null };
         }
+    }
 
-        async function fetchCurseForgeDownloads(slug) {
+    async function fetchCurseForgeDownloads(slug) {
+        try {
             const res = await fetch(`https://api.cfwidget.com/minecraft/mc-mods/${slug}`);
             if (!res.ok) return 0;
             const data = await res.json();
             return data.downloads?.total ?? data.downloadCount ?? 0;
+        } catch {
+            return 0;
+        }
+    }
+
+    async function fetchModrinthUserTotal(username) {
+        try {
+            const r = await fetch(`https://api.modrinth.com/v2/user/${username}/projects`);
+            if (!r.ok) return 0;
+            const projects = await r.json();
+            return projects.reduce((sum, p) => sum + (p.downloads || 0), 0);
+        } catch { return 0; }
+    }
+
+    // ---------- Render project list immediately ----------
+    const container = document.getElementById('projects-container');
+    container.innerHTML = projectsData.map(p => {
+        let badgeHtml = '';
+        if (p.slug === 'ardas-sculks') {
+            badgeHtml = '<span class="project-badge badge-popular">MOST POPULAR</span>';
+        } else if (p.slug === 'ardas-uncrafting-table') {
+            badgeHtml = '<span class="project-badge badge-trending">TRENDING</span>';
         }
 
-        const container = document.getElementById('projects-container');
-        container.innerHTML = projectsData.map(p => {
-            let badgeHtml = '';
-            if (p.slug === 'ardas-sculks') {
-                badgeHtml = '<span class="project-badge badge-popular">MOST POPULAR</span>';
-            } else if (p.slug === 'ardas-uncrafting-table') {
-                badgeHtml = '<span class="project-badge badge-trending">TRENDING</span>';
-            }
-
-            let extraActionsHtml = '';
-            if (p.isSculks) {
-                extraActionsHtml = `
+        let extraActionsHtml = '';
+        if (p.isSculks) {
+            extraActionsHtml = `
             <div class="project-extra-actions">
               <button class="detail-popup-btn" onclick="openArdasDetailModal()" title="View full details">
                 <i class="fas fa-info-circle"></i> Details
@@ -1584,12 +1333,12 @@
                 <span style="font-size:10px;">55%</span>
               </button>
             </div>`;
-            }
+        }
 
-            return `
+        return `
         <div class="project-item" data-slug="${p.slug}">
           <div class="project-info">
-            <img class="project-icon" src="${p.fallbackIcon || ''}" alt="" style="${p.fallbackIcon ? '' : 'display:none;'}">
+            <img class="project-icon" src="${p.fallbackIcon || ''}" alt="" width="38" height="38" loading="lazy" decoding="async" style="${p.fallbackIcon ? '' : 'display:none;'}">
             <span class="project-name">${p.name}${badgeHtml}</span>
           </div>
           <span class="project-downloads">...</span>
@@ -1600,56 +1349,77 @@
           ${extraActionsHtml}
           <div class="project-desc">${p.desc}</div>
         </div>`;
-        }).join('');
+    }).join('');
 
-        const promises = projectsData.map(async (p, index) => {
+    const totalEl = document.getElementById('total-downloads');
+
+    // ---------- Apply data to DOM ----------
+    function applyProjectData(perProject) {
+        projectsData.forEach((p, index) => {
             const item = container.children[index];
+            if (!item) return;
             const iconImg = item.querySelector('.project-icon');
             const downloadsSpan = item.querySelector('.project-downloads');
-            try {
-                const [mrData, cfDownloads] = await Promise.all([
-                    fetchModrinthProject(p.slug),
-                    fetchCurseForgeDownloads(p.slug).catch(() => 0)
-                ]);
-                const total = mrData.downloads + cfDownloads;
-                downloadsSpan.textContent = fmt(total);
-                if (mrData.icon_url) {
-                    iconImg.src = mrData.icon_url;
-                    iconImg.style.display = 'block';
-                } else if (p.fallbackIcon) {
-                    iconImg.src = p.fallbackIcon;
-                    iconImg.style.display = 'block';
-                } else {
-                    iconImg.style.display = 'none';
-                }
-            } catch (e) {
+            const d = perProject[p.slug];
+            if (!d) {
                 downloadsSpan.textContent = '?';
+                return;
+            }
+            const total = (d.mr || 0) + (d.cf || 0);
+            downloadsSpan.textContent = fmt(total);
+            const iconUrl = d.icon || p.fallbackIcon;
+            if (iconUrl) {
+                iconImg.src = iconUrl;
+                iconImg.style.display = 'block';
+            } else {
+                iconImg.style.display = 'none';
             }
         });
+    }
 
-        await Promise.all(promises);
-
-        const MR_USERNAME = 'Ixra';
-        const CF_ALL_SLUGS = projectsData.map(p => p.slug);
-        async function fetchModrinthUserTotal(username) {
-            const r = await fetch(`https://api.modrinth.com/v2/user/${username}/projects`);
-            if (!r.ok) return 0;
-            const projects = await r.json();
-            return projects.reduce((sum, p) => sum + (p.downloads || 0), 0);
+    function applyTotal(total) {
+        if (total > 0) {
+            totalEl.textContent = fmt(total) + '+';
+        } else {
+            totalEl.textContent = '176K+';
         }
-        async function fetchCFWidgetAll(slugs) {
-            const results = await Promise.allSettled(slugs.map(s => fetchCurseForgeDownloads(s)));
-            return results.reduce((sum, r) => r.status === 'fulfilled' ? sum + r.value : sum, 0);
-        }
-        const [mrTotal, cfTotal] = await Promise.all([
-            fetchModrinthUserTotal(MR_USERNAME).catch(() => 0),
-            fetchCFWidgetAll(CF_ALL_SLUGS).catch(() => 0)
-        ]);
-        const grandTotal = mrTotal + cfTotal;
-        const totalEl = document.getElementById('total-downloads');
-        totalEl.textContent = grandTotal > 0 ? fmt(grandTotal) + '+' : '176K+';
         totalEl.classList.remove('loading-val');
-    })();
+    }
+
+    // ---------- Main flow ----------
+    const cache = readCache();
+    if (cache && cache.perProject) {
+        // Instant render from cache
+        applyProjectData(cache.perProject);
+        applyTotal(cache.total || 0);
+        return; // no network hit
+    }
+
+    // No cache: fetch everything in parallel
+    const [projectResults, mrUserTotal] = await Promise.all([
+        Promise.all(projectsData.map(async p => {
+            const [mr, cf] = await Promise.all([
+                fetchModrinthProject(p.slug),
+                fetchCurseForgeDownloads(p.slug)
+            ]);
+            return { slug: p.slug, mr: mr.downloads, cf, icon: mr.icon_url };
+        })),
+        fetchModrinthUserTotal('Ixra')
+    ]);
+
+    const perProject = {};
+    let cfSum = 0;
+    projectResults.forEach(r => {
+        perProject[r.slug] = { mr: r.mr, cf: r.cf, icon: r.icon };
+        cfSum += r.cf;
+    });
+
+    const grandTotal = mrUserTotal + cfSum;
+
+    applyProjectData(perProject);
+    applyTotal(grandTotal);
+    writeCache({ perProject, total: grandTotal });
+})();
 </script>
 </body>
 </html>
