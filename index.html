@@ -280,6 +280,23 @@
             color: white;
         }
 
+        /* ===== Original brand icons ===== */
+        .link-btn .brand-icon {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            object-fit: contain;
+            display: inline-block;
+            filter: brightness(0) invert(1);
+            opacity: 0.95;
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+        }
+        .link-btn:hover .brand-icon {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+
         /* ===== GitHub stats ===== */
         .github-stats {
             margin-left: auto;
@@ -316,6 +333,37 @@
         }
         .link-btn:hover .gh-stat i {
             color: var(--accent-bright) !important;
+        }
+
+        /* ===== CurseForge follower badge ===== */
+        .cf-followers {
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 20px;
+            background: rgba(255, 140, 0, 0.12);
+            border: 1px solid rgba(255, 140, 0, 0.3);
+            color: #ffb066;
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+        }
+        .cf-followers i {
+            color: #ffb066 !important;
+            font-size: 12px;
+            width: auto !important;
+        }
+        .link-btn:hover .cf-followers {
+            background: rgba(255, 140, 0, 0.2);
+            border-color: rgba(255, 140, 0, 0.5);
+            color: #ffc78a;
+        }
+        .link-btn:hover .cf-followers i {
+            color: #ffc78a !important;
         }
 
         .project-item {
@@ -803,21 +851,49 @@
                         <div class="tab-pane active" id="links">
                             <div class="links-list">
                                 <a href="https://github.com/IxraPlayer" class="link-btn link-btn-github" target="_blank" rel="me">
-                                    <i class="fab fa-github"></i> GitHub
+                                    <img class="brand-icon" src="https://cdn.simpleicons.org/github/white" alt="" width="22" height="22" loading="lazy" decoding="async">
+                                    GitHub
                                     <span class="github-stats" id="github-stats">
                                         <span class="gh-stat" title="Public repositories"><i class="fas fa-book"></i> <span id="gh-repos">…</span></span>
                                         <span class="gh-stat" title="Total stars earned"><i class="fas fa-star"></i> <span id="gh-stars">…</span></span>
                                         <span class="gh-stat" title="Followers"><i class="fas fa-users"></i> <span id="gh-followers">…</span></span>
                                     </span>
                                 </a>
-                                <a href="https://modrinth.com/user/Ixra" class="link-btn" target="_blank" rel="me"><i class="fas fa-cube"></i> Modrinth</a>
-                                <a href="https://www.curseforge.com/members/ixra/projects" class="link-btn" target="_blank" rel="me"><i class="fas fa-fire"></i> CurseForge</a>
-                                <a href="https://x.com/IxraPlayer" class="link-btn" target="_blank" rel="me"><i class="fab fa-twitter"></i> X / Twitter</a>
-                                <a href="https://www.instagram.com/ixranium/" class="link-btn" target="_blank" rel="me"><i class="fab fa-instagram"></i> Instagram</a>
-                                <a href="https://www.tiktok.com/@ixraplayer" class="link-btn" target="_blank" rel="me"><i class="fab fa-tiktok"></i> TikTok</a>
-                                <a href="https://www.reddit.com/user/Ixraplayer/" class="link-btn" target="_blank" rel="me"><i class="fab fa-reddit"></i> Reddit</a>
-                                <a href="https://www.youtube.com/@Ixraplayer" class="link-btn" target="_blank" rel="me"><i class="fab fa-youtube"></i> YouTube</a>
-                                <a href="https://mcreator.net/user/756781/ixraultimate" class="link-btn" target="_blank" rel="me"><i class="fas fa-puzzle-piece"></i> MCreator</a>
+                                <a href="https://modrinth.com/user/Ixra" class="link-btn" target="_blank" rel="me">
+                                    <img class="brand-icon" src="https://cdn.simpleicons.org/modrinth/white" alt="" width="22" height="22" loading="lazy" decoding="async">
+                                    Modrinth
+                                </a>
+                                <a href="https://www.curseforge.com/members/ixra/projects" class="link-btn" target="_blank" rel="me">
+                                    <img class="brand-icon" src="https://cdn.simpleicons.org/curseforge/white" alt="" width="22" height="22" loading="lazy" decoding="async">
+                                    CurseForge
+                                    <span class="cf-followers" id="cf-followers" title="CurseForge followers">
+                                        <i class="fas fa-users"></i> <span id="cf-follower-count">—</span>
+                                    </span>
+                                </a>
+                                <a href="https://x.com/IxraPlayer" class="link-btn" target="_blank" rel="me">
+                                    <img class="brand-icon" src="https://cdn.simpleicons.org/x/white" alt="" width="22" height="22" loading="lazy" decoding="async">
+                                    X / Twitter
+                                </a>
+                                <a href="https://www.instagram.com/ixranium/" class="link-btn" target="_blank" rel="me">
+                                    <img class="brand-icon" src="https://cdn.simpleicons.org/instagram/white" alt="" width="22" height="22" loading="lazy" decoding="async">
+                                    Instagram
+                                </a>
+                                <a href="https://www.tiktok.com/@ixraplayer" class="link-btn" target="_blank" rel="me">
+                                    <img class="brand-icon" src="https://cdn.simpleicons.org/tiktok/white" alt="" width="22" height="22" loading="lazy" decoding="async">
+                                    TikTok
+                                </a>
+                                <a href="https://www.reddit.com/user/Ixraplayer/" class="link-btn" target="_blank" rel="me">
+                                    <img class="brand-icon" src="https://cdn.simpleicons.org/reddit/white" alt="" width="22" height="22" loading="lazy" decoding="async">
+                                    Reddit
+                                </a>
+                                <a href="https://www.youtube.com/@Ixraplayer" class="link-btn" target="_blank" rel="me">
+                                    <img class="brand-icon" src="https://cdn.simpleicons.org/youtube/white" alt="" width="22" height="22" loading="lazy" decoding="async">
+                                    YouTube
+                                </a>
+                                <a href="https://mcreator.net/user/756781/ixraultimate" class="link-btn" target="_blank" rel="me">
+                                    <img class="brand-icon" src="https://mcreator.net/favicon.ico" alt="" width="22" height="22" loading="lazy" decoding="async">
+                                    MCreator
+                                </a>
                             </div>
                         </div>
                         <div class="tab-pane" id="about">
@@ -994,7 +1070,7 @@
     (async () => {
         const GH_USER = 'IxraPlayer';
         const GH_CACHE_KEY = 'ixra_github_stats_v1';
-        const GH_TTL = 6 * 60 * 60 * 1000; // 6 saat
+        const GH_TTL = 6 * 60 * 60 * 1000;
 
         const reposEl = document.getElementById('gh-repos');
         const starsEl = document.getElementById('gh-stars');
@@ -1008,7 +1084,6 @@
             return String(n);
         }
 
-        // Cache
         try {
             const raw = localStorage.getItem(GH_CACHE_KEY);
             if (raw) {
@@ -1052,6 +1127,24 @@
             reposEl.textContent = '?';
             starsEl.textContent = '?';
             followersEl.textContent = '?';
+        }
+    })();
+
+    /* =========================================================
+       CURSEFORGE FOLLOWERS (manual — CF API doesn't expose this)
+       ========================================================= */
+    (function () {
+        // 👇 CurseForge profilinden bakıp buraya güncelle
+        const CF_FOLLOWERS = 0; // ör: 1240
+
+        const cfCountEl = document.getElementById('cf-follower-count');
+        if (!cfCountEl) return;
+
+        if (CF_FOLLOWERS > 0) {
+            cfCountEl.textContent = CF_FOLLOWERS.toLocaleString('en-US');
+        } else {
+            cfCountEl.textContent = '—';
+            cfCountEl.parentElement.style.display = 'none'; // gizle
         }
     })();
 
