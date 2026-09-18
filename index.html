@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ixra · Turkish Minecraft Mod Developer | Arda's Sculks Creator</title>
+    <title>Ixra · Minecraft Mod Developer | Arda's Sculks Creator</title>
 
-    <meta name="title" content="Ixra - Turkish Minecraft Mod Developer | Arda's Sculks Creator">
-    <meta name="description" content="Ixra (Ixranium / IxraPlayer) is a Turkish Minecraft mod developer from Istanbul. Creator of Arda's Sculks, Arda's Ores, Arda's Ultimate Golem, Omega Golem, Shadow of the Soul, and 10+ mods for Forge & NeoForge.">
+    <meta name="title" content="Ixra - Minecraft Mod Developer | Arda's Sculks Creator">
+    <meta name="description" content="Ixra (Ixranium / IxraPlayer) is a Minecraft mod developer from Istanbul. Creator of Arda's Sculks, Arda's Ores, Arda's Ultimate Golem, Omega Golem, Shadow of the Soul, and 10+ mods for Forge & NeoForge.">
     <meta name="keywords" content="Ixra, Ixranium, IxraPlayer, Arda Aydoğdu, Turkish Minecraft mod developer, Minecraft mod, Arda's Sculks, Forge, NeoForge, Turkish modder, Minecraft Turkey, Arda's Ultimate Golem, Omega Golem, Shadow of the Soul, Arda's Ores, Arda's Hammers, Arda's Backpack, Arda's Advanced Items, Arda's Special Abilities, Arda's Uncrafting Table, Arda's Cobblestone Generator, ixra minecraft, ixra mod developer, ardask sculks mod, minecraft deep dark mod, sculk expansion mod">
     <meta name="author" content="Ixra (IxraPlayer)">
     <meta name="robots" content="index, follow">
@@ -16,8 +16,8 @@
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ixraplayer.github.io/">
-    <meta property="og:title" content="Ixra - Turkish Minecraft Mod Developer | Arda's Sculks Creator">
-    <meta property="og:description" content="Creator of Arda's Sculks & 10+ Minecraft mods. Turkish modder for Forge & NeoForge.">
+    <meta property="og:title" content="Ixra - Minecraft Mod Developer | Arda's Sculks Creator">
+    <meta property="og:description" content="Creator of Arda's Sculks & 10+ Minecraft mods. Modder for Forge & NeoForge.">
     <meta property="og:image" content="https://ixraplayer.github.io/sitelogo.png">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
@@ -29,8 +29,8 @@
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://ixraplayer.github.io/">
-    <meta name="twitter:title" content="Ixra - Turkish Minecraft Mod Developer | Arda's Sculks Creator">
-    <meta name="twitter:description" content="Creator of Arda's Sculks & 10+ Minecraft mods. Turkish modder for Forge & NeoForge.">
+    <meta name="twitter:title" content="Ixra - Minecraft Mod Developer | Arda's Sculks Creator">
+    <meta name="twitter:description" content="Creator of Arda's Sculks & 10+ Minecraft mods. Modder for Forge & NeoForge.">
     <meta name="twitter:image" content="https://ixraplayer.github.io/sitelogo.png">
     <meta name="twitter:image:alt" content="Ixra Logo">
     <meta name="twitter:site" content="@IxraPlayer">
@@ -81,7 +81,6 @@
             to   { opacity: 1; }
         }
 
-        /* ✅ BODY artık flex değil — block, ortalamayı wrapper yapıyor */
         body {
             min-height: 100vh;
             font-family: 'Inter', sans-serif;
@@ -97,7 +96,6 @@
             overflow-x: hidden;
         }
 
-        /* ✅ ORTALAMA WRAPPER */
         .page-wrapper {
             max-width: 980px;
             width: 100%;
@@ -280,6 +278,44 @@
             box-shadow: var(--shadow-hover), 0 0 20px rgba(74, 155, 181, 0.15);
             transform: translateY(-2px);
             color: white;
+        }
+
+        /* ===== GitHub stats ===== */
+        .github-stats {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+        .gh-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+        }
+        .gh-stat i {
+            color: var(--text-muted) !important;
+            font-size: 11px;
+            width: auto !important;
+        }
+        .link-btn:hover .gh-stat {
+            background: rgba(74, 155, 181, 0.12);
+            border-color: var(--accent-border);
+            color: var(--accent-bright);
+        }
+        .link-btn:hover .gh-stat i {
+            color: var(--accent-bright) !important;
         }
 
         .project-item {
@@ -710,6 +746,8 @@
             .profile-card { padding: 24px 14px; }
             .avatar { width: 85px; height: 85px; }
             .tab-btn { padding: 12px 12px; font-size: 12px; }
+            .link-btn-github { flex-wrap: wrap; }
+            .github-stats { margin-left: 0; width: 100%; margin-top: 8px; }
             .project-item { flex-direction: column; align-items: flex-start; gap: 10px; }
             .project-links { align-self: flex-end; }
             .project-downloads { align-self: flex-start; }
@@ -749,7 +787,6 @@
                     <div class="bio-row">
                         <span class="bio-downloads-tag">⬇ <span id="total-downloads" class="loading-val">...</span> total</span>
                         <span class="bio-tag">Java · Forge · NeoForge</span>
-                        <span class="bio-tag">🇹🇷 Istanbul, Turkey</span>
                         <span class="bio-tag">18</span>
                     </div>
                 </div>
@@ -765,7 +802,14 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="links">
                             <div class="links-list">
-                                <a href="https://github.com/IxraPlayer" class="link-btn" target="_blank" rel="me"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://github.com/IxraPlayer" class="link-btn link-btn-github" target="_blank" rel="me">
+                                    <i class="fab fa-github"></i> GitHub
+                                    <span class="github-stats" id="github-stats">
+                                        <span class="gh-stat" title="Public repositories"><i class="fas fa-book"></i> <span id="gh-repos">…</span></span>
+                                        <span class="gh-stat" title="Total stars earned"><i class="fas fa-star"></i> <span id="gh-stars">…</span></span>
+                                        <span class="gh-stat" title="Followers"><i class="fas fa-users"></i> <span id="gh-followers">…</span></span>
+                                    </span>
+                                </a>
                                 <a href="https://modrinth.com/user/Ixra" class="link-btn" target="_blank" rel="me"><i class="fas fa-cube"></i> Modrinth</a>
                                 <a href="https://www.curseforge.com/members/ixra/projects" class="link-btn" target="_blank" rel="me"><i class="fas fa-fire"></i> CurseForge</a>
                                 <a href="https://x.com/IxraPlayer" class="link-btn" target="_blank" rel="me"><i class="fab fa-twitter"></i> X / Twitter</a>
@@ -777,11 +821,10 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="about">
-                            <!-- MOD İLE İLGİLİ METİNLER (üstte) -->
                             <div class="about-text">
                                 <p>My most popular project is <strong><a href="https://modrinth.com/mod/ardas-sculks" target="_blank">Arda's Sculks</a></strong>, a deep dark expansion that adds new blocks, mechanics, and a boss. But I've released over 10 mods for Forge and NeoForge, ranging from ores and tools to golems and psychological horror.</p>
                                 <p>If you enjoy my work, check out my Projects tab or find me on the links — I'm always working on something new.</p>
-                                <p style="margin-top: 24px;">— Ixra (Turkish Minecraft Modder)</p>
+                                <p style="margin-top: 24px;">— Ixra (Minecraft Modder)</p>
                             </div>
                             <div class="qa-section">
                                 <h3>❓ Arda's Sculks – Developer Q&A</h3>
@@ -813,9 +856,8 @@
                                     <span>▸ A bit more about me…</span>
                                 </button>
                                 <div class="extra-info-content" id="extra-content" style="display: none;">
-                                    <p>Hey! I'm <strong>Ixra</strong> (IxraPlayer / Ixranium), a <strong>Turkish Minecraft mod developer</strong> living in Istanbul. I've been playing Minecraft since I was <strong>6 years old</strong> — it's more than a game to me, it's the universe where I can turn my imagination into reality.</p>
-                                    <p>Over the years I haven't just played; I've <strong>built massive structures, drawn textures and pixel art, and developed mods</strong> that change how the game feels. I'm an ordinary high school student who loves creating, expanding, and always adding something new on top of what already exists. When I truly have the passion for an idea, I commit to it and deliver quality — I usually work alone and I'm not open to direct requests, because I believe creative freedom brings the best results.</p>
-                                    <p>My real name is <strong>Arda</strong>, but online everyone calls me Ixra. I'm 18 years old. I speak Turkish natively, and I know a little English and a little Arabic.</p>
+                                    <p>My real name is <strong>Arda</strong>, but online everyone calls me Ixra. I'm 18 years old and I live in <strong>Istanbul, Turkey</strong>. I speak <strong>Turkish</strong> natively, and I know a little English and a little Arabic.</p>
+                                    <p>Hey! I've been playing Minecraft since I was <strong>6 years old</strong> — it's more than a game to me, it's the universe where I can turn my imagination into reality. Over the years I haven't just played; I've <strong>built massive structures, drawn textures and pixel art, and developed mods</strong> that change how the game feels. I'm an ordinary high school student who loves creating, expanding, and always adding something new on top of what already exists. When I truly have the passion for an idea, I commit to it and deliver quality — I usually work alone and I'm not open to direct requests, because I believe creative freedom brings the best results.</p>
                                     <p>Honestly? I don't like playing games that much. What I truly love is <strong>developing, drawing, designing, and dreaming up new ideas</strong>.</p>
                                     <p><strong>Why I make mods:</strong> Every time I play a game, my mind starts creating new possibilities — different stories, mechanics, and twists that could have been there. It's purely for fun — and to see people download my mods and have a great time playing with them. That's what keeps me going.</p>
                                     <p><strong>Contact:</strong> You cannot reach me directly. If you have requests or bug reports, please leave a comment on <a href="https://www.curseforge.com/members/ixra/projects" target="_blank">CurseForge</a> or open an issue on <a href="https://github.com/IxraPlayer" target="_blank">GitHub</a>.</p>
@@ -832,7 +874,7 @@
 
         <div class="footer">
             <a href="https://ixraplayer.github.io" target="_blank">ixraplayer.github.io</a>
-            &nbsp;·&nbsp; Ixra · Turkish Minecraft Mod Developer
+            &nbsp;·&nbsp; Ixra · Minecraft Mod Developer
         </div>
     </div>
 
@@ -944,6 +986,73 @@
             extraToggle.querySelector('span').textContent =
                 isVisible ? '▸ A bit more about me…' : '▾ A bit more about me…';
         });
+    })();
+
+    /* =========================================================
+       GITHUB STATS (repos + stars + followers)
+       ========================================================= */
+    (async () => {
+        const GH_USER = 'IxraPlayer';
+        const GH_CACHE_KEY = 'ixra_github_stats_v1';
+        const GH_TTL = 6 * 60 * 60 * 1000; // 6 saat
+
+        const reposEl = document.getElementById('gh-repos');
+        const starsEl = document.getElementById('gh-stars');
+        const followersEl = document.getElementById('gh-followers');
+        if (!reposEl || !starsEl || !followersEl) return;
+
+        function ghFmt(n) {
+            if (n === null || n === undefined || isNaN(n)) return '?';
+            if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+            if (n >= 1_000) return (n / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+            return String(n);
+        }
+
+        // Cache
+        try {
+            const raw = localStorage.getItem(GH_CACHE_KEY);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && Date.now() - parsed.t < GH_TTL) {
+                    reposEl.textContent = ghFmt(parsed.d.repos);
+                    starsEl.textContent = ghFmt(parsed.d.stars);
+                    followersEl.textContent = ghFmt(parsed.d.followers);
+                    return;
+                }
+            }
+        } catch { /* ignore */ }
+
+        try {
+            const [userRes, reposRes] = await Promise.all([
+                fetch(`https://api.github.com/users/${GH_USER}`),
+                fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`)
+            ]);
+            if (!userRes.ok || !reposRes.ok) throw new Error('GitHub API error');
+            const user = await userRes.json();
+            const repos = await reposRes.json();
+
+            const stars = Array.isArray(repos)
+                ? repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0)
+                : 0;
+
+            const data = {
+                repos: user.public_repos || 0,
+                followers: user.followers || 0,
+                stars
+            };
+
+            reposEl.textContent = ghFmt(data.repos);
+            starsEl.textContent = ghFmt(data.stars);
+            followersEl.textContent = ghFmt(data.followers);
+
+            try {
+                localStorage.setItem(GH_CACHE_KEY, JSON.stringify({ t: Date.now(), d: data }));
+            } catch { /* quota */ }
+        } catch {
+            reposEl.textContent = '?';
+            starsEl.textContent = '?';
+            followersEl.textContent = '?';
+        }
     })();
 
     /* =========================================================
@@ -1189,10 +1298,9 @@
        PROJECTS + LIVE DOWNLOAD TOTALS (Modrinth + CurseForge)
        ========================================================= */
     (async () => {
-        const CACHE_KEY = 'ixra_stats_v9';
-        const CACHE_TTL = 6 * 60 * 60 * 1000; // 6 saat
+        const CACHE_KEY = 'ixra_stats_v10';
+        const CACHE_TTL = 6 * 60 * 60 * 1000;
 
-        // ⬇ TOPLAM İNDİRMEYE GÖRE SIRALI (en yüksek → en düşük)
         const projectsData = [
             { name: "Arda's Sculks",              modrinthSlug: 'ardas-sculks',                curseforgeSlug: 'ardas-sculks',                desc: 'Deep Dark expansion with new blocks, boss, and mechanics.', isSculks: true },
             { name: "Arda's Uncrafting Table",    modrinthSlug: 'ardas-uncrafting-table',      curseforgeSlug: 'ardas-uncrafting-table',      desc: 'Recycle items into their components.', isTrending: true },
@@ -1242,15 +1350,12 @@
             }
         }
 
-        // cfwidget — retry ile
         async function fetchCurseForgeDownloads(slug, attempt = 0) {
             if (!slug) return 0;
             try {
                 const res = await fetch(`https://api.cfwidget.com/minecraft/mc-mods/${slug}`);
                 if (!res.ok) {
-                    // 404 → mod yok, retry etme
                     if (res.status === 404) return 0;
-                    // 429/5xx → retry
                     if (attempt < 2) {
                         await new Promise(r => setTimeout(r, 500 * (attempt + 1)));
                         return fetchCurseForgeDownloads(slug, attempt + 1);
@@ -1259,7 +1364,6 @@
                 }
                 const data = await res.json();
                 const total = data.downloads?.total ?? data.downloadCount ?? 0;
-                // 0 dönerse ve retry hakkı varsa tekrar dene
                 if (total === 0 && attempt < 2) {
                     await new Promise(r => setTimeout(r, 600 * (attempt + 1)));
                     return fetchCurseForgeDownloads(slug, attempt + 1);
@@ -1274,7 +1378,6 @@
             }
         }
 
-        // ---------- Render ----------
         const container = document.getElementById('projects-container');
         container.innerHTML = projectsData.map(p => {
             let badgeHtml = '';
@@ -1286,7 +1389,8 @@
 
             const links = [];
             if (p.modrinthSlug) {
-                links.push(`<a href="https://modrinth.com/${p.modrinthSlug === 'uyghur-language-pack' ? 'resourcepack' : 'mod'}/${p.modrinthSlug}" class="project-link" target="_blank">Modrinth</a>`);
+                const mrCategory = p.modrinthSlug === 'uyghur-language-pack' ? 'resourcepack' : 'mod';
+                links.push(`<a href="https://modrinth.com/${mrCategory}/${p.modrinthSlug}" class="project-link" target="_blank">Modrinth</a>`);
             }
             if (p.curseforgeSlug) {
                 const cfCategory = p.curseforgeSlug === 'uyghur-language-pack' ? 'texture-packs' : 'mc-mods';
@@ -1361,7 +1465,6 @@
             return;
         }
 
-        // ✅ Her projeyi paralel çek
         const projectResults = await Promise.all(
             projectsData.map(async p => {
                 const [mr, cf] = await Promise.all([
@@ -1386,7 +1489,6 @@
             cfSum += r.cf;
         });
 
-        // ✅ TOPLAM = listelenen modların toplamı (kullanıcı API'sine güvenmiyoruz)
         const grandTotal = mrSum + cfSum;
 
         applyProjectData(perProject);
