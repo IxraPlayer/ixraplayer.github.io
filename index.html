@@ -243,42 +243,76 @@
             gap: 10px;
         }
 
+        /* ============ LINK BUTTONS (canlı markalı) ============ */
         .link-btn {
+            --brand-rgb: 74, 155, 181;
             display: flex;
             align-items: center;
             gap: 12px;
-            background: #1b2532;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 15px 22px;
+            background: linear-gradient(90deg,
+                rgba(var(--brand-rgb), 0.08) 0%,
+                #1b2532 40%,
+                #1b2532 100%);
+            border: 1px solid rgba(var(--brand-rgb), 0.15);
+            padding: 15px 22px 15px 26px;
             border-radius: 18px;
             color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
             font-size: 16px;
-            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.2s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
+            isolation: isolate;
         }
-        .link-btn i { width: 24px; text-align: center; font-size: 1.3em; flex-shrink: 0; }
+
+        /* Sol renk şeridi */
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg,
+                rgba(var(--brand-rgb), 1) 0%,
+                rgba(var(--brand-rgb), 0.4) 100%);
+            transition: width 0.25s, box-shadow 0.25s;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .link-btn:hover::before {
+            width: 6px;
+            box-shadow: 0 0 12px rgba(var(--brand-rgb), 0.7);
+        }
+
+        /* Shimmer */
         .link-btn::after {
             content: '';
             position: absolute;
             top: -50%; left: -100%;
             width: 80%; height: 200%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
             transform: skewX(-25deg);
             transition: transform 0.6s;
             pointer-events: none;
+            z-index: 0;
         }
-        .link-btn:hover::after { transform: translateX(250%) skewX(-25deg); }
+        .link-btn:hover::after { transform: translateX(280%) skewX(-25deg); }
+
         .link-btn:hover {
-            background: #222f3e;
-            border-color: var(--accent);
-            box-shadow: var(--shadow-hover), 0 0 20px rgba(74, 155, 181, 0.15);
+            background: linear-gradient(90deg,
+                rgba(var(--brand-rgb), 0.22) 0%,
+                #222f3e 40%,
+                #1b2532 100%);
+            border-color: rgba(var(--brand-rgb), 0.55);
+            box-shadow: var(--shadow-hover),
+                        0 0 24px rgba(var(--brand-rgb), 0.22),
+                        inset 0 0 0 1px rgba(var(--brand-rgb), 0.12);
             transform: translateY(-2px);
             color: white;
         }
+
+        .link-btn > * { position: relative; z-index: 2; }
 
         .link-btn .brand-icon {
             width: 22px;
@@ -288,15 +322,35 @@
             display: inline-block;
             filter: brightness(0) invert(1);
             opacity: 0.95;
-            transition: opacity 0.2s, transform 0.2s;
+            transition: opacity 0.2s, transform 0.25s, filter 0.25s;
             pointer-events: none;
         }
         .link-btn:hover .brand-icon {
             opacity: 1;
-            transform: scale(1.08);
+            transform: scale(1.12);
+            filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(var(--brand-rgb), 0.9));
         }
 
-        .github-stats {
+        .link-name {
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+
+        .link-handle {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-left: 2px;
+            transition: color 0.25s;
+            white-space: nowrap;
+        }
+        .link-btn:hover .link-handle {
+            color: rgba(var(--brand-rgb), 1);
+            text-shadow: 0 0 8px rgba(var(--brand-rgb), 0.5);
+        }
+
+        /* Sağdaki stat rozetleri */
+        .link-stats {
             margin-left: auto;
             display: flex;
             align-items: center;
@@ -325,14 +379,15 @@
             width: auto !important;
         }
         .link-btn:hover .gh-stat {
-            background: rgba(74, 155, 181, 0.12);
-            border-color: var(--accent-border);
-            color: var(--accent-bright);
+            background: rgba(var(--brand-rgb), 0.15);
+            border-color: rgba(var(--brand-rgb), 0.35);
+            color: rgb(var(--brand-rgb));
         }
         .link-btn:hover .gh-stat i {
-            color: var(--accent-bright) !important;
+            color: rgb(var(--brand-rgb)) !important;
         }
 
+        /* CurseForge follower badge — özel */
         .cf-followers {
             margin-left: auto;
             display: inline-flex;
@@ -363,9 +418,9 @@
             color: #ffc78a !important;
         }
 
-        /* ===== PROJECT ITEM (artık logo ortalaması renk alıyor) ===== */
+        /* ============ PROJECT ITEM ============ */
         .project-item {
-            --project-color: 74, 155, 181; /* default accent (fallback) */
+            --project-color: 74, 155, 181;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -386,7 +441,6 @@
             isolation: isolate;
         }
         .project-item::before {
-            /* Sağ üstte yumuşak, logo renginde ambient glow */
             content: '';
             position: absolute;
             top: -50%;
@@ -407,7 +461,6 @@
         }
         .project-item > * { position: relative; z-index: 1; }
 
-        /* ===== PROJECT INFO (wrap ile badge taşması önlendi) ===== */
         .project-info {
             display: flex;
             align-items: center;
@@ -526,7 +579,7 @@
         }
 
         .project-desc {
-            margin-left: 88px; /* ikon 76px + gap 12px */
+            margin-left: 88px;
             margin-top: -4px;
             color: var(--text-muted);
             font-size: 13px;
@@ -708,106 +761,55 @@
         .modal-body a { color: var(--accent-bright); text-decoration: none; }
         .modal-body a:hover { text-decoration: underline; }
 
-        .mod-detail-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
+        .mod-detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
         .mod-detail-icon {
-            width: 76px;
-            height: 76px;
-            border-radius: 14px;
-            object-fit: cover;
-            background: #0f1620;
-            border: 1px solid #2a3f50;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-            flex-shrink: 0;
+            width: 76px; height: 76px;
+            border-radius: 14px; object-fit: cover;
+            background: #0f1620; border: 1px solid #2a3f50;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); flex-shrink: 0;
         }
         .mod-detail-title { font-size: 22px; font-weight: 700; color: white; margin-bottom: 4px; }
         .mod-detail-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-        .mod-detail-desc {
-            font-size: 15px;
-            color: var(--text-secondary);
-            margin-bottom: 18px;
-            line-height: 1.6;
-        }
-        .mod-detail-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
+        .mod-detail-desc { font-size: 15px; color: var(--text-secondary); margin-bottom: 18px; line-height: 1.6; }
+        .mod-detail-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
         .mod-detail-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 22px;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border-radius: 22px;
             background: linear-gradient(135deg, #1e2a38 0%, #253344 100%);
-            color: #d0dce8;
-            text-decoration: none;
-            border: 1px solid #2d3e50;
-            font-weight: 600;
-            font-size: 14px;
+            color: #d0dce8; text-decoration: none;
+            border: 1px solid #2d3e50; font-weight: 600; font-size: 14px;
             transition: all 0.25s;
         }
         .mod-detail-link:hover {
             background: linear-gradient(135deg, #263748 0%, #30455a 100%);
-            border-color: var(--accent);
-            color: #fff;
+            border-color: var(--accent); color: #fff;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), 0 0 18px rgba(74, 155, 181, 0.2);
             transform: translateY(-2px);
         }
-        .mod-detail-link .brand-icon {
-            width: 18px;
-            height: 18px;
-            filter: brightness(0) invert(1);
-        }
+        .mod-detail-link .brand-icon { width: 18px; height: 18px; filter: brightness(0) invert(1); }
 
         .progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
         .progress-label {
-            width: 120px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            width: 120px; font-size: 13px; font-weight: 500; color: var(--text-secondary);
+            flex-shrink: 0; display: flex; align-items: center; gap: 6px;
         }
         .progress-label i { font-size: 12px; width: 16px; text-align: center; }
         .progress-bar-wrap {
-            flex: 1;
-            height: 8px;
+            flex: 1; height: 8px;
             background: rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
+            border-radius: 10px; overflow: hidden; position: relative;
         }
         .progress-bar-fill { height: 100%; border-radius: 10px; transition: width 0.8s ease; }
         .progress-bar-fill.language { background: linear-gradient(90deg, #facc15, #f59e0b); width: 20%; }
         .progress-bar-fill.gameplay { background: linear-gradient(90deg, #4ade80, #22c55e); width: 90%; }
         .progress-bar-fill.bugfix   { background: linear-gradient(90deg, #fb923c, #f97316); width: 60%; }
         .progress-bar-fill.quality  { background: linear-gradient(90deg, #60a5fa, #3b82f6); width: 50%; }
-        .progress-value {
-            width: 40px;
-            text-align: right;
-            font-size: 13px;
-            font-weight: 600;
-            color: white;
-            flex-shrink: 0;
-        }
+        .progress-value { width: 40px; text-align: right; font-size: 13px; font-weight: 600; color: white; flex-shrink: 0; }
         .progress-avg {
-            margin-top: 14px;
-            padding-top: 12px;
+            margin-top: 14px; padding-top: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            color: var(--accent-bright);
-            font-size: 14px;
+            display: flex; align-items: center; gap: 12px;
+            font-weight: 600; color: var(--accent-bright); font-size: 14px;
         }
         .progress-avg .progress-bar-wrap { height: 10px; flex: 1; }
         .progress-avg .progress-bar-fill {
@@ -827,21 +829,13 @@
             padding-top: 24px;
         }
         .qa-section h3 {
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
         }
         .qa-scroll { max-height: 420px; overflow-y: auto; padding-right: 8px; overscroll-behavior: contain; }
         .qa-bubble {
-            background: #1b2532;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 16px 18px;
-            margin-bottom: 12px;
+            background: #1b2532; border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px; padding: 16px 18px; margin-bottom: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: border-color 0.2s, box-shadow 0.2s;
         }
@@ -859,25 +853,14 @@
         }
         .video-showcase h3 { color: white; font-size: 18px; font-weight: 600; margin-bottom: 12px; }
         .video-wrapper {
-            background: #111922;
-            border-radius: 18px;
-            padding: 12px;
+            background: #111922; border-radius: 18px; padding: 12px;
             box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
         }
         .video-embed {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            background: #000;
+            position: relative; padding-bottom: 56.25%;
+            height: 0; overflow: hidden; border-radius: 12px; background: #000;
         }
-        .video-embed iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: 0;
-        }
+        .video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .video-caption { color: var(--text-secondary); font-size: 13px; margin-top: 8px; }
 
         .extra-info-section {
@@ -886,29 +869,19 @@
             padding-top: 16px;
         }
         .extra-info-toggle {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 14px;
-            font-family: inherit;
-            cursor: pointer;
-            padding: 6px 14px;
-            border-radius: 20px;
+            background: none; border: none; color: var(--text-muted);
+            font-size: 14px; font-family: inherit; cursor: pointer;
+            padding: 6px 14px; border-radius: 20px;
             transition: color 0.2s, background 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            display: flex; align-items: center; gap: 6px;
         }
         .extra-info-toggle:hover { color: var(--accent-bright); background: rgba(74, 155, 181, 0.08); }
         .extra-info-content {
-            margin-top: 12px;
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.7;
+            margin-top: 12px; color: var(--text-secondary);
+            font-size: 14px; line-height: 1.7;
             background: rgba(20, 28, 40, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 16px;
-            padding: 16px;
+            border-radius: 16px; padding: 16px;
         }
         .extra-info-content p { margin-bottom: 12px; }
         .extra-info-content strong { color: white; }
@@ -916,12 +889,9 @@
         .extra-info-content a:hover { text-decoration: underline; }
 
         .footer {
-            text-align: center;
-            font-size: 13px;
-            color: var(--text-muted);
+            text-align: center; font-size: 13px; color: var(--text-muted);
             border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 20px;
-            margin-top: 6px;
+            padding-top: 20px; margin-top: 6px;
         }
         .footer a { color: var(--accent-bright); text-decoration: none; font-weight: 500; }
         .footer a:hover { text-decoration: underline; }
@@ -932,15 +902,15 @@
             .profile-card { padding: 24px 14px; }
             .avatar { width: 85px; height: 85px; }
             .tab-btn { padding: 12px 12px; font-size: 12px; }
-            .link-btn-github { flex-wrap: wrap; }
-            .github-stats { margin-left: 0; width: 100%; margin-top: 8px; }
+            .link-btn { flex-wrap: wrap; padding-left: 22px; }
+            .link-stats { margin-left: 0; width: 100%; margin-top: 8px; }
+            .link-handle { display: none; }
             .project-item { flex-direction: column; align-items: flex-start; gap: 10px; }
             .project-info { flex: 1 1 auto; width: 100%; }
             .project-links { align-self: flex-end; }
             .project-downloads { align-self: flex-start; }
             .project-extra-actions { align-self: flex-end; }
-            .project-desc { margin-left: 0; }
-            .project-tags { margin-left: 0; }
+            .project-desc, .project-tags { margin-left: 0; }
             .progress-row { flex-wrap: wrap; }
             .progress-label { width: 90px; font-size: 11px; }
             .modal-dialog { max-width: 95vw; max-height: 88vh; border-radius: 14px; }
@@ -990,49 +960,62 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="links">
                             <div class="links-list">
-                                <a href="https://github.com/IxraPlayer" class="link-btn link-btn-github" target="_blank" rel="me">
+                                <a href="https://github.com/IxraPlayer" class="link-btn" style="--brand-rgb: 200, 200, 200;" target="_blank" rel="me">
                                     <img class="brand-icon" src="https://cdn.simpleicons.org/github/white" alt="" width="22" height="22" loading="lazy" decoding="async">
-                                    GitHub
-                                    <span class="github-stats" id="github-stats">
+                                    <span class="link-name">GitHub</span>
+                                    <span class="link-handle">@IxraPlayer</span>
+                                    <span class="link-stats" id="github-stats">
                                         <span class="gh-stat" title="Public repositories"><i class="fas fa-book"></i> <span id="gh-repos">…</span></span>
                                         <span class="gh-stat" title="Total stars earned"><i class="fas fa-star"></i> <span id="gh-stars">…</span></span>
                                         <span class="gh-stat" title="Followers"><i class="fas fa-users"></i> <span id="gh-followers">…</span></span>
                                     </span>
                                 </a>
-                                <a href="https://modrinth.com/user/Ixra" class="link-btn" target="_blank" rel="me">
+                                <a href="https://modrinth.com/user/Ixra" class="link-btn" style="--brand-rgb: 27, 217, 106;" target="_blank" rel="me">
                                     <img class="brand-icon" src="https://cdn.simpleicons.org/modrinth/white" alt="" width="22" height="22" loading="lazy" decoding="async">
-                                    Modrinth
+                                    <span class="link-name">Modrinth</span>
+                                    <span class="link-handle">@Ixra</span>
+                                    <span class="link-stats">
+                                        <span class="gh-stat" title="Published projects"><i class="fas fa-cube"></i> <span id="mr-projects">…</span></span>
+                                        <span class="gh-stat" title="Total downloads"><i class="fas fa-download"></i> <span id="mr-downloads">…</span></span>
+                                    </span>
                                 </a>
-                                <a href="https://www.curseforge.com/members/ixra/projects" class="link-btn" target="_blank" rel="me">
+                                <a href="https://www.curseforge.com/members/ixra/projects" class="link-btn" style="--brand-rgb: 241, 100, 54;" target="_blank" rel="me">
                                     <img class="brand-icon" src="https://cdn.simpleicons.org/curseforge/white" alt="" width="22" height="22" loading="lazy" decoding="async">
-                                    CurseForge
+                                    <span class="link-name">CurseForge</span>
+                                    <span class="link-handle">@Ixra</span>
                                     <span class="cf-followers" id="cf-followers" title="CurseForge followers">
                                         <i class="fas fa-users"></i> <span id="cf-follower-count">—</span>
                                     </span>
                                 </a>
-                                <a href="https://x.com/IxraPlayer" class="link-btn" target="_blank" rel="me">
+                                <a href="https://x.com/IxraPlayer" class="link-btn" style="--brand-rgb: 220, 220, 220;" target="_blank" rel="me">
                                     <img class="brand-icon" src="https://cdn.simpleicons.org/x/white" alt="" width="22" height="22" loading="lazy" decoding="async">
-                                    X / Twitter
+                                    <span class="link-name">X / Twitter</span>
+                                    <span class="link-handle">@IxraPlayer</span>
                                 </a>
-                                <a href="https://www.instagram.com/ixranium/" class="link-btn" target="_blank" rel="me">
+                                <a href="https://www.instagram.com/ixranium/" class="link-btn" style="--brand-rgb: 228, 64, 95;" target="_blank" rel="me">
                                     <img class="brand-icon" src="https://cdn.simpleicons.org/instagram/white" alt="" width="22" height="22" loading="lazy" decoding="async">
-                                    Instagram
+                                    <span class="link-name">Instagram</span>
+                                    <span class="link-handle">@ixranium</span>
                                 </a>
-                                <a href="https://www.tiktok.com/@ixraplayer" class="link-btn" target="_blank" rel="me">
+                                <a href="https://www.tiktok.com/@ixraplayer" class="link-btn" style="--brand-rgb: 255, 0, 80;" target="_blank" rel="me">
                                     <img class="brand-icon" src="https://cdn.simpleicons.org/tiktok/white" alt="" width="22" height="22" loading="lazy" decoding="async">
-                                    TikTok
+                                    <span class="link-name">TikTok</span>
+                                    <span class="link-handle">@ixraplayer</span>
                                 </a>
-                                <a href="https://www.reddit.com/user/Ixraplayer/" class="link-btn" target="_blank" rel="me">
+                                <a href="https://www.reddit.com/user/Ixraplayer/" class="link-btn" style="--brand-rgb: 255, 69, 0;" target="_blank" rel="me">
                                     <img class="brand-icon" src="https://cdn.simpleicons.org/reddit/white" alt="" width="22" height="22" loading="lazy" decoding="async">
-                                    Reddit
+                                    <span class="link-name">Reddit</span>
+                                    <span class="link-handle">u/Ixraplayer</span>
                                 </a>
-                                <a href="https://www.youtube.com/@Ixraplayer" class="link-btn" target="_blank" rel="me">
+                                <a href="https://www.youtube.com/@Ixraplayer" class="link-btn" style="--brand-rgb: 255, 0, 0;" target="_blank" rel="me">
                                     <img class="brand-icon" src="https://cdn.simpleicons.org/youtube/white" alt="" width="22" height="22" loading="lazy" decoding="async">
-                                    YouTube
+                                    <span class="link-name">YouTube</span>
+                                    <span class="link-handle">@Ixraplayer</span>
                                 </a>
-                                <a href="https://mcreator.net/user/756781/ixraultimate" class="link-btn" target="_blank" rel="me">
+                                <a href="https://mcreator.net/user/756781/ixraultimate" class="link-btn" style="--brand-rgb: 47, 91, 143;" target="_blank" rel="me">
                                     <img class="brand-icon" src="https://mcreator.net/favicon.ico" alt="" width="22" height="22" loading="lazy" decoding="async">
-                                    MCreator
+                                    <span class="link-name">MCreator</span>
+                                    <span class="link-handle">IxraUltimate</span>
                                 </a>
                             </div>
                         </div>
@@ -1170,9 +1153,7 @@
     </div>
 
     <script>
-    /* =========================================================
-       TAB SWITCHING + LAZY IFRAME LOADING
-       ========================================================= */
+    /* TAB SWITCHING + LAZY IFRAME */
     (function () {
         const tabBtns = document.querySelectorAll('.tab-btn');
         const panes = {
@@ -1187,28 +1168,18 @@
             pane.querySelectorAll('iframe[data-src]').forEach(f => {
                 if (loadedIframes.has(f)) return;
                 const src = f.dataset.src;
-                if (src && !f.src) {
-                    f.src = src;
-                    loadedIframes.add(f);
-                }
+                if (src && !f.src) { f.src = src; loadedIframes.add(f); }
             });
         }
-
         function switchTab(tabId) {
-            tabBtns.forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.tab === tabId);
-            });
+            tabBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
             Object.entries(panes).forEach(([id, pane]) => {
                 if (!pane) return;
                 pane.classList.toggle('active', id === tabId);
             });
             loadIframesIn(panes[tabId]);
         }
-
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-        });
-
+        tabBtns.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
         if ('requestIdleCallback' in window) {
             requestIdleCallback(() => loadIframesIn(panes.about), { timeout: 3000 });
         } else {
@@ -1216,9 +1187,7 @@
         }
     })();
 
-    /* =========================================================
-       EXTRA INFO TOGGLE
-       ========================================================= */
+    /* EXTRA INFO TOGGLE */
     (function () {
         const extraToggle = document.getElementById('extra-toggle');
         const extraContent = document.getElementById('extra-content');
@@ -1231,25 +1200,23 @@
         });
     })();
 
-    /* =========================================================
-       GITHUB STATS
-       ========================================================= */
+    /* NUMBER FORMATTER */
+    function ghFmt(n) {
+        if (n === null || n === undefined || isNaN(n)) return '?';
+        if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+        if (n >= 1_000) return (n / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+        return String(n);
+    }
+
+    /* GITHUB STATS */
     (async () => {
         const GH_USER = 'IxraPlayer';
         const GH_CACHE_KEY = 'ixra_github_stats_v1';
         const GH_TTL = 6 * 60 * 60 * 1000;
-
         const reposEl = document.getElementById('gh-repos');
         const starsEl = document.getElementById('gh-stars');
         const followersEl = document.getElementById('gh-followers');
         if (!reposEl || !starsEl || !followersEl) return;
-
-        function ghFmt(n) {
-            if (n === null || n === undefined || isNaN(n)) return '?';
-            if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
-            if (n >= 1_000) return (n / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
-            return String(n);
-        }
 
         try {
             const raw = localStorage.getItem(GH_CACHE_KEY);
@@ -1262,34 +1229,23 @@
                     return;
                 }
             }
-        } catch { /* ignore */ }
+        } catch {}
 
         try {
             const [userRes, reposRes] = await Promise.all([
                 fetch(`https://api.github.com/users/${GH_USER}`),
                 fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`)
             ]);
-            if (!userRes.ok || !reposRes.ok) throw new Error('GitHub API error');
+            if (!userRes.ok || !reposRes.ok) throw new Error();
             const user = await userRes.json();
             const repos = await reposRes.json();
-
             const stars = Array.isArray(repos)
-                ? repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0)
-                : 0;
-
-            const data = {
-                repos: user.public_repos || 0,
-                followers: user.followers || 0,
-                stars
-            };
-
+                ? repos.reduce((s, r) => s + (r.stargazers_count || 0), 0) : 0;
+            const data = { repos: user.public_repos || 0, followers: user.followers || 0, stars };
             reposEl.textContent = ghFmt(data.repos);
             starsEl.textContent = ghFmt(data.stars);
             followersEl.textContent = ghFmt(data.followers);
-
-            try {
-                localStorage.setItem(GH_CACHE_KEY, JSON.stringify({ t: Date.now(), d: data }));
-            } catch { /* quota */ }
+            try { localStorage.setItem(GH_CACHE_KEY, JSON.stringify({ t: Date.now(), d: data })); } catch {}
         } catch {
             reposEl.textContent = '?';
             starsEl.textContent = '?';
@@ -1297,14 +1253,48 @@
         }
     })();
 
-    /* =========================================================
-       CURSEFORGE FOLLOWERS (manual)
-       ========================================================= */
+    /* MODRINTH USER STATS */
+    (async () => {
+        const MR_USER = 'Ixra';
+        const CACHE_KEY = 'ixra_modrinth_stats_v1';
+        const TTL = 6 * 60 * 60 * 1000;
+        const projectsEl = document.getElementById('mr-projects');
+        const downloadsEl = document.getElementById('mr-downloads');
+        if (!projectsEl || !downloadsEl) return;
+
+        try {
+            const raw = localStorage.getItem(CACHE_KEY);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && Date.now() - parsed.t < TTL) {
+                    projectsEl.textContent = ghFmt(parsed.d.projects);
+                    downloadsEl.textContent = ghFmt(parsed.d.downloads);
+                    return;
+                }
+            }
+        } catch {}
+
+        try {
+            const res = await fetch(`https://api.modrinth.com/v2/user/${MR_USER}/projects`);
+            if (!res.ok) throw new Error();
+            const projects = await res.json();
+            const downloads = Array.isArray(projects)
+                ? projects.reduce((s, p) => s + (p.downloads || 0), 0) : 0;
+            const data = { projects: projects.length, downloads };
+            projectsEl.textContent = ghFmt(data.projects);
+            downloadsEl.textContent = ghFmt(data.downloads);
+            try { localStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), d: data })); } catch {}
+        } catch {
+            projectsEl.textContent = '?';
+            downloadsEl.textContent = '?';
+        }
+    })();
+
+    /* CURSEFORGE FOLLOWERS (manual) */
     (function () {
-        const CF_FOLLOWERS = 0; // 👈 CurseForge profilinden bakıp güncelle
+        const CF_FOLLOWERS = 0; // 👈 CurseForge profilinden güncelle
         const cfCountEl = document.getElementById('cf-follower-count');
         if (!cfCountEl) return;
-
         if (CF_FOLLOWERS > 0) {
             cfCountEl.textContent = CF_FOLLOWERS.toLocaleString('en-US');
         } else {
@@ -1313,9 +1303,7 @@
         }
     })();
 
-    /* =========================================================
-       🎨 AVERAGE COLOR FROM IMAGE
-       ========================================================= */
+    /* AVERAGE COLOR FROM IMAGE */
     async function getAverageColorFromUrl(url) {
         if (!url) return null;
         return new Promise((resolve) => {
@@ -1323,50 +1311,33 @@
             img.crossOrigin = 'anonymous';
             let settled = false;
             const finish = (val) => { if (!settled) { settled = true; resolve(val); } };
-
             const timer = setTimeout(() => finish(null), 4000);
-
             img.onload = () => {
                 try {
                     const size = 24;
                     const canvas = document.createElement('canvas');
-                    canvas.width = size;
-                    canvas.height = size;
+                    canvas.width = size; canvas.height = size;
                     const ctx = canvas.getContext('2d', { willReadFrequently: true });
                     ctx.drawImage(img, 0, 0, size, size);
                     const data = ctx.getImageData(0, 0, size, size).data;
-
                     let r = 0, g = 0, b = 0, count = 0;
                     for (let i = 0; i < data.length; i += 4) {
-                        const a = data[i + 3];
-                        if (a < 128) continue;
-                        const rr = data[i], gg = data[i + 1], bb = data[i + 2];
-                        const brightness = (rr + gg + bb) / 3;
-                        // Çok koyu veya çok açık (muhtemelen arka plan) pikselleri atla
-                        if (brightness < 25 || brightness > 230) continue;
-                        // Aşırı doygun olmayan (gri) pikselleri yarı ağırlıkla al
+                        if (data[i + 3] < 128) continue;
+                        const rr = data[i], gg = data[i+1], bb = data[i+2];
+                        const br = (rr + gg + bb) / 3;
+                        if (br < 25 || br > 230) continue;
                         r += rr; g += gg; b += bb; count++;
                     }
                     clearTimeout(timer);
                     if (count === 0) return finish(null);
-                    resolve([
-                        Math.round(r / count),
-                        Math.round(g / count),
-                        Math.round(b / count)
-                    ]);
-                } catch (e) {
-                    clearTimeout(timer);
-                    finish(null);
-                }
+                    resolve([Math.round(r/count), Math.round(g/count), Math.round(b/count)]);
+                } catch { clearTimeout(timer); finish(null); }
             };
             img.onerror = () => { clearTimeout(timer); finish(null); };
             img.src = url;
         });
     }
-
-    // Cache: URL → renk (session boyunca)
     const colorCache = new Map();
-
     async function applyProjectColor(projectItem, iconUrl) {
         if (!projectItem || !iconUrl) return;
         if (colorCache.has(iconUrl)) {
@@ -1379,37 +1350,27 @@
             const str = `${rgb[0]}, ${rgb[1]}, ${rgb[2]}`;
             colorCache.set(iconUrl, str);
             projectItem.style.setProperty('--project-color', str);
-        } else {
-            colorCache.set(iconUrl, null);
-        }
+        } else colorCache.set(iconUrl, null);
     }
 
-    /* =========================================================
-       MODALS
-       ========================================================= */
+    /* MODALS */
     (function () {
         const detailModalOverlay = document.getElementById('ardas-detail-modal');
         const detailModalBody = document.getElementById('detail-modal-body');
         const closeDetailBtn = document.getElementById('modal-close-detail');
-
         const genericModalOverlay = document.getElementById('generic-mod-modal');
         const genericModalTitle = document.getElementById('generic-modal-title');
         const genericModalBody = document.getElementById('generic-modal-body');
         const closeGenericBtn = document.getElementById('modal-close-generic');
-
         const progressModalOverlay = document.getElementById('progress-modal');
         const closeProgressBtn = document.getElementById('modal-close-progress');
 
         function openDetailModal(content) {
             detailModalBody.innerHTML = content;
             detailModalBody.querySelectorAll('img').forEach(img => {
-                img.loading = 'lazy';
-                img.decoding = 'async';
-                if (!img.alt) img.alt = '';
+                img.loading = 'lazy'; img.decoding = 'async'; if (!img.alt) img.alt = '';
             });
-            detailModalBody.querySelectorAll('iframe').forEach(f => {
-                f.loading = 'lazy';
-            });
+            detailModalBody.querySelectorAll('iframe').forEach(f => f.loading = 'lazy');
             detailModalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1418,7 +1379,6 @@
             document.body.style.overflow = '';
             detailModalBody.innerHTML = '';
         }
-
         function openGenericModal(title, html) {
             genericModalTitle.textContent = title;
             genericModalBody.innerHTML = html;
@@ -1430,22 +1390,18 @@
             document.body.style.overflow = '';
             genericModalBody.innerHTML = '';
         }
-
         function openProgressModal() {
             progressModalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
-            const bars = progressModalOverlay.querySelectorAll('.progress-bar-fill');
-            bars.forEach(bar => {
-                const finalWidth = bar.dataset.finalWidth || bar.style.width || getComputedStyle(bar).width;
-                bar.dataset.finalWidth = finalWidth;
+            progressModalOverlay.querySelectorAll('.progress-bar-fill').forEach(bar => {
+                const fw = bar.dataset.finalWidth || bar.style.width || getComputedStyle(bar).width;
+                bar.dataset.finalWidth = fw;
                 bar.style.transition = 'none';
                 bar.style.width = '0%';
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        bar.style.transition = '';
-                        bar.style.width = finalWidth;
-                    });
-                });
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    bar.style.transition = '';
+                    bar.style.width = fw;
+                }));
             });
         }
         function closeProgressModal() {
@@ -1454,18 +1410,11 @@
         }
 
         closeDetailBtn.addEventListener('click', closeDetailModal);
-        detailModalOverlay.addEventListener('click', e => {
-            if (e.target === detailModalOverlay) closeDetailModal();
-        });
+        detailModalOverlay.addEventListener('click', e => { if (e.target === detailModalOverlay) closeDetailModal(); });
         closeGenericBtn.addEventListener('click', closeGenericModal);
-        genericModalOverlay.addEventListener('click', e => {
-            if (e.target === genericModalOverlay) closeGenericModal();
-        });
+        genericModalOverlay.addEventListener('click', e => { if (e.target === genericModalOverlay) closeGenericModal(); });
         closeProgressBtn.addEventListener('click', closeProgressModal);
-        progressModalOverlay.addEventListener('click', e => {
-            if (e.target === progressModalOverlay) closeProgressModal();
-        });
-
+        progressModalOverlay.addEventListener('click', e => { if (e.target === progressModalOverlay) closeProgressModal(); });
         document.addEventListener('keydown', e => {
             if (e.key !== 'Escape') return;
             if (detailModalOverlay.classList.contains('active')) closeDetailModal();
@@ -1634,7 +1583,6 @@
             <p style="text-align:center;">For more detailed information about the mod: "https://github.com/IxraPlayer/Ardas-Sculks"</p>
             `;
             openDetailModal(detailHTML);
-
             requestAnimationFrame(() => {
                 detailModalBody.querySelectorAll('iframe[data-src]').forEach(f => {
                     if (!f.src) f.src = f.dataset.src;
@@ -1647,30 +1595,18 @@
         window.openGenericModDetail = function (slug) {
             const p = projectsData.find(item => (item.modrinthSlug || item.curseforgeSlug) === slug);
             if (!p) return;
-
-            const versionTags = (p.versions || []).map(v =>
-                `<span class="version-tag">${v}</span>`
-            ).join('');
-            const loaderTags = (p.loaders || []).map(l =>
-                `<span class="loader-tag ${l.toLowerCase() === 'forge' ? 'forge' : ''}">${l}</span>`
-            ).join('');
-
+            const versionTags = (p.versions || []).map(v => `<span class="version-tag">${v}</span>`).join('');
+            const loaderTags = (p.loaders || []).map(l => `<span class="loader-tag ${l.toLowerCase() === 'forge' ? 'forge' : ''}">${l}</span>`).join('');
             const links = [];
             if (p.modrinthSlug) {
                 const mrCat = p.modrinthSlug === 'uyghur-language-pack' ? 'resourcepack' : 'mod';
-                links.push(`<a href="https://modrinth.com/${mrCat}/${p.modrinthSlug}" class="mod-detail-link" target="_blank">
-                    <img class="brand-icon" src="https://cdn.simpleicons.org/modrinth/white" alt=""> Modrinth
-                </a>`);
+                links.push(`<a href="https://modrinth.com/${mrCat}/${p.modrinthSlug}" class="mod-detail-link" target="_blank"><img class="brand-icon" src="https://cdn.simpleicons.org/modrinth/white" alt=""> Modrinth</a>`);
             }
             if (p.curseforgeSlug) {
                 const cfCat = p.curseforgeSlug === 'uyghur-language-pack' ? 'texture-packs' : 'mc-mods';
-                links.push(`<a href="https://www.curseforge.com/minecraft/${cfCat}/${p.curseforgeSlug}" class="mod-detail-link" target="_blank">
-                    <img class="brand-icon" src="https://cdn.simpleicons.org/curseforge/white" alt=""> CurseForge
-                </a>`);
+                links.push(`<a href="https://www.curseforge.com/minecraft/${cfCat}/${p.curseforgeSlug}" class="mod-detail-link" target="_blank"><img class="brand-icon" src="https://cdn.simpleicons.org/curseforge/white" alt=""> CurseForge</a>`);
             }
-
             const iconUrl = p.fallbackIcon || `https://cdn.modrinth.com/data/${p.modrinthSlug}/icon.png`;
-
             const html = `
                 <div class="mod-detail-header">
                     <img class="mod-detail-icon" src="${iconUrl}" alt="${p.name}" onerror="this.style.display='none'">
@@ -1682,18 +1618,15 @@
                 <div class="mod-detail-desc">${p.desc}</div>
                 <div class="mod-detail-actions">${links.join('')}</div>
             `;
-
             openGenericModal(`📦 ${p.name}`, html);
         };
     })();
 
-    /* =========================================================
-       PROJECTS + LIVE DOWNLOAD TOTALS
-       ========================================================= */
+    /* PROJECTS + LIVE DOWNLOAD TOTALS */
     let projectsData = [];
 
     (async () => {
-        const CACHE_KEY = 'ixra_stats_v11';
+        const CACHE_KEY = 'ixra_stats_v12';
         const CACHE_TTL = 6 * 60 * 60 * 1000;
 
         projectsData = [
@@ -1713,198 +1646,4 @@
 
         function fmt(n) {
             if (n === null || n === undefined || isNaN(n)) return '?';
-            if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
-            if (n >= 1_000) return (n / 1_000).toFixed(1) + 'K';
-            return n.toString();
-        }
-
-        function readCache() {
-            try {
-                const raw = localStorage.getItem(CACHE_KEY);
-                if (!raw) return null;
-                const parsed = JSON.parse(raw);
-                if (!parsed || Date.now() - parsed.timestamp > CACHE_TTL) return null;
-                return parsed.data;
-            } catch { return null; }
-        }
-        function writeCache(data) {
-            try {
-                localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
-            } catch { /* quota */ }
-        }
-
-        async function fetchModrinthProject(slug) {
-            if (!slug) return { downloads: 0, icon_url: null };
-            try {
-                const res = await fetch(`https://api.modrinth.com/v2/project/${slug}`);
-                if (!res.ok) return { downloads: 0, icon_url: null };
-                const data = await res.json();
-                return { downloads: data.downloads || 0, icon_url: data.icon_url || null };
-            } catch {
-                return { downloads: 0, icon_url: null };
-            }
-        }
-
-        async function fetchCurseForgeDownloads(slug, attempt = 0) {
-            if (!slug) return 0;
-            try {
-                const res = await fetch(`https://api.cfwidget.com/minecraft/mc-mods/${slug}`);
-                if (!res.ok) {
-                    if (res.status === 404) return 0;
-                    if (attempt < 2) {
-                        await new Promise(r => setTimeout(r, 500 * (attempt + 1)));
-                        return fetchCurseForgeDownloads(slug, attempt + 1);
-                    }
-                    return 0;
-                }
-                const data = await res.json();
-                const total = data.downloads?.total ?? data.downloadCount ?? 0;
-                if (total === 0 && attempt < 2) {
-                    await new Promise(r => setTimeout(r, 600 * (attempt + 1)));
-                    return fetchCurseForgeDownloads(slug, attempt + 1);
-                }
-                return total;
-            } catch {
-                if (attempt < 2) {
-                    await new Promise(r => setTimeout(r, 500 * (attempt + 1)));
-                    return fetchCurseForgeDownloads(slug, attempt + 1);
-                }
-                return 0;
-            }
-        }
-
-        const container = document.getElementById('projects-container');
-        container.innerHTML = projectsData.map(p => {
-            let badgeHtml = '';
-            if (p.isSculks) {
-                badgeHtml = '<span class="project-badge badge-popular">MOST POPULAR</span>';
-            } else if (p.isTrending) {
-                badgeHtml = '<span class="project-badge badge-trending">TRENDING</span>';
-            }
-
-            const links = [];
-            if (p.modrinthSlug) {
-                const mrCategory = p.modrinthSlug === 'uyghur-language-pack' ? 'resourcepack' : 'mod';
-                links.push(`<a href="https://modrinth.com/${mrCategory}/${p.modrinthSlug}" class="project-link" target="_blank">Modrinth</a>`);
-            }
-            if (p.curseforgeSlug) {
-                const cfCategory = p.curseforgeSlug === 'uyghur-language-pack' ? 'texture-packs' : 'mc-mods';
-                links.push(`<a href="https://www.curseforge.com/minecraft/${cfCategory}/${p.curseforgeSlug}" class="project-link" target="_blank">CurseForge</a>`);
-            }
-
-            const versionTags = (p.versions || []).map(v =>
-                `<span class="version-tag">${v}</span>`
-            ).join('');
-            const loaderTags = (p.loaders || []).map(l =>
-                `<span class="loader-tag ${l.toLowerCase() === 'forge' ? 'forge' : ''}">${l}</span>`
-            ).join('');
-
-            let extraActionsHtml = `
-                <div class="project-extra-actions">
-                  <button class="detail-popup-btn" onclick="openGenericModDetail('${p.modrinthSlug || p.curseforgeSlug}')" title="View details">
-                    <i class="fas fa-info-circle"></i> Details
-                  </button>
-                </div>`;
-            if (p.isSculks) {
-                extraActionsHtml = `
-                <div class="project-extra-actions">
-                  <button class="detail-popup-btn" onclick="openArdasDetailModal()" title="View full details">
-                    <i class="fas fa-info-circle"></i> Details
-                  </button>
-                  <button class="progress-btn" onclick="openProgressModal()" title="Development progress">
-                    <i class="fas fa-tasks"></i> Progress
-                    <div class="progress-bar-mini">
-                      <div class="progress-bar-mini-fill"></div>
-                    </div>
-                    <span style="font-size:10px;">55%</span>
-                  </button>
-                </div>`;
-            }
-
-            return `
-            <div class="project-item" data-slug="${p.modrinthSlug || p.curseforgeSlug}">
-              <div class="project-info">
-                <img class="project-icon" src="${p.fallbackIcon || ''}" alt="" width="76" height="76" loading="lazy" decoding="async" style="${p.fallbackIcon ? '' : 'display:none;'}">
-                <span class="project-name">${p.name}${badgeHtml}</span>
-              </div>
-              <span class="project-downloads">...</span>
-              <div class="project-links">${links.join('')}</div>
-              ${extraActionsHtml}
-              <div class="project-tags">${versionTags}${loaderTags}</div>
-              <div class="project-desc">${p.desc}</div>
-            </div>`;
-        }).join('');
-
-        const totalEl = document.getElementById('total-downloads');
-
-        function applyProjectData(perProject) {
-            projectsData.forEach((p, index) => {
-                const item = container.children[index];
-                if (!item) return;
-                const iconImg = item.querySelector('.project-icon');
-                const downloadsSpan = item.querySelector('.project-downloads');
-                const key = p.modrinthSlug || p.curseforgeSlug;
-                const d = perProject[key];
-                if (!d) {
-                    downloadsSpan.textContent = '?';
-                    return;
-                }
-                const total = (d.mr || 0) + (d.cf || 0);
-                downloadsSpan.textContent = fmt(total);
-                const iconUrl = d.icon || p.fallbackIcon;
-                if (iconUrl) {
-                    iconImg.src = iconUrl;
-                    iconImg.style.display = 'block';
-                    // 🎨 Kartın arka planına ikonun ortalama rengini uygula
-                    applyProjectColor(item, iconUrl);
-                } else {
-                    iconImg.style.display = 'none';
-                }
-            });
-        }
-
-        function applyTotal(total) {
-            totalEl.textContent = total > 0 ? fmt(total) + '+' : '—';
-            totalEl.classList.remove('loading-val');
-        }
-
-        const cache = readCache();
-        if (cache && cache.perProject) {
-            applyProjectData(cache.perProject);
-            applyTotal(cache.total || 0);
-            return;
-        }
-
-        const projectResults = await Promise.all(
-            projectsData.map(async p => {
-                const [mr, cf] = await Promise.all([
-                    fetchModrinthProject(p.modrinthSlug),
-                    fetchCurseForgeDownloads(p.curseforgeSlug)
-                ]);
-                return {
-                    key: p.modrinthSlug || p.curseforgeSlug,
-                    mr: mr.downloads,
-                    cf,
-                    icon: mr.icon_url
-                };
-            })
-        );
-
-        const perProject = {};
-        let mrSum = 0;
-        let cfSum = 0;
-        projectResults.forEach(r => {
-            perProject[r.key] = { mr: r.mr, cf: r.cf, icon: r.icon };
-            mrSum += r.mr;
-            cfSum += r.cf;
-        });
-
-        const grandTotal = mrSum + cfSum;
-
-        applyProjectData(perProject);
-        applyTotal(grandTotal);
-        writeCache({ perProject, total: grandTotal });
-    })();
-    </script>
-</body>
-</html>
+            if (n >= 1_000_000) return (n / 1_000_000).toFixed(1
