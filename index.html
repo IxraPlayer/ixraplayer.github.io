@@ -84,7 +84,7 @@
         body {
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            justify-content: center;   /* ← YATAY ORTALAMA */
             align-items: flex-start;
             font-family: 'Inter', sans-serif;
             font-weight: 400;
@@ -102,6 +102,7 @@
         .profile-card {
             max-width: 980px;
             width: 100%;
+            margin: 10px auto 0;       /* ← ORTALAMA İÇİN */
             background: var(--card-bg);
             border-radius: var(--radius-card);
             padding: 36px 32px;
@@ -109,7 +110,6 @@
             border: 1px solid var(--card-border);
             position: relative;
             z-index: 1;
-            margin-top: 10px;
         }
 
         .profile-header {
@@ -771,12 +771,13 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="about">
+                        <!-- MOD İLE İLGİLİ METİNLER YUKARIDA -->
                         <div class="about-text">
+                            <p>My most popular project is <strong><a href="https://modrinth.com/mod/ardas-sculks" target="_blank">Arda's Sculks</a></strong>, a deep dark expansion that adds new blocks, mechanics, and a boss. But I've released over 10 mods for Forge and NeoForge, ranging from ores and tools to golems and psychological horror.</p>
+                            <p>If you enjoy my work, check out my Projects tab or find me on the links — I'm always working on something new.</p>
                             <p>Hey! I'm <strong>Ixra</strong> (IxraPlayer / Ixranium), a <strong>Turkish Minecraft mod developer</strong> living in Istanbul. I've been playing Minecraft since I was <strong>6 years old</strong> — it's more than a game to me, it's the universe where I can turn my imagination into reality.</p>
                             <p>Over the years I haven't just played; I've <strong>built massive structures, drawn textures and pixel art, and developed mods</strong> that change how the game feels. I'm an ordinary high school student who loves creating, expanding, and always adding something new on top of what already exists. When I truly have the passion for an idea, I commit to it and deliver quality — I usually work alone and I'm not open to direct requests, because I believe creative freedom brings the best results.</p>
                             <p><strong>Why I make mods:</strong> Every time I play a game, my mind starts creating new possibilities — different stories, mechanics, and twists that could have been there. I always want to bring those ideas to life, and Minecraft gives me the perfect canvas to build them and share them with others.</p>
-                            <p>My most popular project is <strong><a href="https://modrinth.com/mod/ardas-sculks" target="_blank">Arda's Sculks</a></strong>, a deep dark expansion that adds new blocks, mechanics, and a boss. But I've released over 10 mods for Forge and NeoForge, ranging from ores and tools to golems and psychological horror.</p>
-                            <p>If you enjoy my work, check out my Projects tab or find me on the links — I'm always working on something new.</p>
                             <p style="margin-top: 24px;">— Ixra (Turkish Minecraft Modder)</p>
                         </div>
                         <div class="qa-section">
@@ -1183,11 +1184,10 @@
    PROJECTS + LIVE DOWNLOAD TOTALS (Modrinth + CurseForge)
    ========================================================= */
 (async () => {
-    const CACHE_KEY = 'ixra_stats_v6';
+    const CACHE_KEY = 'ixra_stats_v7';
     const CACHE_TTL = 6 * 60 * 60 * 1000; // 6 saat
 
     // ⬇ TOPLAM İNDİRMEYE GÖRE SIRALI (en yüksek → en düşük)
-    // Modrinth + CurseForge toplam indirmeleri baz alınmıştır.
     const projectsData = [
         {
             name: "Arda's Sculks",
@@ -1249,19 +1249,19 @@
         {
             name: "Arda's Cobblestone Generator",
             modrinthSlug: 'ardas-cobblestone-generator',
-            curseforgeSlug: null,
+            curseforgeSlug: 'ardas-cobblestone-generator',   /* ← ARTIK MEVCUT */
             desc: 'Automatic cobblestone generator.'
         },
         {
             name: "Arda's Special Abilities",
             modrinthSlug: 'ardas-special-abilities',
-            curseforgeSlug: null,
+            curseforgeSlug: 'ardas-special-abilities',       /* ← ARTIK MEVCUT */
             desc: 'Unique player abilities.'
         },
         {
             name: "Uyghur Language Pack",
             modrinthSlug: 'uyghur-language-pack',
-            curseforgeSlug: null,
+            curseforgeSlug: 'uyghur-language-pack',           /* ← TEXTURE PACK (cfwidget bulamaz) */
             desc: 'Adds Uyghur language support to Minecraft.'
         }
     ];
@@ -1300,14 +1300,12 @@
         }
     }
 
-    // cfwidget API — CurseForge indirme sayıları için (Modrinth'teki gibi canlı)
     async function fetchCurseForgeDownloads(slug) {
         if (!slug) return 0;
         try {
             const res = await fetch(`https://api.cfwidget.com/minecraft/mc-mods/${slug}`);
             if (!res.ok) return 0;
             const data = await res.json();
-            // cfwidget bazen "downloads" altında obje döner: { total: N, monthly: N }
             return data.downloads?.total ?? data.downloadCount ?? 0;
         } catch {
             return 0;
@@ -1333,7 +1331,6 @@
             badgeHtml = '<span class="project-badge badge-trending">TRENDING</span>';
         }
 
-        // Dinamik link oluşturma — CurseForge'da olmayan modlar için "disabled"
         const links = [];
         if (p.modrinthSlug) {
             links.push(`<a href="https://modrinth.com/mod/${p.modrinthSlug}" class="project-link" target="_blank">Modrinth</a>`);
@@ -1416,7 +1413,6 @@
         return;
     }
 
-    // Paralel fetch: her proje için MR + CF
     const [projectResults, mrUserTotal] = await Promise.all([
         Promise.all(projectsData.map(async p => {
             const [mr, cf] = await Promise.all([
