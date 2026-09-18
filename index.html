@@ -392,9 +392,9 @@
             min-width: 160px;
         }
         .project-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
+            width: 76px;
+            height: 76px;
+            border-radius: 12px;
             object-fit: cover;
             background: #0f1620;
             border: 1px solid #2a3f50;
@@ -487,6 +487,43 @@
             font-size: 13px;
             padding-right: 20px;
             width: 100%;
+        }
+
+        /* ===== Version & Loader Tags ===== */
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-left: 50px;
+            margin-top: 4px;
+            width: 100%;
+        }
+        .version-tag {
+            font-size: 9px;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 8px;
+            background: rgba(93, 184, 212, 0.15);
+            border: 1px solid rgba(93, 184, 212, 0.3);
+            color: var(--accent-bright);
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        .loader-tag {
+            font-size: 9px;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 8px;
+            background: rgba(74, 222, 128, 0.12);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            color: #4ade80;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        .loader-tag.forge {
+            background: rgba(249, 115, 22, 0.12);
+            border-color: rgba(249, 115, 22, 0.3);
+            color: #fb923c;
         }
 
         .project-extra-actions {
@@ -626,6 +663,64 @@
         .modal-body h1, .modal-body h2, .modal-body h3 { color: white; margin-top: 18px; margin-bottom: 8px; }
         .modal-body a { color: var(--accent-bright); text-decoration: none; }
         .modal-body a:hover { text-decoration: underline; }
+
+        /* ===== Generic Mod Detail Modal ===== */
+        .mod-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .mod-detail-icon {
+            width: 76px;
+            height: 76px;
+            border-radius: 14px;
+            object-fit: cover;
+            background: #0f1620;
+            border: 1px solid #2a3f50;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            flex-shrink: 0;
+        }
+        .mod-detail-title { font-size: 22px; font-weight: 700; color: white; margin-bottom: 4px; }
+        .mod-detail-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+        .mod-detail-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+        .mod-detail-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .mod-detail-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #1e2a38 0%, #253344 100%);
+            color: #d0dce8;
+            text-decoration: none;
+            border: 1px solid #2d3e50;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.25s;
+        }
+        .mod-detail-link:hover {
+            background: linear-gradient(135deg, #263748 0%, #30455a 100%);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), 0 0 18px rgba(74, 155, 181, 0.2);
+            transform: translateY(-2px);
+        }
+        .mod-detail-link .brand-icon {
+            width: 18px;
+            height: 18px;
+            filter: brightness(0) invert(1);
+        }
 
         .progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
         .progress-label {
@@ -801,6 +896,7 @@
             .project-downloads { align-self: flex-start; }
             .project-extra-actions { align-self: flex-end; }
             .project-desc { margin-left: 0; }
+            .project-tags { margin-left: 0; }
             .progress-row { flex-wrap: wrap; }
             .progress-label { width: 90px; font-size: 11px; }
             .modal-dialog { max-width: 95vw; max-height: 88vh; border-radius: 14px; }
@@ -902,6 +998,24 @@
                                 <p>If you enjoy my work, check out my Projects tab or find me on the links — I'm always working on something new.</p>
                                 <p style="margin-top: 24px;">— Ixra (Minecraft Modder)</p>
                             </div>
+
+                            <!-- ===== GENERAL FAQ ===== -->
+                            <div class="qa-section">
+                                <h3>❓ General FAQ</h3>
+                                <div class="qa-scroll">
+                                    <div class="qa-bubble"><div class="qa-question">Can I use your mods in my modpack?</div><div class="qa-answer">Yes! All of my mods are modpack-friendly. You can include them in any modpack, public or private.</div></div>
+                                    <div class="qa-bubble"><div class="qa-question">Can I use your mods on my server?</div><div class="qa-answer">Absolutely. All mods are multiplayer-compatible and work on servers.</div></div>
+                                    <div class="qa-bubble"><div class="qa-question">What's the difference between Forge and NeoForge?</div><div class="qa-answer">NeoForge is the modern fork of Forge and is the primary loader I develop for. I also release Forge versions for older Minecraft versions (like 1.20.1).</div></div>
+                                    <div class="qa-bubble"><div class="qa-question">Do you take mod requests?</div><div class="qa-answer">Not directly — I work alone and prefer creative freedom. But you can always leave suggestions on CurseForge or GitHub.</div></div>
+                                    <div class="qa-bubble"><div class="qa-question">How do I report a bug?</div><div class="qa-answer">The best way is through GitHub Issues. Go to the repository on my profile, click "Issues", and describe the problem in detail.</div></div>
+                                    <div class="qa-bubble"><div class="qa-question">Why are some mods only on Modrinth and not CurseForge?</div><div class="qa-answer">I release on both platforms whenever possible. If a mod isn't on CurseForge, it's either pending approval or was only released on Modrinth.</div></div>
+                                    <div class="qa-bubble"><div class="qa-question">Will you update old mods to newer Minecraft versions?</div><div class="qa-answer">I try to keep my most popular mods updated. Older or smaller mods may not get updates, as I focus on new projects.</div></div>
+                                    <div class="qa-bubble"><div class="qa-question">Can I translate your mods into my language?</div><div class="qa-answer">Yes! I welcome translations. Contact me on CurseForge or GitHub and I'll add your translation.</div></div>
+                                    <div class="qa-bubble"><div class="qa-question">Are your mods open source?</div><div class="qa-answer">Most of them are. Check the GitHub repository for the source code and license information.</div></div>
+                                </div>
+                            </div>
+
+                            <!-- ===== SCULKS Q&A ===== -->
                             <div class="qa-section">
                                 <h3>❓ Arda's Sculks – Developer Q&A</h3>
                                 <div class="qa-scroll">
@@ -918,6 +1032,7 @@
                                     <div class="qa-bubble"><div class="qa-question">What license is Arda's Sculks released under?</div><div class="qa-answer">The mod is licensed under the <strong>GNU Lesser General Public License Version 2.1 (LGPL-2.1)</strong>.</div></div>
                                 </div>
                             </div>
+
                             <div class="video-showcase">
                                 <h3>🎬 Arda's Sculks – Boss Battle Showcase</h3>
                                 <div class="video-wrapper">
@@ -954,6 +1069,7 @@
         </div>
     </div>
 
+    <!-- ===== Arda's Sculks Detail Modal (özel) ===== -->
     <div class="modal-overlay" id="ardas-detail-modal">
         <div class="modal-dialog">
             <div class="modal-header">
@@ -964,6 +1080,18 @@
         </div>
     </div>
 
+    <!-- ===== Generic Mod Detail Modal ===== -->
+    <div class="modal-overlay" id="generic-mod-modal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3 id="generic-modal-title">📦 Mod Details</h3>
+                <button class="modal-close-btn" id="modal-close-generic" title="Close">✕</button>
+            </div>
+            <div class="modal-body" id="generic-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ===== Progress Modal ===== -->
     <div class="modal-overlay" id="progress-modal">
         <div class="modal-dialog" style="max-width: 480px;">
             <div class="modal-header">
@@ -1065,7 +1193,7 @@
     })();
 
     /* =========================================================
-       GITHUB STATS (repos + stars + followers)
+       GITHUB STATS
        ========================================================= */
     (async () => {
         const GH_USER = 'IxraPlayer';
@@ -1131,12 +1259,10 @@
     })();
 
     /* =========================================================
-       CURSEFORGE FOLLOWERS (manual — CF API doesn't expose this)
+       CURSEFORGE FOLLOWERS (manual)
        ========================================================= */
     (function () {
-        // 👇 CurseForge profilinden bakıp buraya güncelle
-        const CF_FOLLOWERS = 0; // ör: 1240
-
+        const CF_FOLLOWERS = 0; // 👈 CurseForge profilinden bakıp güncelle
         const cfCountEl = document.getElementById('cf-follower-count');
         if (!cfCountEl) return;
 
@@ -1144,7 +1270,7 @@
             cfCountEl.textContent = CF_FOLLOWERS.toLocaleString('en-US');
         } else {
             cfCountEl.textContent = '—';
-            cfCountEl.parentElement.style.display = 'none'; // gizle
+            cfCountEl.parentElement.style.display = 'none';
         }
     })();
 
@@ -1155,6 +1281,11 @@
         const detailModalOverlay = document.getElementById('ardas-detail-modal');
         const detailModalBody = document.getElementById('detail-modal-body');
         const closeDetailBtn = document.getElementById('modal-close-detail');
+
+        const genericModalOverlay = document.getElementById('generic-mod-modal');
+        const genericModalTitle = document.getElementById('generic-modal-title');
+        const genericModalBody = document.getElementById('generic-modal-body');
+        const closeGenericBtn = document.getElementById('modal-close-generic');
 
         const progressModalOverlay = document.getElementById('progress-modal');
         const closeProgressBtn = document.getElementById('modal-close-progress');
@@ -1176,6 +1307,18 @@
             detailModalOverlay.classList.remove('active');
             document.body.style.overflow = '';
             detailModalBody.innerHTML = '';
+        }
+
+        function openGenericModal(title, html) {
+            genericModalTitle.textContent = title;
+            genericModalBody.innerHTML = html;
+            genericModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeGenericModal() {
+            genericModalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            genericModalBody.innerHTML = '';
         }
 
         function openProgressModal() {
@@ -1204,6 +1347,10 @@
         detailModalOverlay.addEventListener('click', e => {
             if (e.target === detailModalOverlay) closeDetailModal();
         });
+        closeGenericBtn.addEventListener('click', closeGenericModal);
+        genericModalOverlay.addEventListener('click', e => {
+            if (e.target === genericModalOverlay) closeGenericModal();
+        });
         closeProgressBtn.addEventListener('click', closeProgressModal);
         progressModalOverlay.addEventListener('click', e => {
             if (e.target === progressModalOverlay) closeProgressModal();
@@ -1212,6 +1359,7 @@
         document.addEventListener('keydown', e => {
             if (e.key !== 'Escape') return;
             if (detailModalOverlay.classList.contains('active')) closeDetailModal();
+            if (genericModalOverlay.classList.contains('active')) closeGenericModal();
             if (progressModalOverlay.classList.contains('active')) closeProgressModal();
         });
 
@@ -1385,28 +1533,162 @@
         };
 
         window.openProgressModal = openProgressModal;
+
+        /* =========================================================
+           GENERIC MOD DETAIL
+           ========================================================= */
+        window.openGenericModDetail = function (slug) {
+            const p = projectsData.find(item => (item.modrinthSlug || item.curseforgeSlug) === slug);
+            if (!p) return;
+
+            const versionTags = (p.versions || []).map(v =>
+                `<span class="version-tag">${v}</span>`
+            ).join('');
+            const loaderTags = (p.loaders || []).map(l =>
+                `<span class="loader-tag ${l.toLowerCase() === 'forge' ? 'forge' : ''}">${l}</span>`
+            ).join('');
+
+            const links = [];
+            if (p.modrinthSlug) {
+                const mrCat = p.modrinthSlug === 'uyghur-language-pack' ? 'resourcepack' : 'mod';
+                links.push(`<a href="https://modrinth.com/${mrCat}/${p.modrinthSlug}" class="mod-detail-link" target="_blank">
+                    <img class="brand-icon" src="https://cdn.simpleicons.org/modrinth/white" alt=""> Modrinth
+                </a>`);
+            }
+            if (p.curseforgeSlug) {
+                const cfCat = p.curseforgeSlug === 'uyghur-language-pack' ? 'texture-packs' : 'mc-mods';
+                links.push(`<a href="https://www.curseforge.com/minecraft/${cfCat}/${p.curseforgeSlug}" class="mod-detail-link" target="_blank">
+                    <img class="brand-icon" src="https://cdn.simpleicons.org/curseforge/white" alt=""> CurseForge
+                </a>`);
+            }
+
+            const iconUrl = p.fallbackIcon || `https://cdn.modrinth.com/data/${p.modrinthSlug}/icon.png`;
+
+            const html = `
+                <div class="mod-detail-header">
+                    <img class="mod-detail-icon" src="${iconUrl}" alt="${p.name}" onerror="this.style.display='none'">
+                    <div>
+                        <div class="mod-detail-title">${p.name}</div>
+                        <div class="mod-detail-tags">${versionTags}${loaderTags}</div>
+                    </div>
+                </div>
+                <div class="mod-detail-desc">${p.desc}</div>
+                <div class="mod-detail-actions">${links.join('')}</div>
+            `;
+
+            openGenericModal(`📦 ${p.name}`, html);
+        };
     })();
 
     /* =========================================================
-       PROJECTS + LIVE DOWNLOAD TOTALS (Modrinth + CurseForge)
+       PROJECTS + LIVE DOWNLOAD TOTALS
        ========================================================= */
+    let projectsData = []; // global
+
     (async () => {
         const CACHE_KEY = 'ixra_stats_v10';
         const CACHE_TTL = 6 * 60 * 60 * 1000;
 
-        const projectsData = [
-            { name: "Arda's Sculks",              modrinthSlug: 'ardas-sculks',                curseforgeSlug: 'ardas-sculks',                desc: 'Deep Dark expansion with new blocks, boss, and mechanics.', isSculks: true },
-            { name: "Arda's Uncrafting Table",    modrinthSlug: 'ardas-uncrafting-table',      curseforgeSlug: 'ardas-uncrafting-table',      desc: 'Recycle items into their components.', isTrending: true },
-            { name: "Arda's Ultimate Golem",      modrinthSlug: 'ardas-ultimate-golem',        curseforgeSlug: 'ardas-ultimate-golem',        desc: 'Powerful golem companion for boss fights.' },
-            { name: "Arda's Hammers",             modrinthSlug: 'ardas-hammer',                curseforgeSlug: 'ardas-hammer',                desc: '3x3 mining hammers.' },
-            { name: "Arda's Ores",                modrinthSlug: 'ardas-ores',                  curseforgeSlug: 'ardas-ores',                  desc: 'New ores, armor, and tools.' },
-            { name: "Arda's Backpack",            modrinthSlug: 'ardas-backpack',              curseforgeSlug: 'ardas-backpack',              desc: 'Portable storage backpack.' },
-            { name: "Shadow of the Soul",         modrinthSlug: 'shadow-of-the-soul',          curseforgeSlug: 'shadow-of-the-soul',          desc: 'Psychological horror mod with stalking AI.' },
-            { name: "Arda's Omega Golem",         modrinthSlug: 'ardas-omega-golem',           curseforgeSlug: 'ardas-omega-golem',           desc: 'The ultimate golem evolution — massive power, new abilities.', fallbackIcon: 'https://cdn.modrinth.com/data/1gQ5hWPl/b3377cb90bc5093a0e06fd689b24e1487cdeb199_96.webp' },
-            { name: "Arda's Advanced Items",      modrinthSlug: 'ardas-advanced-items',        curseforgeSlug: 'ardas-advanced-items',        desc: 'Advanced items and special abilities.' },
-            { name: "Arda's Cobblestone Generator", modrinthSlug: 'ardas-cobblestone-generator', curseforgeSlug: 'ardas-cobblestone-generator', desc: 'Automatic cobblestone generator.' },
-            { name: "Arda's Special Abilities",   modrinthSlug: 'ardas-special-abilities',     curseforgeSlug: 'ardas-special-abilities',     desc: 'Unique player abilities.' },
-            { name: "Uyghur Language Pack",       modrinthSlug: 'uyghur-language-pack',        curseforgeSlug: 'uyghur-language-pack',        desc: 'Adds Uyghur language support to Minecraft.' }
+        projectsData = [
+            {
+                name: "Arda's Sculks",
+                modrinthSlug: 'ardas-sculks',
+                curseforgeSlug: 'ardas-sculks',
+                desc: 'Deep Dark expansion with new blocks, boss, and mechanics.',
+                isSculks: true,
+                versions: ['1.21.1', '1.20.1'],
+                loaders: ['NeoForge', 'Forge']
+            },
+            {
+                name: "Arda's Uncrafting Table",
+                modrinthSlug: 'ardas-uncrafting-table',
+                curseforgeSlug: 'ardas-uncrafting-table',
+                desc: 'Recycle items into their components.',
+                isTrending: true,
+                versions: ['1.21.1', '1.20.1'],
+                loaders: ['NeoForge', 'Forge']
+            },
+            {
+                name: "Arda's Ultimate Golem",
+                modrinthSlug: 'ardas-ultimate-golem',
+                curseforgeSlug: 'ardas-ultimate-golem',
+                desc: 'Powerful golem companion for boss fights.',
+                versions: ['1.21.1', '1.20.1', '1.18.2'],
+                loaders: ['NeoForge', 'Forge']
+            },
+            {
+                name: "Arda's Hammers",
+                modrinthSlug: 'ardas-hammer',
+                curseforgeSlug: 'ardas-hammer',
+                desc: '3x3 mining hammers.',
+                versions: ['1.21.1', '1.21.4', '1.21.8'],
+                loaders: ['NeoForge']
+            },
+            {
+                name: "Arda's Ores",
+                modrinthSlug: 'ardas-ores',
+                curseforgeSlug: 'ardas-ores',
+                desc: 'New ores, armor, and tools.',
+                versions: ['1.21.1', '1.20.1'],
+                loaders: ['NeoForge', 'Forge']
+            },
+            {
+                name: "Arda's Backpack",
+                modrinthSlug: 'ardas-backpack',
+                curseforgeSlug: 'ardas-backpack',
+                desc: 'Portable storage backpack.',
+                versions: ['1.16.5', '1.20.1', '1.21.1'],
+                loaders: ['Forge', 'NeoForge']
+            },
+            {
+                name: "Shadow of the Soul",
+                modrinthSlug: 'shadow-of-the-soul',
+                curseforgeSlug: 'shadow-of-the-soul',
+                desc: 'Psychological horror mod with stalking AI.',
+                versions: ['1.21.1'],
+                loaders: ['NeoForge']
+            },
+            {
+                name: "Arda's Omega Golem",
+                modrinthSlug: 'ardas-omega-golem',
+                curseforgeSlug: 'ardas-omega-golem',
+                desc: 'The ultimate golem evolution — massive power, new abilities.',
+                fallbackIcon: 'https://cdn.modrinth.com/data/1gQ5hWPl/b3377cb90bc5093a0e06fd689b24e1487cdeb199_96.webp',
+                versions: ['1.21.1'],
+                loaders: ['NeoForge']
+            },
+            {
+                name: "Arda's Advanced Items",
+                modrinthSlug: 'ardas-advanced-items',
+                curseforgeSlug: 'ardas-advanced-items',
+                desc: 'Advanced items and special abilities.',
+                versions: ['1.21.1'],
+                loaders: ['NeoForge']
+            },
+            {
+                name: "Arda's Cobblestone Generator",
+                modrinthSlug: 'ardas-cobblestone-generator',
+                curseforgeSlug: 'ardas-cobblestone-generator',
+                desc: 'Automatic cobblestone generator.',
+                versions: ['1.20.1'],
+                loaders: ['Forge']
+            },
+            {
+                name: "Arda's Special Abilities",
+                modrinthSlug: 'ardas-special-abilities',
+                curseforgeSlug: 'ardas-special-abilities',
+                desc: 'Unique player abilities.',
+                versions: ['1.21.1', '1.20.1'],
+                loaders: ['NeoForge', 'Forge']
+            },
+            {
+                name: "Uyghur Language Pack",
+                modrinthSlug: 'uyghur-language-pack',
+                curseforgeSlug: 'uyghur-language-pack',
+                desc: 'Adds Uyghur language support to Minecraft.',
+                versions: ['1.13 - 1.26.2'],
+                loaders: ['Resource Pack']
+            }
         ];
 
         function fmt(n) {
@@ -1490,7 +1772,19 @@
                 links.push(`<a href="https://www.curseforge.com/minecraft/${cfCategory}/${p.curseforgeSlug}" class="project-link" target="_blank">CurseForge</a>`);
             }
 
-            let extraActionsHtml = '';
+            const versionTags = (p.versions || []).map(v =>
+                `<span class="version-tag">${v}</span>`
+            ).join('');
+            const loaderTags = (p.loaders || []).map(l =>
+                `<span class="loader-tag ${l.toLowerCase() === 'forge' ? 'forge' : ''}">${l}</span>`
+            ).join('');
+
+            let extraActionsHtml = `
+                <div class="project-extra-actions">
+                  <button class="detail-popup-btn" onclick="openGenericModDetail('${p.modrinthSlug || p.curseforgeSlug}')" title="View details">
+                    <i class="fas fa-info-circle"></i> Details
+                  </button>
+                </div>`;
             if (p.isSculks) {
                 extraActionsHtml = `
                 <div class="project-extra-actions">
@@ -1510,12 +1804,13 @@
             return `
             <div class="project-item" data-slug="${p.modrinthSlug || p.curseforgeSlug}">
               <div class="project-info">
-                <img class="project-icon" src="${p.fallbackIcon || ''}" alt="" width="38" height="38" loading="lazy" decoding="async" style="${p.fallbackIcon ? '' : 'display:none;'}">
+                <img class="project-icon" src="${p.fallbackIcon || ''}" alt="" width="76" height="76" loading="lazy" decoding="async" style="${p.fallbackIcon ? '' : 'display:none;'}">
                 <span class="project-name">${p.name}${badgeHtml}</span>
               </div>
               <span class="project-downloads">...</span>
               <div class="project-links">${links.join('')}</div>
               ${extraActionsHtml}
+              <div class="project-tags">${versionTags}${loaderTags}</div>
               <div class="project-desc">${p.desc}</div>
             </div>`;
         }).join('');
