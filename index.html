@@ -41,7 +41,6 @@
     <link rel="shortcut icon" type="image/png" href="https://ixraplayer.github.io/sitelogo.png">
     <link rel="apple-touch-icon" href="https://ixraplayer.github.io/sitelogo.png">
 
-    <!-- Font Awesome: non-blocking load -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
 
@@ -82,7 +81,6 @@
             to   { opacity: 1; }
         }
 
-        /* Static ambient glow — no animation, GPU-cheap */
         body {
             min-height: 100vh;
             display: flex;
@@ -181,7 +179,6 @@
             color: var(--accent-bright);
             font-weight: 700;
             letter-spacing: 0.02em;
-            /* Static glow — no animation */
             box-shadow: 0 0 16px rgba(74, 155, 181, 0.25), inset 0 0 8px rgba(255, 255, 255, 0.03);
             text-shadow: 0 0 12px rgba(125, 216, 240, 0.5);
         }
@@ -388,6 +385,11 @@
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), 0 0 18px rgba(74, 155, 181, 0.2);
             transform: translateY(-2px);
         }
+        .project-link.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+            filter: grayscale(0.5);
+        }
 
         .project-desc {
             margin-left: 50px;
@@ -428,7 +430,6 @@
             transform: translateY(-2px);
         }
 
-        /* Static glow, no pulsing animation */
         .progress-btn {
             background: transparent;
             border: 1px dashed rgba(255, 255, 255, 0.2);
@@ -687,32 +688,6 @@
         .extra-info-content a { color: var(--accent-bright); text-decoration: none; }
         .extra-info-content a:hover { text-decoration: underline; }
 
-        .x-feed-container {
-            background: #0f1620;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            overflow: hidden;
-            min-height: 400px;
-        }
-        .x-feed-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .x-feed-header i { font-size: 20px; }
-        .x-feed-header span { color: white; font-weight: 600; font-size: 16px; }
-        .x-feed-iframe-wrap { width: 100%; height: 550px; background: #000; }
-        .x-feed-iframe-wrap iframe { width: 100%; height: 100%; border: none; }
-        .x-feed-fallback { padding: 30px; text-align: center; color: var(--text-muted); }
-        .x-feed-fallback a {
-            color: var(--accent-bright);
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
         .footer {
             text-align: center;
             font-size: 13px;
@@ -739,7 +714,6 @@
             .progress-label { width: 90px; font-size: 11px; }
             .modal-dialog { max-width: 95vw; max-height: 88vh; border-radius: 14px; }
             .modal-body { padding: 14px 16px; }
-            .x-feed-iframe-wrap { height: 400px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -781,7 +755,6 @@
                     <button class="tab-btn active" data-tab="links"><i class="fas fa-link"></i> Links</button>
                     <button class="tab-btn" data-tab="about"><i class="fas fa-user"></i> About</button>
                     <button class="tab-btn" data-tab="projects"><i class="fas fa-folder"></i> Projects</button>
-                    <button class="tab-btn" data-tab="xfeed"><i class="fab fa-twitter"></i> X Feed</button>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane active" id="links">
@@ -826,7 +799,6 @@
                             <h3>🎬 Arda's Sculks – Boss Battle Showcase</h3>
                             <div class="video-wrapper">
                                 <div class="video-embed">
-                                    <!-- Lazy: sadece About sekmesi açılınca yüklenir -->
                                     <iframe data-src="https://www.youtube-nocookie.com/embed/QW3HqoWXRFg?t=21s" title="Arda's Sculks Boss Battle" allowfullscreen loading="lazy"></iframe>
                                 </div>
                             </div>
@@ -846,27 +818,6 @@
                     </div>
                     <div class="tab-pane" id="projects">
                         <div class="projects-list" id="projects-container"></div>
-                    </div>
-                    <div class="tab-pane" id="xfeed">
-                        <div class="x-feed-container">
-                            <div class="x-feed-header">
-                                <i class="fab fa-twitter"></i>
-                                <span>@IxraPlayer · Latest Posts on X</span>
-                            </div>
-                            <div class="x-feed-iframe-wrap">
-                                <!-- Lazy: sadece X Feed sekmesi açılınca yüklenir -->
-                                <iframe
-                                data-src="https://www.twitter.com/IxraPlayer?ref_src=twsrc%5Etfw"
-                                title="IxraPlayer on X"
-                                sandbox="allow-scripts allow-same-origin allow-popups"
-                                loading="lazy"
-                                onerror="this.style.display='none'; document.getElementById('x-fallback').style.display='block';">
-                            </iframe>
-                        </div>
-                        <div class="x-feed-fallback" id="x-fallback" style="display:none;">
-                            <p>⚠️ Could not load the embedded timeline.</p>
-                            <p>👉 <a href="https://x.com/IxraPlayer" target="_blank" rel="me">Open @IxraPlayer on X.com</a></p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -936,8 +887,7 @@
     const panes = {
         links: document.getElementById('links'),
         about: document.getElementById('about'),
-        projects: document.getElementById('projects'),
-        xfeed: document.getElementById('xfeed')
+        projects: document.getElementById('projects')
     };
     const loadedIframes = new WeakSet();
 
@@ -968,8 +918,6 @@
         btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 
-    // About pane içindeki YouTube iframe'i, kullanıcı About'a tıklamasa bile
-    // idle olduğunda arka planda yükle (ilk tıklamada gecikme olmasın diye).
     if ('requestIdleCallback' in window) {
         requestIdleCallback(() => loadIframesIn(panes.about), { timeout: 3000 });
     } else {
@@ -1005,7 +953,6 @@
 
     function openDetailModal(content) {
         detailModalBody.innerHTML = content;
-        // Defer image loading inside modal
         detailModalBody.querySelectorAll('img').forEach(img => {
             img.loading = 'lazy';
             img.decoding = 'async';
@@ -1020,7 +967,6 @@
     function closeDetailModal() {
         detailModalOverlay.classList.remove('active');
         document.body.style.overflow = '';
-        // İçeriği temizleyerek iframe ve img'leri serbest bırak
         detailModalBody.innerHTML = '';
     }
 
@@ -1223,7 +1169,6 @@
         `;
         openDetailModal(detailHTML);
 
-        // Modal açıldıktan sonra lazy iframe'leri yükle
         requestAnimationFrame(() => {
             detailModalBody.querySelectorAll('iframe[data-src]').forEach(f => {
                 if (!f.src) f.src = f.dataset.src;
@@ -1235,24 +1180,90 @@
 })();
 
 /* =========================================================
-   PROJECTS + API FETCHING (with localStorage cache)
+   PROJECTS + LIVE DOWNLOAD TOTALS (Modrinth + CurseForge)
    ========================================================= */
 (async () => {
-    const CACHE_KEY = 'ixra_stats_v3';
+    const CACHE_KEY = 'ixra_stats_v5';
     const CACHE_TTL = 6 * 60 * 60 * 1000; // 6 saat
 
+    // ⬇ İNDİRME SAYISINA GÖRE SIRALI (en yüksek → en düşük)
+    // Modrinth + CurseForge toplam indirmeleri baz alınmıştır.
     const projectsData = [
-        { name: "Arda's Sculks", slug: 'ardas-sculks', desc: 'Deep Dark expansion with new blocks, boss, and mechanics.', isSculks: true },
-        { name: "Arda's Ultimate Golem", slug: 'ardas-ultimate-golem', desc: 'Powerful golem companion for boss fights.' },
-        { name: "Omega Golem", slug: 'ardas-omega-golem', desc: 'The ultimate golem evolution — massive power, new abilities.', fallbackIcon: 'https://cdn.modrinth.com/data/1gQ5hWPl/b3377cb90bc5093a0e06fd689b24e1487cdeb199_96.webp' },
-        { name: "Arda's Ores", slug: 'ardas-ores', desc: 'New ores, armor, and tools.' },
-        { name: "Shadow of the Soul", slug: 'shadow-of-the-soul', desc: 'Psychological horror mod with stalking AI.' },
-        { name: "Arda's Hammers", slug: 'ardas-hammer', desc: '3x3 mining hammers.' },
-        { name: "Arda's Uncrafting Table", slug: 'ardas-uncrafting-table', desc: 'Recycle items into their components.' },
-        { name: "Arda's Cobblestone Generator", slug: 'ardas-cobblestone-generator', desc: 'Automatic cobblestone generator.' },
-        { name: "Arda's Backpack", slug: 'ardas-backpack', desc: 'Portable storage backpack.' },
-        { name: "Arda's Advanced Items", slug: 'ardas-advanced-items', desc: 'Advanced items and special abilities.' },
-        { name: "Arda's Special Abilities", slug: 'ardas-special-abilities', desc: 'Unique player abilities.' }
+        {
+            name: "Arda's Sculks",
+            modrinthSlug: 'ardas-sculks',
+            curseforgeSlug: 'ardas-sculks',
+            desc: 'Deep Dark expansion with new blocks, boss, and mechanics.',
+            isSculks: true
+        },
+        {
+            name: "Arda's Uncrafting Table",
+            modrinthSlug: 'ardas-uncrafting-table',
+            curseforgeSlug: 'ardas-uncrafting-table',
+            desc: 'Recycle items into their components.',
+            isTrending: true
+        },
+        {
+            name: "Arda's Ultimate Golem",
+            modrinthSlug: 'ardas-ultimate-golem',
+            curseforgeSlug: 'ardas-ultimate-golem',
+            desc: 'Powerful golem companion for boss fights.'
+        },
+        {
+            name: "Arda's Hammers",
+            modrinthSlug: 'ardas-hammer',
+            curseforgeSlug: 'ardas-hammers',
+            desc: '3x3 mining hammers.'
+        },
+        {
+            name: "Arda's Ores",
+            modrinthSlug: 'ardas-ores',
+            curseforgeSlug: 'ardas-ores',
+            desc: 'New ores, armor, and tools.'
+        },
+        {
+            name: "Arda's Backpack",
+            modrinthSlug: 'ardas-backpack',
+            curseforgeSlug: 'ardas-backpack',
+            desc: 'Portable storage backpack.'
+        },
+        {
+            name: "Shadow of the Soul",
+            modrinthSlug: 'shadow-of-the-soul',
+            curseforgeSlug: 'shadow-of-the-soul',
+            desc: 'Psychological horror mod with stalking AI.'
+        },
+        {
+            name: "Arda's Omega Golem",
+            modrinthSlug: 'ardas-omega-golem',
+            curseforgeSlug: 'ardas-omega-golem',
+            desc: 'The ultimate golem evolution — massive power, new abilities.',
+            fallbackIcon: 'https://cdn.modrinth.com/data/1gQ5hWPl/b3377cb90bc5093a0e06fd689b24e1487cdeb199_96.webp'
+        },
+        {
+            name: "Arda's Advanced Items",
+            modrinthSlug: 'ardas-advanced-items',
+            curseforgeSlug: 'ardas-advanced-items',
+            desc: 'Advanced items and special abilities.'
+        },
+        {
+            name: "Arda's Cobblestone Generator",
+            modrinthSlug: 'ardas-cobblestone-generator',
+            curseforgeSlug: null,
+            desc: 'Automatic cobblestone generator.'
+        },
+        {
+            name: "Arda's Special Abilities",
+            modrinthSlug: 'ardas-special-abilities',
+            curseforgeSlug: null,
+            desc: 'Unique player abilities.'
+        },
+        {
+            name: "Uyghur Language Pack",
+            modrinthSlug: 'uyghur-language-pack',
+            curseforgeSlug: 'uyghur-language-pack',
+            desc: 'Adds Uyghur language support to Minecraft.'
+        }
     ];
 
     function fmt(n) {
@@ -1274,10 +1285,11 @@
     function writeCache(data) {
         try {
             localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
-        } catch { /* quota veya private mode */ }
+        } catch { /* quota */ }
     }
 
     async function fetchModrinthProject(slug) {
+        if (!slug) return { downloads: 0, icon_url: null };
         try {
             const res = await fetch(`https://api.modrinth.com/v2/project/${slug}`);
             if (!res.ok) return { downloads: 0, icon_url: null };
@@ -1289,6 +1301,7 @@
     }
 
     async function fetchCurseForgeDownloads(slug) {
+        if (!slug) return 0;
         try {
             const res = await fetch(`https://api.cfwidget.com/minecraft/mc-mods/${slug}`);
             if (!res.ok) return 0;
@@ -1308,14 +1321,27 @@
         } catch { return 0; }
     }
 
-    // ---------- Render project list immediately ----------
+    // ---------- Render ----------
     const container = document.getElementById('projects-container');
     container.innerHTML = projectsData.map(p => {
         let badgeHtml = '';
         if (p.slug === 'ardas-sculks') {
             badgeHtml = '<span class="project-badge badge-popular">MOST POPULAR</span>';
-        } else if (p.slug === 'ardas-uncrafting-table') {
+        } else if (p.isTrending) {
             badgeHtml = '<span class="project-badge badge-trending">TRENDING</span>';
+        }
+
+        // Dinamik link oluşturma
+        const links = [];
+        if (p.modrinthSlug) {
+            links.push(`<a href="https://modrinth.com/mod/${p.modrinthSlug}" class="project-link" target="_blank">Modrinth</a>`);
+        } else {
+            links.push(`<span class="project-link disabled">Modrinth</span>`);
+        }
+        if (p.curseforgeSlug) {
+            links.push(`<a href="https://www.curseforge.com/minecraft/mc-mods/${p.curseforgeSlug}" class="project-link" target="_blank">CurseForge</a>`);
+        } else {
+            links.push(`<span class="project-link disabled">CurseForge</span>`);
         }
 
         let extraActionsHtml = '';
@@ -1336,16 +1362,13 @@
         }
 
         return `
-        <div class="project-item" data-slug="${p.slug}">
+        <div class="project-item" data-slug="${p.modrinthSlug || p.curseforgeSlug}">
           <div class="project-info">
             <img class="project-icon" src="${p.fallbackIcon || ''}" alt="" width="38" height="38" loading="lazy" decoding="async" style="${p.fallbackIcon ? '' : 'display:none;'}">
             <span class="project-name">${p.name}${badgeHtml}</span>
           </div>
           <span class="project-downloads">...</span>
-          <div class="project-links">
-            <a href="https://modrinth.com/mod/${p.slug}" class="project-link" target="_blank">Modrinth</a>
-            <a href="https://www.curseforge.com/minecraft/mc-mods/${p.slug}" class="project-link" target="_blank">CurseForge</a>
-          </div>
+          <div class="project-links">${links.join('')}</div>
           ${extraActionsHtml}
           <div class="project-desc">${p.desc}</div>
         </div>`;
@@ -1353,14 +1376,14 @@
 
     const totalEl = document.getElementById('total-downloads');
 
-    // ---------- Apply data to DOM ----------
     function applyProjectData(perProject) {
         projectsData.forEach((p, index) => {
             const item = container.children[index];
             if (!item) return;
             const iconImg = item.querySelector('.project-icon');
             const downloadsSpan = item.querySelector('.project-downloads');
-            const d = perProject[p.slug];
+            const key = p.modrinthSlug || p.curseforgeSlug;
+            const d = perProject[key];
             if (!d) {
                 downloadsSpan.textContent = '?';
                 return;
@@ -1386,23 +1409,21 @@
         totalEl.classList.remove('loading-val');
     }
 
-    // ---------- Main flow ----------
     const cache = readCache();
     if (cache && cache.perProject) {
-        // Instant render from cache
         applyProjectData(cache.perProject);
         applyTotal(cache.total || 0);
-        return; // no network hit
+        return;
     }
 
-    // No cache: fetch everything in parallel
+    // Paralel fetch: her proje için MR + CF
     const [projectResults, mrUserTotal] = await Promise.all([
         Promise.all(projectsData.map(async p => {
             const [mr, cf] = await Promise.all([
-                fetchModrinthProject(p.slug),
-                fetchCurseForgeDownloads(p.slug)
+                fetchModrinthProject(p.modrinthSlug),
+                fetchCurseForgeDownloads(p.curseforgeSlug)
             ]);
-            return { slug: p.slug, mr: mr.downloads, cf, icon: mr.icon_url };
+            return { key: p.modrinthSlug || p.curseforgeSlug, mr: mr.downloads, cf, icon: mr.icon_url };
         })),
         fetchModrinthUserTotal('Ixra')
     ]);
@@ -1410,7 +1431,7 @@
     const perProject = {};
     let cfSum = 0;
     projectResults.forEach(r => {
-        perProject[r.slug] = { mr: r.mr, cf: r.cf, icon: r.icon };
+        perProject[r.key] = { mr: r.mr, cf: r.cf, icon: r.icon };
         cfSum += r.cf;
     });
 
