@@ -321,6 +321,23 @@
         } catch { return null; }
     }
 
+    // Sculks kartında hover'da arkada dönen ekran görüntüleri
+    const SCULKS_SHOWCASE = [
+        { src: 'assets/sculks-showcase/01-sculk-blocks.webp', alt: "Arda's Sculks — glowing sculk blocks in a deep dark cave" },
+        { src: 'assets/sculks-showcase/02-shadow-hunter.webp', alt: "Arda's Sculks — Shadow Hunter boss in the ancient arena" },
+        { src: 'assets/sculks-showcase/03-radioactive-warden.webp', alt: "Arda's Sculks — Radioactive Warden boss arena" },
+        { src: 'assets/sculks-showcase/04-sculk-golem.webp', alt: "Arda's Sculks — Sculk Golem with glowing chest core" },
+        { src: 'assets/sculks-showcase/05-sculk-flowers.webp', alt: "Arda's Sculks — decorative sculk flowers and light sources" },
+        { src: 'assets/sculks-showcase/06-items-showcase.webp', alt: "Arda's Sculks — sculkerite weapons and armor showcase" }
+    ];
+    function sculksShowcaseHtml() {
+        return `<div class="sculks-showcase" aria-hidden="true">${
+            SCULKS_SHOWCASE.map((img, idx) =>
+                `<img src="${esc(img.src)}" alt="${esc(img.alt)}" loading="lazy" decoding="async" style="animation-delay:${idx * 3}s">`
+            ).join('')
+        }</div>`;
+    }
+
     function projectCardHtml(p, i) {
         const badge = p.badge === 'popular' ? `<span class="project-badge badge-popular">${t('badge_popular')}</span>`
                     : p.badge === 'trending' ? `<span class="project-badge badge-trending">${t('badge_trending')}</span>` : '';
@@ -351,7 +368,8 @@
         // NOT: p.iconUrl varsa (canlı API'den gelmiş gerçek ikon) o kullanılır, dil değişince kaybolmaz
         const iconSrc = p.iconUrl || p.icon || ICON_PLACEHOLDER;
         return `
-        <article class="project-item" data-key="${esc(projectKey(p))}">
+        <article class="project-item${p.detail === 'sculks' ? ' project-item-showcase' : ''}" data-key="${esc(projectKey(p))}">
+            ${p.detail === 'sculks' ? sculksShowcaseHtml() : ''}
             <div class="project-info">
                 <img class="project-icon" src="${esc(iconSrc)}" alt="${esc(p.name)} icon" width="76" height="76" decoding="async" data-fallback="${esc(iconSrc)}" onerror="if(this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}else if(!this.dataset.gaveUp){this.dataset.gaveUp='1';this.src='${ICON_PLACEHOLDER}';}">
                 <h2 class="project-name">${esc(p.name)}${badge}</h2>
@@ -463,6 +481,19 @@
             if (action === 'sculks') openSculksDetails();
             else if (action === 'progress') openProgress();
             else if (action === 'details') openGenericDetails(projects[Number(btn.dataset.index)]);
+        });
+
+        // Mobilde hover yok: Sculks kartının ikonuna dokununca showcase'i birkaç saniyeliğine göster
+        let touchHideTimer = null;
+        container.addEventListener('click', (e) => {
+            if (e.target.closest('[data-action]') || e.target.closest('a')) return; // buton/link tıklamalarını etkileme
+            const card = e.target.closest('.project-item-showcase');
+            if (!card) return;
+            const showcase = $('.sculks-showcase', card);
+            if (!showcase) return;
+            showcase.classList.add('touch-active');
+            clearTimeout(touchHideTimer);
+            touchHideTimer = setTimeout(() => showcase.classList.remove('touch-active'), 6000);
         });
 
         // Dil değişince kartları (rozet, buton, açıklama metinleri) yeniden çiz
