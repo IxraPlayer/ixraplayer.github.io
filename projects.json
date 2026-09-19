@@ -7,8 +7,15 @@
     "badge": "popular",
     "detail": "sculks",
     "icon": "https://cdn.modrinth.com/data/znWHo5Qt/74c9971f4a948949d8531f79af1a81e8259a0fad.gif",
-    "versions": ["1.21.1", "1.20.1"],
-    "loaders": ["NeoForge", "Forge"]
+    "versions": [
+      "1.21.1",
+      "1.20.1"
+    ],
+    "loaders": [
+      "NeoForge",
+      "Forge"
+    ],
+    "descTr": "Yeni bloklar, boss ve mekaniklerle Deep Dark genişletmesi."
   },
   {
     "name": "Arda's Uncrafting Table",
@@ -16,48 +23,90 @@
     "curseforgeSlug": "ardas-uncrafting-table",
     "desc": "Recycle items into their components.",
     "badge": "trending",
-    "versions": ["1.21.1", "1.20.1"],
-    "loaders": ["NeoForge", "Forge"]
+    "versions": [
+      "1.21.1",
+      "1.20.1"
+    ],
+    "loaders": [
+      "NeoForge",
+      "Forge"
+    ],
+    "descTr": "Eşyaları bileşenlerine geri dönüştürür."
   },
   {
     "name": "Arda's Ultimate Golem",
     "modrinthSlug": "ardas-ultimate-golem",
     "curseforgeSlug": "ardas-ultimate-golem",
     "desc": "Powerful golem companion for boss fights.",
-    "versions": ["1.21.1", "1.20.1", "1.18.2"],
-    "loaders": ["NeoForge", "Forge"]
+    "versions": [
+      "1.21.1",
+      "1.20.1",
+      "1.18.2"
+    ],
+    "loaders": [
+      "NeoForge",
+      "Forge"
+    ],
+    "descTr": "Boss savaşları için güçlü golem yoldaşı."
   },
   {
     "name": "Arda's Hammers",
     "modrinthSlug": "ardas-hammer",
     "curseforgeSlug": "ardas-hammer",
     "desc": "3x3 mining hammers.",
-    "versions": ["1.21.1", "1.21.4", "1.21.8"],
-    "loaders": ["NeoForge"]
+    "versions": [
+      "1.21.1",
+      "1.21.4",
+      "1.21.8"
+    ],
+    "loaders": [
+      "NeoForge"
+    ],
+    "descTr": "3x3 madencilik çekiçleri."
   },
   {
     "name": "Arda's Ores",
     "modrinthSlug": "ardas-ores",
     "curseforgeSlug": "ardas-ores",
     "desc": "New ores, armor, and tools.",
-    "versions": ["1.21.1", "1.20.1"],
-    "loaders": ["NeoForge", "Forge"]
+    "versions": [
+      "1.21.1",
+      "1.20.1"
+    ],
+    "loaders": [
+      "NeoForge",
+      "Forge"
+    ],
+    "descTr": "Yeni cevherler, zırhlar ve aletler."
   },
   {
     "name": "Arda's Backpack",
     "modrinthSlug": "ardas-backpack",
     "curseforgeSlug": "ardas-backpack",
     "desc": "Portable storage backpack.",
-    "versions": ["1.16.5", "1.20.1", "1.21.1"],
-    "loaders": ["Forge", "NeoForge"]
+    "versions": [
+      "1.16.5",
+      "1.20.1",
+      "1.21.1"
+    ],
+    "loaders": [
+      "Forge",
+      "NeoForge"
+    ],
+    "descTr": "Taşınabilir depolama çantası."
   },
   {
     "name": "Shadow of the Soul",
     "modrinthSlug": "shadow-of-the-soul",
     "curseforgeSlug": "shadow-of-the-soul",
     "desc": "Psychological horror mod with stalking AI.",
-    "versions": ["1.21.1"],
-    "loaders": ["NeoForge"]
+    "versions": [
+      "1.21.1"
+    ],
+    "loaders": [
+      "NeoForge"
+    ],
+    "descTr": "Takip eden yapay zekaya sahip psikolojik korku modu."
   },
   {
     "name": "Arda's Omega Golem",
@@ -65,32 +114,54 @@
     "curseforgeSlug": "ardas-omega-golem",
     "desc": "The ultimate golem evolution — massive power, new abilities.",
     "icon": "https://cdn.modrinth.com/data/1gQ5hWPl/b3377cb90bc5093a0e06fd689b24e1487cdeb199_96.webp",
-    "versions": ["1.21.1"],
-    "loaders": ["NeoForge"]
+    "versions": [
+      "1.21.1"
+    ],
+    "loaders": [
+      "NeoForge"
+    ],
+    "descTr": "Golemin nihai evrimi — muazzam güç, yeni yetenekler."
   },
   {
     "name": "Arda's Advanced Items",
     "modrinthSlug": "ardas-advanced-items",
     "curseforgeSlug": "ardas-advanced-items",
     "desc": "Advanced items and special abilities.",
-    "versions": ["1.21.1"],
-    "loaders": ["NeoForge"]
+    "versions": [
+      "1.21.1"
+    ],
+    "loaders": [
+      "NeoForge"
+    ],
+    "descTr": "Gelişmiş eşyalar ve özel yetenekler."
   },
   {
     "name": "Arda's Cobblestone Generator",
     "modrinthSlug": "ardas-cobblestone-generator",
     "curseforgeSlug": "ardas-cobblestone-generator",
     "desc": "Automatic cobblestone generator.",
-    "versions": ["1.20.1"],
-    "loaders": ["Forge"]
+    "versions": [
+      "1.20.1"
+    ],
+    "loaders": [
+      "Forge"
+    ],
+    "descTr": "Otomatik moloz taşı jeneratörü."
   },
   {
     "name": "Arda's Special Abilities",
     "modrinthSlug": "ardas-special-abilities",
     "curseforgeSlug": "ardas-special-abilities",
     "desc": "Unique player abilities.",
-    "versions": ["1.21.1", "1.20.1"],
-    "loaders": ["NeoForge", "Forge"]
+    "versions": [
+      "1.21.1",
+      "1.20.1"
+    ],
+    "loaders": [
+      "NeoForge",
+      "Forge"
+    ],
+    "descTr": "Benzersiz oyuncu yetenekleri."
   },
   {
     "name": "Uyghur Language Pack",
@@ -98,7 +169,12 @@
     "curseforgeSlug": "uyghur-language-pack",
     "type": "resourcepack",
     "desc": "Adds Uyghur language support to Minecraft.",
-    "versions": ["1.13 - 1.26.2"],
-    "loaders": ["Resource Pack"]
+    "versions": [
+      "1.13 - 1.26.2"
+    ],
+    "loaders": [
+      "Resource Pack"
+    ],
+    "descTr": "Minecraft'a Uygurca dil desteği ekler."
   }
 ]

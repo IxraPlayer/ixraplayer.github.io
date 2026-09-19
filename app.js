@@ -80,15 +80,17 @@
 
     /* ---------- "A bit more about me" ---------- */
     (() => {
-        const t = $('#extra-toggle');
+        const tg = $('#extra-toggle');
         const c = $('#extra-content');
-        if (!t || !c) return;
-        t.addEventListener('click', () => {
+        if (!tg || !c) return;
+        const label = () => (window.I18N ? window.I18N.t(c.hidden ? 'extra_toggle_closed' : 'extra_toggle_open') : (c.hidden ? '▸ A bit more about me…' : '▾ A bit more about me…'));
+        tg.addEventListener('click', () => {
             const open = c.hidden;
             c.hidden = !open;
-            t.setAttribute('aria-expanded', String(open));
-            $('span', t).textContent = open ? '▾ A bit more about me…' : '▸ A bit more about me…';
+            tg.setAttribute('aria-expanded', String(open));
+            $('span', tg).textContent = label();
         });
+        if (window.I18N) window.I18N.onLanguageChange(() => { $('span', tg).textContent = label(); });
     })();
 
     /* =========================================================
@@ -146,7 +148,8 @@
     }
 
     async function openSculksDetails() {
-        sculksModal.body.innerHTML = '<p>Loading…</p>';
+        const t = (key) => (window.I18N ? window.I18N.t(key) : key);
+        sculksModal.body.innerHTML = `<p>${t('sculks_loading')}</p>`;
         sculksModal.open();
         try {
             const html = await loadSculksHtml();
@@ -154,9 +157,7 @@
             sculksModal.body.innerHTML = html;
             $$('iframe[data-src]', sculksModal.body).forEach((f) => { f.src = f.dataset.src; });
         } catch {
-            sculksModal.body.innerHTML =
-                '<p>Could not load details. See the full page on ' +
-                '<a href="https://www.curseforge.com/minecraft/mc-mods/ardas-sculks" target="_blank" rel="noopener">CurseForge</a>.</p>';
+            sculksModal.body.innerHTML = `<p>${t('sculks_load_error')}</p>`;
         }
     }
     // Kapanınca içeriği temizle: YouTube videosu durur, bellek boşalır
@@ -295,7 +296,7 @@
     /* =========================================================
        PROJELER  (projects.json)
        ========================================================= */
-    const STATS_KEY = 'ixra_stats_v14';
+    const STATS_KEY = 'ixra_stats_v15';
     let projects = [];
 
     const isPack = (p) => p.type === 'resourcepack';
@@ -303,46 +304,64 @@
     const curseforgeUrl = (p) => `https://www.curseforge.com/minecraft/${isPack(p) ? 'texture-packs' : 'mc-mods'}/${p.curseforgeSlug}`;
     const projectKey = (p) => p.modrinthSlug || p.curseforgeSlug;
 
+    const t = (key) => (window.I18N ? window.I18N.t(key) : key);
+    const curLang = () => (window.I18N ? window.I18N.getLang() : 'en');
+    const projectDesc = (p) => (curLang() === 'tr' && p.descTr ? p.descTr : p.desc);
+
     const tagsHtml = (p) =>
         (p.versions || []).map((v) => `<span class="version-tag">${esc(v)}</span>`).join('') +
         (p.loaders || []).map((l) => `<span class="loader-tag ${l.toLowerCase() === 'forge' ? 'forge' : ''}">${esc(l)}</span>`).join('');
 
+    function fmtDate(iso) {
+        if (!iso) return null;
+        try {
+            const d = new Date(iso);
+            if (isNaN(d.getTime())) return null;
+            return d.toLocaleDateString(curLang() === 'tr' ? 'tr-TR' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        } catch { return null; }
+    }
+
     function projectCardHtml(p, i) {
-        const badge = p.badge === 'popular' ? '<span class="project-badge badge-popular">MOST POPULAR</span>'
-                    : p.badge === 'trending' ? '<span class="project-badge badge-trending">TRENDING</span>' : '';
+        const badge = p.badge === 'popular' ? `<span class="project-badge badge-popular">${t('badge_popular')}</span>`
+                    : p.badge === 'trending' ? `<span class="project-badge badge-trending">${t('badge_trending')}</span>` : '';
 
         const links = [];
         if (p.modrinthSlug) links.push(`<a href="${modrinthUrl(p)}" class="project-link" target="_blank" rel="noopener">Modrinth</a>`);
         if (p.curseforgeSlug) links.push(`<a href="${curseforgeUrl(p)}" class="project-link" target="_blank" rel="noopener">CurseForge</a>`);
 
         let actions = `
-            <button class="detail-popup-btn" data-action="details" data-index="${i}" title="View details">
-                <i class="fas fa-info-circle"></i> Details
+            <button class="detail-popup-btn" data-action="details" data-index="${i}" title="${t('details_title')}">
+                <i class="fas fa-info-circle"></i> ${t('details_btn')}
             </button>`;
         if (p.detail === 'sculks') {
             actions = `
-            <button class="detail-popup-btn" data-action="sculks" title="View full details">
-                <i class="fas fa-info-circle"></i> Details
+            <button class="detail-popup-btn" data-action="sculks" title="${t('sculks_details_title')}">
+                <i class="fas fa-info-circle"></i> ${t('details_btn')}
             </button>
-            <button class="progress-btn" data-action="progress" title="Development progress">
-                <i class="fas fa-tasks"></i> Progress
+            <button class="progress-btn" data-action="progress" title="${t('progress_title')}">
+                <i class="fas fa-tasks"></i> ${t('progress_btn')}
                 <div class="progress-bar-mini"><div class="progress-bar-mini-fill"></div></div>
                 <span style="font-size:10px;">55%</span>
             </button>`;
         }
 
+        const updatedText = fmtDate(p.updatedAt);
+
         // İkon HER ZAMAN görünür: fallback yoksa placeholder, asla gizlenmez
         return `
-        <article class="project-item" data-key="${esc(projectKey(p))}">
+        <article class="project-item" data-key="${esc(projectKey(p))}" data-search="${esc((p.name + ' ' + p.desc + ' ' + (p.descTr || '') + ' ' + (p.versions || []).join(' ') + ' ' + (p.loaders || []).join(' ')).toLowerCase())}">
             <div class="project-info">
                 <img class="project-icon" src="${esc(p.icon || ICON_PLACEHOLDER)}" alt="${esc(p.name)} icon" width="76" height="76" decoding="async">
                 <h2 class="project-name">${esc(p.name)}${badge}</h2>
             </div>
-            <span class="project-downloads" title="Total downloads">...</span>
+            <span class="project-downloads" title="${t('downloads_title')}">...</span>
+            <span class="project-updated" title="${t('updated_title')}"${updatedText ? '' : ' hidden'}>
+                <i class="fas fa-clock"></i> ${t('updated_label')}: <span class="project-updated-date">${updatedText ? esc(updatedText) : ''}</span>
+            </span>
             <div class="project-links">${links.join('')}</div>
             <div class="project-extra-actions">${actions}</div>
             <div class="project-tags">${tagsHtml(p)}</div>
-            <div class="project-desc">${esc(p.desc)}</div>
+            <div class="project-desc">${esc(projectDesc(p))}</div>
         </article>`;
     }
 
@@ -351,6 +370,8 @@
         if (p.modrinthSlug) links.push(`<a href="${modrinthUrl(p)}" class="mod-detail-link" target="_blank" rel="noopener"><img class="brand-icon" src="https://cdn.simpleicons.org/modrinth/white" alt=""> Modrinth</a>`);
         if (p.curseforgeSlug) links.push(`<a href="${curseforgeUrl(p)}" class="mod-detail-link" target="_blank" rel="noopener"><img class="brand-icon" src="https://cdn.simpleicons.org/curseforge/white" alt=""> CurseForge</a>`);
 
+        const updatedText = fmtDate(p.updatedAt);
+
         $('#generic-modal-title').textContent = `📦 ${p.name}`;
         genericModal.body.innerHTML = `
             <div class="mod-detail-header">
@@ -358,9 +379,10 @@
                 <div>
                     <div class="mod-detail-title">${esc(p.name)}</div>
                     <div class="mod-detail-tags">${tagsHtml(p)}</div>
+                    ${updatedText ? `<div class="mod-detail-updated"><i class="fas fa-clock"></i> ${t('updated_label')}: ${esc(updatedText)}</div>` : ''}
                 </div>
             </div>
-            <div class="mod-detail-desc">${esc(p.desc)}</div>
+            <div class="mod-detail-desc">${esc(projectDesc(p))}</div>
             <div class="mod-detail-actions">${links.join('')}</div>`;
 
         const icon = $('.mod-detail-icon', genericModal.body);
@@ -375,7 +397,7 @@
             const res = await fetch(`https://api.modrinth.com/v2/project/${slug}`);
             if (!res.ok) return null;
             const d = await res.json();
-            return { downloads: d.downloads || 0, icon_url: d.icon_url || null };
+            return { downloads: d.downloads || 0, icon_url: d.icon_url || null, updated: d.updated || null };
         } catch { return null; }
     }
 
@@ -415,10 +437,8 @@
             if (!Array.isArray(projects) || !projects.length) throw new Error('empty');
         } catch {
             container.innerHTML =
-                '<div class="load-error">Could not load projects. ' +
-                'See them on <a href="https://modrinth.com/user/Ixra" target="_blank" rel="noopener">Modrinth</a> or ' +
-                '<a href="https://www.curseforge.com/members/ixra/projects" target="_blank" rel="noopener">CurseForge</a>. ' +
-                '<button type="button" id="retry-projects">Retry</button></div>';
+                `<div class="load-error">${t('load_error')} ` +
+                `<button type="button" id="retry-projects">${t('retry_btn')}</button></div>`;
             $('#retry-projects').addEventListener('click', () => {
                 container.innerHTML = '<div class="project-skeleton"></div><div class="project-skeleton"></div><div class="project-skeleton"></div>';
                 initProjects();
@@ -440,6 +460,45 @@
             else if (action === 'progress') openProgress();
             else if (action === 'details') openGenericDetails(projects[Number(btn.dataset.index)]);
         });
+
+        // Arama filtresi
+        const searchInput = $('#projects-search');
+        const emptyMsg = $('#projects-empty');
+        if (searchInput) {
+            const applyFilter = () => {
+                const q = searchInput.value.trim().toLowerCase();
+                let visible = 0;
+                $$('.project-item', container).forEach((item) => {
+                    const match = !q || (item.dataset.search || '').includes(q);
+                    item.hidden = !match;
+                    if (match) visible++;
+                });
+                if (emptyMsg) emptyMsg.hidden = visible !== 0;
+            };
+            searchInput.addEventListener('input', applyFilter);
+            applyFilter();
+        }
+
+        // Dil değişince kartları (rozet, buton, açıklama metinleri) yeniden çiz
+        if (window.I18N) {
+            window.I18N.onLanguageChange(() => {
+                const q = searchInput ? searchInput.value : '';
+                container.innerHTML = projects.map(projectCardHtml).join('');
+                projects.forEach((p, i) => { if (p.icon || p.iconUrl) applyProjectColor($$('.project-item', container)[i], p.iconUrl || p.icon); });
+                const dlEls = $$('.project-downloads', container);
+                projects.forEach((p, i) => {
+                    const key = projectKey(p);
+                    const cached2 = cacheRead(STATS_KEY);
+                    const d = cached2 && cached2.data && cached2.data.perProject ? cached2.data.perProject[key] : null;
+                    if (d) dlEls[i].textContent = fmtNum((d.mr || 0) + (d.cf || 0));
+                });
+                const si = $('#projects-search');
+                if (si) {
+                    si.value = q;
+                    si.dispatchEvent(new Event('input'));
+                }
+            });
+        }
 
         // Elle verilmiş ikonların rengini hemen uygula
         projects.forEach((p, i) => { if (p.icon) applyProjectColor(items[i], p.icon); });
@@ -467,6 +526,16 @@
                 if (!d) { if (dl.textContent === '...') dl.textContent = '?'; return; }
                 dl.textContent = fmtNum((d.mr || 0) + (d.cf || 0));
                 setIcon(item, p, d.icon || p.icon);
+                if (d.updated) {
+                    p.updatedAt = d.updated;
+                    const updEl = $('.project-updated', item);
+                    const dateEl = $('.project-updated-date', item);
+                    const text = fmtDate(d.updated);
+                    if (updEl && dateEl && text) {
+                        dateEl.textContent = text;
+                        updEl.hidden = false;
+                    }
+                }
             });
         }
 
@@ -489,17 +558,18 @@
         const bySlug = new Map((list || []).map((x) => [x.slug, x]));
 
         const results = await Promise.all(projects.map(async (p) => {
-            let mr = null, icon = null;
+            let mr = null, icon = null, updated = null;
             const info = bySlug.get(p.modrinthSlug);
             if (info) {
                 mr = info.downloads || 0;
                 icon = info.icon_url || null;
+                updated = info.updated || null;
             } else if (p.modrinthSlug) {
                 const one = await fetchModrinthProject(p.modrinthSlug);
-                if (one) { mr = one.downloads; icon = one.icon_url; }
+                if (one) { mr = one.downloads; icon = one.icon_url; updated = one.updated; }
             }
             const cf = await fetchCurseForgeDownloads(p.curseforgeSlug);
-            return { key: projectKey(p), mr, cf, icon };
+            return { key: projectKey(p), mr, cf, icon, updated };
         }));
 
         // Başarısız/0 gelenlerin üstüne yazma: son bilinen iyi değeri koru
@@ -511,7 +581,7 @@
             const mr = r.mr > 0 ? r.mr : (o.mr || 0);
             const cf = r.cf > 0 ? r.cf : (o.cf || 0);
             if (r.mr > 0 || r.cf > 0) anyOk = true;
-            perProject[r.key] = { mr, cf, icon: r.icon || o.icon || null };
+            perProject[r.key] = { mr, cf, icon: r.icon || o.icon || null, updated: r.updated || o.updated || null };
             sum += mr + cf;
         });
 
