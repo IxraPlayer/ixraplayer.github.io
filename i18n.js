@@ -124,7 +124,7 @@
             const saved = localStorage.getItem(LANG_KEY);
             if (saved === 'en' || saved === 'tr') return saved;
         } catch { /* yoksay */ }
-        return (navigator.language || '').toLowerCase().startsWith('tr') ? 'tr' : 'en';
+        return 'en'; // sayfa varsayılan olarak İngilizce açılır
     }
 
     let currentLang = getLang();

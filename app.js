@@ -349,9 +349,9 @@
 
         // İkon HER ZAMAN görünür: fallback yoksa placeholder, asla gizlenmez
         return `
-        <article class="project-item" data-key="${esc(projectKey(p))}" data-search="${esc((p.name + ' ' + p.desc + ' ' + (p.descTr || '') + ' ' + (p.versions || []).join(' ') + ' ' + (p.loaders || []).join(' ')).toLowerCase())}">
+        <article class="project-item" data-key="${esc(projectKey(p))}">
             <div class="project-info">
-                <img class="project-icon" src="${esc(p.icon || ICON_PLACEHOLDER)}" alt="${esc(p.name)} icon" width="76" height="76" decoding="async">
+                <img class="project-icon" src="${esc(p.icon || ICON_PLACEHOLDER)}" alt="${esc(p.name)} icon" width="76" height="76" decoding="async" data-fallback="${esc(p.icon || ICON_PLACEHOLDER)}" onerror="if(this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}else if(!this.dataset.gaveUp){this.dataset.gaveUp='1';this.src='${ICON_PLACEHOLDER}';}">
                 <h2 class="project-name">${esc(p.name)}${badge}</h2>
             </div>
             <span class="project-downloads" title="${t('downloads_title')}">...</span>
@@ -461,28 +461,9 @@
             else if (action === 'details') openGenericDetails(projects[Number(btn.dataset.index)]);
         });
 
-        // Arama filtresi
-        const searchInput = $('#projects-search');
-        const emptyMsg = $('#projects-empty');
-        if (searchInput) {
-            const applyFilter = () => {
-                const q = searchInput.value.trim().toLowerCase();
-                let visible = 0;
-                $$('.project-item', container).forEach((item) => {
-                    const match = !q || (item.dataset.search || '').includes(q);
-                    item.hidden = !match;
-                    if (match) visible++;
-                });
-                if (emptyMsg) emptyMsg.hidden = visible !== 0;
-            };
-            searchInput.addEventListener('input', applyFilter);
-            applyFilter();
-        }
-
         // Dil değişince kartları (rozet, buton, açıklama metinleri) yeniden çiz
         if (window.I18N) {
             window.I18N.onLanguageChange(() => {
-                const q = searchInput ? searchInput.value : '';
                 container.innerHTML = projects.map(projectCardHtml).join('');
                 projects.forEach((p, i) => { if (p.icon || p.iconUrl) applyProjectColor($$('.project-item', container)[i], p.iconUrl || p.icon); });
                 const dlEls = $$('.project-downloads', container);
@@ -492,11 +473,6 @@
                     const d = cached2 && cached2.data && cached2.data.perProject ? cached2.data.perProject[key] : null;
                     if (d) dlEls[i].textContent = fmtNum((d.mr || 0) + (d.cf || 0));
                 });
-                const si = $('#projects-search');
-                if (si) {
-                    si.value = q;
-                    si.dispatchEvent(new Event('input'));
-                }
             });
         }
 
@@ -512,6 +488,8 @@
             test.onload = () => {
                 img.src = url;
                 img.dataset.current = url;
+                img.dataset.fallback = url; // ileride resim geçici olarak yüklenemezse buraya geri dönülür
+                delete img.dataset.gaveUp;
                 p.iconUrl = url;
                 applyProjectColor(item, url);
             };

@@ -7,7 +7,7 @@
 :root {
     --bg-body: #070a10;
     --card-bg: #10161f;
-    --card-border: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.12);
     --accent: #5db8d4;
     --accent-bright: #7dd8f0;
     --accent-soft: rgba(74, 155, 181, 0.14);
@@ -16,7 +16,7 @@
     --text-secondary: #b8c9db;
     --text-muted: #7f92a5;
     --shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03);
+    --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
     --shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--accent-border);
     --radius-card: 28px;
 }
@@ -457,44 +457,6 @@ body::before {
     gap: 5px;
 }
 
-.projects-search-wrap {
-    position: relative;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-}
-.projects-search-wrap i {
-    position: absolute;
-    left: 16px;
-    color: var(--text-muted);
-    font-size: 13px;
-    pointer-events: none;
-}
-.projects-search-input {
-    width: 100%;
-    padding: 11px 16px 11px 38px;
-    border-radius: 14px;
-    border: 1px solid var(--card-border);
-    background: var(--card-bg);
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-.projects-search-input::placeholder { color: var(--text-muted); }
-.projects-search-input:focus {
-    border-color: var(--accent-border);
-    box-shadow: 0 0 0 3px var(--accent-soft);
-}
-
-.projects-empty {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 14px;
-    padding: 24px 12px;
-}
-
 .lang-toggle-btn {
     position: fixed;
     right: 18px;
@@ -663,13 +625,13 @@ body::before {
 
 .modal-dialog {
     background: #141c28;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 20px;
     max-width: 700px;
     width: 100%;
     max-height: 82vh;
     overflow-y: auto;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 0, 0, 0.4);
     animation: modalFadeIn 0.3s ease-out;
     overscroll-behavior: contain;
 }
