@@ -873,6 +873,9 @@ body::before {
     .project-updated { align-self: flex-start; }
     .project-extra-actions { align-self: flex-end; }
     .project-desc, .project-tags { margin-left: 0; }
+    /* Mobilde .project-item column'a dönüp çok uzuyor (ikon+isim+açıklama+etiketler alt alta);
+       iskelet de buna yakın olmalı, yoksa projects.json yüklenince büyük bir CLS sıçraması olur. */
+    .project-skeleton { height: 250px; }
     .progress-row { flex-wrap: wrap; }
     .progress-label { width: 90px; font-size: 11px; }
     .modal-dialog { max-width: 95vw; max-height: 88vh; border-radius: 14px; }

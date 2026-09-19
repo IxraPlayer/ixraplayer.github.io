@@ -403,10 +403,12 @@
         } catch { return null; }
     }
 
-    async function fetchCurseForgeDownloads(slug, attempt = 0) {
+    async function fetchCurseForgeDownloads(slug, category = 'mc-mods', attempt = 0) {
         if (!slug) return null;
         try {
-            const res = await fetch(`https://api.cfwidget.com/minecraft/mc-mods/${slug}`);
+            // NOT: resourcepack'ler cfwidget'ta "texture-packs" altında, mod'lar "mc-mods" altında.
+            // Kategori yanlış verilirse (örn. her zaman mc-mods) var olan projeler bile 404 döner.
+            const res = await fetch(`https://api.cfwidget.com/minecraft/${category}/${slug}`);
             if (!res.ok) {
                 if (res.status === 404) return null;
                 throw new Error('cf');
@@ -415,13 +417,13 @@
             const total = d.downloads?.total ?? d.downloadCount ?? 0;
             if (total === 0 && attempt < 1) {
                 await new Promise((r) => setTimeout(r, 700));
-                return fetchCurseForgeDownloads(slug, attempt + 1);
+                return fetchCurseForgeDownloads(slug, category, attempt + 1);
             }
             return total;
         } catch {
             if (attempt < 1) {
                 await new Promise((r) => setTimeout(r, 700));
-                return fetchCurseForgeDownloads(slug, attempt + 1);
+                return fetchCurseForgeDownloads(slug, category, attempt + 1);
             }
             return null;
         }
@@ -543,7 +545,7 @@
             const info = bySlug.get(p.modrinthSlug);
             // Modrinth toplu listede yoksa tekil istek at; bunu CurseForge isteğiyle PARALEL çalıştır
             // (öncesinde sırayla bekleniyordu, bu da her kart için gecikmeyi ikiye katlıyordu)
-            const cfPromise = fetchCurseForgeDownloads(p.curseforgeSlug);
+            const cfPromise = fetchCurseForgeDownloads(p.curseforgeSlug, isPack(p) ? 'texture-packs' : 'mc-mods');
             if (info) {
                 mr = info.downloads || 0;
                 icon = info.icon_url || null;
