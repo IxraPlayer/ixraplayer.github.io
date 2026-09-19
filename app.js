@@ -344,12 +344,56 @@
     ];
     const SCULKS_SLOT_SECONDS = 1; // her görsel ~1 saniye görünür kalır
     function sculksShowcaseHtml() {
-        const total = SCULKS_SHOWCASE.length * SCULKS_SLOT_SECONDS;
-        return `<div class="sculks-showcase" aria-hidden="true" style="--sculks-total:${total}s">${
-            SCULKS_SHOWCASE.map((img, idx) =>
-                `<img src="${esc(img.src)}" alt="${esc(img.alt)}" loading="lazy" decoding="async" style="animation-duration:${total}s; animation-delay:${idx * SCULKS_SLOT_SECONDS}s">`
+        return `<div class="sculks-showcase" aria-hidden="true">${
+            SCULKS_SHOWCASE.map((img) =>
+                `<img src="${esc(img.src)}" alt="${esc(img.alt)}" loading="lazy" decoding="async">`
             ).join('')
         }</div>`;
+    }
+
+    // Sculks showcase döngüsünü başlat/durdur (hover ve dokunma için ortak)
+    function startSculksShowcase(card) {
+        const showcase = $('.sculks-showcase', card);
+        if (!showcase || showcase.dataset.running === '1') return;
+        const imgs = $$('img', showcase);
+        if (!imgs.length) return;
+        showcase.dataset.running = '1';
+        let idx = 0;
+        imgs.forEach((im) => im.classList.remove('is-visible'));
+        // İlk görsel hemen (yumuşak fade-in ile, CSS transition zaten opacity'yi yumuşatıyor)
+        imgs[0].classList.add('is-visible');
+        showcase._sculksTimer = setInterval(() => {
+            imgs[idx].classList.remove('is-visible');
+            idx = (idx + 1) % imgs.length;
+            imgs[idx].classList.add('is-visible');
+        }, SCULKS_SLOT_SECONDS * 1000);
+    }
+    function stopSculksShowcase(card) {
+        const showcase = $('.sculks-showcase', card);
+        if (!showcase) return;
+        clearInterval(showcase._sculksTimer);
+        showcase._sculksTimer = null;
+        showcase.dataset.running = '0';
+        $$('img', showcase).forEach((im) => im.classList.remove('is-visible'));
+    }
+    function wireSculksShowcase(container) {
+        const card = $('.project-item-showcase', container);
+        if (!card) return;
+        card.addEventListener('mouseenter', () => startSculksShowcase(card));
+        card.addEventListener('mouseleave', () => stopSculksShowcase(card));
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('[data-action]') || e.target.closest('a')) return;
+            if (!window.matchMedia('(hover: none)').matches) return; // sadece dokunmatikte
+            const showcase = $('.sculks-showcase', card);
+            if (showcase && showcase.dataset.running === '1') { stopSculksShowcase(card); return; }
+            showcase && showcase.classList.add('touch-active');
+            startSculksShowcase(card);
+            clearTimeout(card._touchHideTimer);
+            card._touchHideTimer = setTimeout(() => {
+                stopSculksShowcase(card);
+                showcase && showcase.classList.remove('touch-active');
+            }, 6000);
+        });
     }
 
     function projectCardHtml(p, i) {
@@ -497,24 +541,14 @@
             else if (action === 'details') openGenericDetails(projects[Number(btn.dataset.index)]);
         });
 
-        // Mobilde hover yok: Sculks kartının ikonuna dokununca showcase'i birkaç saniyeliğine göster
-        let touchHideTimer = null;
-        container.addEventListener('click', (e) => {
-            if (e.target.closest('[data-action]') || e.target.closest('a')) return; // buton/link tıklamalarını etkileme
-            const card = e.target.closest('.project-item-showcase');
-            if (!card) return;
-            const showcase = $('.sculks-showcase', card);
-            if (!showcase) return;
-            showcase.classList.add('touch-active');
-            clearTimeout(touchHideTimer);
-            touchHideTimer = setTimeout(() => showcase.classList.remove('touch-active'), 6000);
-        });
+        wireSculksShowcase(container);
 
         // Dil değişince kartları (rozet, buton, açıklama metinleri) yeniden çiz
         if (window.I18N) {
             window.I18N.onLanguageChange(() => {
                 container.innerHTML = projects.map(projectCardHtml).join('');
                 items = $$('.project-item', container); // eskiyi (DOM'dan kopmuş) değil, yeni kartları referansla
+                wireSculksShowcase(container);
                 projects.forEach((p, i) => { if (p.icon || p.iconUrl) applyProjectColor(items[i], p.iconUrl || p.icon); });
                 const dlEls = $$('.project-downloads', container);
                 projects.forEach((p, i) => {

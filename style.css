@@ -408,31 +408,18 @@ body::before {
     height: 100%;
     object-fit: cover;
     opacity: 0;
-    animation-name: sculksShowcaseCycle;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-play-state: paused;
+    transition: opacity 0.7s ease;
 }
-.project-item-showcase:hover .sculks-showcase img,
-.sculks-showcase.touch-active img {
-    animation-play-state: running;
+.sculks-showcase img.is-visible {
+    opacity: 1;
 }
-/* 18 görsel × ~1sn: her görsel hızlıca belirir (matlaşarak gelir), kısa süre kalır, saydamlaşarak kaybolur.
-   Bir sonraki görselin belirmesi bununkinin kaybolmasıyla çakışır -> yumuşak crossfade. */
-@keyframes sculksShowcaseCycle {
-    0%    { opacity: 0; }
-    1%    { opacity: 1; }
-    3.2%  { opacity: 1; }
-    5.5%  { opacity: 0; }
-    100%  { opacity: 0; }
-}
-/* Mobilde hover olmadığı için görseller elle döngüye alınır (bkz. app.js autoShowcaseOnTouch) */
+/* Mobilde hover olmadığı için görseller dokununca elle döngüye alınır (bkz. app.js) */
 @media (hover: none) {
     .project-item-showcase:hover { transform: none; }
     .sculks-showcase.touch-active { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .sculks-showcase img { animation: none; opacity: 0; }
+    .sculks-showcase img { transition: none; opacity: 0; }
     .sculks-showcase img:first-child { opacity: 1; }
     .project-item-showcase:hover { transform: none; }
 }
