@@ -348,10 +348,12 @@
         const updatedText = fmtDate(p.updatedAt);
 
         // İkon HER ZAMAN görünür: fallback yoksa placeholder, asla gizlenmez
+        // NOT: p.iconUrl varsa (canlı API'den gelmiş gerçek ikon) o kullanılır, dil değişince kaybolmaz
+        const iconSrc = p.iconUrl || p.icon || ICON_PLACEHOLDER;
         return `
         <article class="project-item" data-key="${esc(projectKey(p))}">
             <div class="project-info">
-                <img class="project-icon" src="${esc(p.icon || ICON_PLACEHOLDER)}" alt="${esc(p.name)} icon" width="76" height="76" decoding="async" data-fallback="${esc(p.icon || ICON_PLACEHOLDER)}" onerror="if(this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}else if(!this.dataset.gaveUp){this.dataset.gaveUp='1';this.src='${ICON_PLACEHOLDER}';}">
+                <img class="project-icon" src="${esc(iconSrc)}" alt="${esc(p.name)} icon" width="76" height="76" decoding="async" data-fallback="${esc(iconSrc)}" onerror="if(this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}else if(!this.dataset.gaveUp){this.dataset.gaveUp='1';this.src='${ICON_PLACEHOLDER}';}">
                 <h2 class="project-name">${esc(p.name)}${badge}</h2>
             </div>
             <span class="project-downloads" title="${t('downloads_title')}">...</span>
@@ -449,7 +451,7 @@
         }
 
         container.innerHTML = projects.map(projectCardHtml).join('');
-        const items = $$('.project-item', container);
+        let items = $$('.project-item', container);
 
         // Buton tıklamaları (event delegation)
         container.addEventListener('click', (e) => {
@@ -465,7 +467,8 @@
         if (window.I18N) {
             window.I18N.onLanguageChange(() => {
                 container.innerHTML = projects.map(projectCardHtml).join('');
-                projects.forEach((p, i) => { if (p.icon || p.iconUrl) applyProjectColor($$('.project-item', container)[i], p.iconUrl || p.icon); });
+                items = $$('.project-item', container); // eskiyi (DOM'dan kopmuş) değil, yeni kartları referansla
+                projects.forEach((p, i) => { if (p.icon || p.iconUrl) applyProjectColor(items[i], p.iconUrl || p.icon); });
                 const dlEls = $$('.project-downloads', container);
                 projects.forEach((p, i) => {
                     const key = projectKey(p);
@@ -538,6 +541,9 @@
         const results = await Promise.all(projects.map(async (p) => {
             let mr = null, icon = null, updated = null;
             const info = bySlug.get(p.modrinthSlug);
+            // Modrinth toplu listede yoksa tekil istek at; bunu CurseForge isteğiyle PARALEL çalıştır
+            // (öncesinde sırayla bekleniyordu, bu da her kart için gecikmeyi ikiye katlıyordu)
+            const cfPromise = fetchCurseForgeDownloads(p.curseforgeSlug);
             if (info) {
                 mr = info.downloads || 0;
                 icon = info.icon_url || null;
@@ -546,7 +552,7 @@
                 const one = await fetchModrinthProject(p.modrinthSlug);
                 if (one) { mr = one.downloads; icon = one.icon_url; updated = one.updated; }
             }
-            const cf = await fetchCurseForgeDownloads(p.curseforgeSlug);
+            const cf = await cfPromise;
             return { key: projectKey(p), mr, cf, icon, updated };
         }));
 
