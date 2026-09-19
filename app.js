@@ -328,14 +328,14 @@
         { src: 'assets/sculks-showcase/03-radioactive-warden.webp', alt: "Arda's Sculks — Radioactive Warden boss arena" },
         { src: 'assets/sculks-showcase/04-sculk-golem.webp', alt: "Arda's Sculks — Sculk Golem with glowing chest core" },
         { src: 'assets/sculks-showcase/05-sculk-flowers.webp', alt: "Arda's Sculks — decorative sculk flowers and light sources" },
-        { src: 'assets/sculks-showcase/06-weapons-wall.webp', alt: "Arda's Sculks — sculkerite weapons and armor showcase" },
+        { src: 'assets/sculks-showcase/06-yellow-glow-forest.webp', alt: "Arda's Sculks — glowing yellow sculk forest at night" },
         { src: 'assets/sculks-showcase/07-sculk-plains.webp', alt: "Arda's Sculks — glowing Sculk Plains biome landscape" },
         { src: 'assets/sculks-showcase/08-dangerous-biome.webp', alt: "Arda's Sculks — dangerous biome with tall sculk plants" },
-        { src: 'assets/sculks-showcase/09-sculk-creeper.webp', alt: "Arda's Sculks — Sculk Creeper mob" },
-        { src: 'assets/sculks-showcase/10-sculk-fish.webp', alt: "Arda's Sculks — Sculk Fish mob" },
-        { src: 'assets/sculks-showcase/11-gear-set.webp', alt: "Arda's Sculks — full sculkerite gear and tool set" },
+        { src: 'assets/sculks-showcase/09-crystal-cave.webp', alt: "Arda's Sculks — colorful crystal cave chamber" },
+        { src: 'assets/sculks-showcase/10-wisteria-build.webp', alt: "Arda's Sculks — glowing wisteria-themed build at night" },
+        { src: 'assets/sculks-showcase/11-purple-wood-build.webp', alt: "Arda's Sculks — wooden build with purple sculk accents" },
         { src: 'assets/sculks-showcase/12-purple-biome.webp', alt: "Arda's Sculks — purple glowing biome at night" },
-        { src: 'assets/sculks-showcase/13-sculk-ghost.webp', alt: "Arda's Sculks — Sculk Ghost mob" },
+        { src: 'assets/sculks-showcase/13-ancient-vault.webp', alt: "Arda's Sculks — symmetrical ancient vault chamber from above" },
         { src: 'assets/sculks-showcase/14-ancient-city-chest.webp', alt: "Arda's Sculks — ancient city chest room" },
         { src: 'assets/sculks-showcase/15-circular-structure.webp', alt: "Arda's Sculks — symmetrical ancient city structure from above" },
         { src: 'assets/sculks-showcase/16-mushroom-forest.webp', alt: "Arda's Sculks — glowing giant mushroom forest" },
@@ -346,7 +346,7 @@
     function sculksShowcaseHtml() {
         return `<div class="sculks-showcase" aria-hidden="true">${
             SCULKS_SHOWCASE.map((img) =>
-                `<img src="${esc(img.src)}" alt="${esc(img.alt)}" loading="lazy" decoding="async">`
+                `<img src="${esc(img.src)}" alt="${esc(img.alt)}" decoding="async">`
             ).join('')
         }</div>`;
     }

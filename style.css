@@ -397,7 +397,8 @@ body::before {
     inset: 0;
     background: linear-gradient(180deg, rgba(7, 10, 16, 0.2) 0%, rgba(7, 10, 16, 0.55) 55%, rgba(7, 10, 16, 0.88) 100%);
     opacity: 0;
-    transition: opacity 0.7s ease;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 .sculks-showcase.active::after {
     opacity: 1;
@@ -409,7 +410,8 @@ body::before {
     height: 100%;
     object-fit: cover;
     opacity: 0;
-    transition: opacity 0.7s ease;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 .sculks-showcase img.is-visible {
     opacity: 1;
