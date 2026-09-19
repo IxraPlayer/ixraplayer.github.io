@@ -344,29 +344,49 @@
     ];
     const SCULKS_SLOT_SECONDS = 1; // her görsel ~1 saniye görünür kalır
     function sculksShowcaseHtml() {
-        return `<div class="sculks-showcase" aria-hidden="true">${
-            SCULKS_SHOWCASE.map((img) =>
-                `<img src="${esc(img.src)}" alt="${esc(img.alt)}" decoding="async">`
-            ).join('')
-        }</div>`;
+        const imgsHtml = SCULKS_SHOWCASE.map((img) =>
+            `<img src="${esc(img.src)}" alt="${esc(img.alt)}" decoding="async">`
+        ).join('');
+        return `<div class="sculks-showcase" aria-hidden="true"><div class="sculks-gradient"></div>${imgsHtml}</div>`;
     }
 
-    // Sculks showcase döngüsünü başlat/durdur (hover ve dokunma için ortak)
+    // Sculks showcase: tamamen JS kontrollü, requestAnimationFrame ile kare kare opacity
+    // (CSS transition / prefers-reduced-motion gibi tarayıcıya bağlı garipliklere güvenmemek için)
+    function fadeEl(el, from, to, duration, onDone) {
+        if (!el) return;
+        cancelAnimationFrame(el._fadeRaf);
+        const start = performance.now();
+        function step(now) {
+            const t = Math.min(1, (now - start) / duration);
+            const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; // ease-in-out
+            el.style.opacity = String(from + (to - from) * eased);
+            if (t < 1) {
+                el._fadeRaf = requestAnimationFrame(step);
+            } else {
+                el.style.opacity = String(to);
+                if (onDone) onDone();
+            }
+        }
+        el._fadeRaf = requestAnimationFrame(step);
+    }
+
     function startSculksShowcase(card) {
         const showcase = $('.sculks-showcase', card);
         if (!showcase || showcase.dataset.running === '1') return;
+        const gradient = $('.sculks-gradient', showcase);
         const imgs = $$('img', showcase);
         if (!imgs.length) return;
         showcase.dataset.running = '1';
-        showcase.classList.add('active'); // arka plan gradyanı yumuşak fade-in
+        imgs.forEach((im) => { im.style.opacity = '0'; });
         let idx = 0;
-        imgs.forEach((im) => im.classList.remove('is-visible'));
-        // İlk görsel hemen (yumuşak fade-in ile, CSS transition zaten opacity'yi yumuşatıyor)
-        imgs[0].classList.add('is-visible');
+        fadeEl(gradient, 0, 1, 400);
+        fadeEl(imgs[0], 0, 1, 400);
         showcase._sculksTimer = setInterval(() => {
-            imgs[idx].classList.remove('is-visible');
+            const prev = imgs[idx];
             idx = (idx + 1) % imgs.length;
-            imgs[idx].classList.add('is-visible');
+            const next = imgs[idx];
+            fadeEl(prev, 1, 0, 450);
+            fadeEl(next, 0, 1, 450);
         }, SCULKS_SLOT_SECONDS * 1000);
     }
     function stopSculksShowcase(card) {
@@ -375,8 +395,9 @@
         clearInterval(showcase._sculksTimer);
         showcase._sculksTimer = null;
         showcase.dataset.running = '0';
-        showcase.classList.remove('active'); // arka plan gradyanı yumuşak fade-out
-        $$('img', showcase).forEach((im) => im.classList.remove('is-visible'));
+        const gradient = $('.sculks-gradient', showcase);
+        fadeEl(gradient, parseFloat(gradient.style.opacity) || 0, 0, 400);
+        $$('img', showcase).forEach((im) => fadeEl(im, parseFloat(im.style.opacity) || 0, 0, 400));
     }
     function wireSculksShowcase(container) {
         const card = $('.project-item-showcase', container);
