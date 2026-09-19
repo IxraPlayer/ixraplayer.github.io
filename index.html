@@ -296,6 +296,7 @@
             <a href="https://ixraplayer.github.io" target="_blank" rel="noopener">ixraplayer.github.io</a>
             &nbsp;·&nbsp; <span data-i18n="footer_text">Ixra · Minecraft Mod Developer</span>
             &nbsp;·&nbsp; <a href="/sitemap.html">Site Map</a>
+            &nbsp;·&nbsp; <a href="/analytics.html">Analytics</a>
         </footer>
     </div>
 
@@ -360,5 +361,15 @@
 
     <script src="i18n.js" defer></script>
     <script src="app.js" defer></script>
+
+    <!-- ============ Basit ziyaretçi sayacı (analytics.html'de gösterilir) ============ -->
+    <script>
+        (function () {
+            try {
+                fetch('https://api.countapi.xyz/hit/ixraplayer-github-io/pageviews')
+                    .catch(function () { /* sayaç servisine ulaşılamazsa sessizce yoksay */ });
+            } catch (e) { /* fetch yoksa yoksay */ }
+        })();
+    </script>
 </body>
 </html>
