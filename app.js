@@ -332,11 +332,11 @@
         { src: 'assets/sculks-showcase/07-sculk-plains.webp', alt: "Arda's Sculks — glowing Sculk Plains biome landscape" },
         { src: 'assets/sculks-showcase/08-dangerous-biome.webp', alt: "Arda's Sculks — dangerous biome with tall sculk plants" },
         { src: 'assets/sculks-showcase/09-crystal-cave.webp', alt: "Arda's Sculks — colorful crystal cave chamber" },
-        { src: 'assets/sculks-showcase/10-wisteria-build.webp', alt: "Arda's Sculks — glowing wisteria-themed build at night" },
-        { src: 'assets/sculks-showcase/11-purple-wood-build.webp', alt: "Arda's Sculks — wooden build with purple sculk accents" },
+        { src: 'assets/sculks-showcase/10-pillar-forest.webp', alt: "Arda's Sculks — eerie glowing pillar forest at night" },
+        { src: 'assets/sculks-showcase/11-golem-shrine.webp', alt: "Arda's Sculks — glowing golem shrine chamber" },
         { src: 'assets/sculks-showcase/12-purple-biome.webp', alt: "Arda's Sculks — purple glowing biome at night" },
         { src: 'assets/sculks-showcase/13-ancient-vault.webp', alt: "Arda's Sculks — symmetrical ancient vault chamber from above" },
-        { src: 'assets/sculks-showcase/14-ancient-city-chest.webp', alt: "Arda's Sculks — ancient city chest room" },
+        { src: 'assets/sculks-showcase/14-symmetric-chamber.webp', alt: "Arda's Sculks — symmetrical green ancient chamber from above" },
         { src: 'assets/sculks-showcase/15-circular-structure.webp', alt: "Arda's Sculks — symmetrical ancient city structure from above" },
         { src: 'assets/sculks-showcase/16-mushroom-forest.webp', alt: "Arda's Sculks — glowing giant mushroom forest" },
         { src: 'assets/sculks-showcase/17-glowing-forest.webp', alt: "Arda's Sculks — glowing forest biome at dusk" },
@@ -347,7 +347,7 @@
         const imgsHtml = SCULKS_SHOWCASE.map((img) =>
             `<img src="${esc(img.src)}" alt="${esc(img.alt)}" decoding="async">`
         ).join('');
-        return `<div class="sculks-showcase" aria-hidden="true"><div class="sculks-gradient"></div>${imgsHtml}</div>`;
+        return `<div class="sculks-permanent-bg"><img src="assets/sculks-showcase/bg-warden-shrine.webp" alt="Arda's Sculks — ancient warden shrine artwork" decoding="async"></div><div class="sculks-showcase" aria-hidden="true"><div class="sculks-gradient"></div>${imgsHtml}</div>`;
     }
 
     // Sculks showcase: tamamen JS kontrollü, requestAnimationFrame ile kare kare opacity
