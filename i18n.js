@@ -56,7 +56,7 @@
         q9_a: { en: 'Most of them are. Check the GitHub repository for the source code and license information.', tr: 'Çoğu açık kaynak. Kaynak kod ve lisans bilgisi için GitHub deposuna bakabilirsin.' },
 
         s1_q: { en: 'How did the idea for this mod come about?', tr: 'Bu modun fikri nasıl ortaya çıktı?' },
-        s1_a: { en: `It all started with a suggestion from a friend. They told me "you should make a mod that expands the Deep Dark theme", and I got to work. That idea eventually turned into Arda's Sculks.`, tr: `Her şey bir arkadaşımın önerisiyle başladı. Bana "Deep Dark temasını genişleten bir mod yapmalısın" dedi ve işe koyuldum. Bu fikir sonunda Arda's Sculks'a dönüştü.` },
+        s1_a: { en: `It actually started with a friend suggesting I add powerful arms to the game. I combined that idea with the sculk theme, kept developing it further, and eventually decided to release it as Arda's Sculks.`, tr: `Aslında her şey bir arkadaşımın oyuna güçlü kollar ekleme fikrini önermesiyle başladı. Ben de bu fikri sculk temasıyla birleştirdim, sonra modu daha da geliştirmeye devam ettim ve sonunda Arda's Sculks olarak yayınlamaya karar verdim.` },
         s2_q: { en: 'What tools did you use?', tr: 'Hangi araçları kullandınız?' },
         s2_a: { en: 'I used <strong>MCreator</strong> throughout development. It allowed me to prototype quickly and still shape the codebase exactly how I needed it.', tr: 'Geliştirme boyunca <strong>MCreator</strong> kullandım. Hızlıca prototip oluşturmamı sağlarken kod tabanını tam istediğim gibi şekillendirmeme de izin verdi.' },
         s3_q: { en: 'What was the biggest technical challenge?', tr: 'En büyük teknik zorluk neydi?' },
