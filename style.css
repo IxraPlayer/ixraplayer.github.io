@@ -388,7 +388,6 @@ body::before {
     position: absolute;
     inset: 0;
     z-index: -1;
-    opacity: 0.5;
     pointer-events: none;
 }
 .sculks-permanent-bg img {
