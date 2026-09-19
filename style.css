@@ -408,14 +408,23 @@ body::before {
     height: 100%;
     object-fit: cover;
     opacity: 0;
-    animation: sculksShowcaseCycle 18s infinite;
+    animation-name: sculksShowcaseCycle;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-play-state: paused;
 }
+.project-item-showcase:hover .sculks-showcase img,
+.sculks-showcase.touch-active img {
+    animation-play-state: running;
+}
+/* 18 görsel × ~1sn: her görsel hızlıca belirir (matlaşarak gelir), kısa süre kalır, saydamlaşarak kaybolur.
+   Bir sonraki görselin belirmesi bununkinin kaybolmasıyla çakışır -> yumuşak crossfade. */
 @keyframes sculksShowcaseCycle {
-    0%   { opacity: 0; }
-    3%   { opacity: 1; }
-    14%  { opacity: 1; }
-    19%  { opacity: 0; }
-    100% { opacity: 0; }
+    0%    { opacity: 0; }
+    1%    { opacity: 1; }
+    3.2%  { opacity: 1; }
+    5.5%  { opacity: 0; }
+    100%  { opacity: 0; }
 }
 /* Mobilde hover olmadığı için görseller elle döngüye alınır (bkz. app.js autoShowcaseOnTouch) */
 @media (hover: none) {
