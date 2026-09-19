@@ -358,6 +358,7 @@
         const imgs = $$('img', showcase);
         if (!imgs.length) return;
         showcase.dataset.running = '1';
+        showcase.classList.add('active'); // arka plan gradyanı yumuşak fade-in
         let idx = 0;
         imgs.forEach((im) => im.classList.remove('is-visible'));
         // İlk görsel hemen (yumuşak fade-in ile, CSS transition zaten opacity'yi yumuşatıyor)
@@ -374,6 +375,7 @@
         clearInterval(showcase._sculksTimer);
         showcase._sculksTimer = null;
         showcase.dataset.running = '0';
+        showcase.classList.remove('active'); // arka plan gradyanı yumuşak fade-out
         $$('img', showcase).forEach((im) => im.classList.remove('is-visible'));
     }
     function wireSculksShowcase(container) {
@@ -386,13 +388,9 @@
             if (!window.matchMedia('(hover: none)').matches) return; // sadece dokunmatikte
             const showcase = $('.sculks-showcase', card);
             if (showcase && showcase.dataset.running === '1') { stopSculksShowcase(card); return; }
-            showcase && showcase.classList.add('touch-active');
             startSculksShowcase(card);
             clearTimeout(card._touchHideTimer);
-            card._touchHideTimer = setTimeout(() => {
-                stopSculksShowcase(card);
-                showcase && showcase.classList.remove('touch-active');
-            }, 6000);
+            card._touchHideTimer = setTimeout(() => stopSculksShowcase(card), 6000);
         });
     }
 
