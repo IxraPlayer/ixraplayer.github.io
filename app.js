@@ -340,7 +340,7 @@
         { src: 'assets/sculks-showcase/15-circular-structure.webp', alt: "Arda's Sculks — symmetrical ancient city structure from above", pos: '50% 50%' },
         { src: 'assets/sculks-showcase/16-mushroom-forest.webp', alt: "Arda's Sculks — glowing giant mushroom forest", pos: '50% 60%' },
         { src: 'assets/sculks-showcase/17-glowing-forest.webp', alt: "Arda's Sculks — glowing forest biome at dusk", pos: '50% 45%' },
-        { src: 'assets/sculks-showcase/18-glowing-build.webp', alt: "Arda's Sculks — glowing sculk house build at sunset", pos: '40% 65%' }
+        { src: 'assets/sculks-showcase/18-mossy-chamber.webp', alt: "Arda's Sculks — mossy ancient chamber from above", pos: '50% 50%' }
     ];
     const SCULKS_SLOT_SECONDS = 1; // her görsel ~1 saniye görünür kalır
     function sculksShowcaseHtml() {

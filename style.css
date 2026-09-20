@@ -384,6 +384,42 @@ body::before {
     transform: scale(1.035);
     z-index: 5;
 }
+/* Arda's Sculks kartı: arka plan görseli var, bu yüzden yazılar okunsun diye beyaz + siyah gölge */
+.project-item-showcase .project-desc,
+.project-item-showcase .project-updated,
+.project-item-showcase .project-updated-date {
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 8px rgba(0, 0, 0, 0.7);
+}
+.project-item-showcase .project-name {
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 0, 0, 0.6);
+}
+.project-item-showcase .version-tag,
+.project-item-showcase .loader-tag {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+.project-item-showcase .project-link {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* Butonlar (Details / Progress / Modrinth-CurseForge linkleri) arka planla uyum için %30 saydam */
+.project-item-showcase .detail-popup-btn,
+.project-item-showcase .progress-btn,
+.project-item-showcase .project-link {
+    background: rgba(20, 28, 38, 0.3);
+}
+.project-item-showcase .loader-tag.forge {
+    background: rgba(120, 60, 20, 0.3);
+}
+.project-item-showcase .version-tag {
+    background: rgba(30, 70, 85, 0.3);
+}
+.project-item-showcase .loader-tag {
+    background: rgba(30, 80, 45, 0.3);
+}
+
 .sculks-permanent-bg {
     position: absolute;
     inset: 0;
