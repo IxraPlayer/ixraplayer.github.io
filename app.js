@@ -444,9 +444,13 @@
         // İkon HER ZAMAN görünür: fallback yoksa placeholder, asla gizlenmez
         // NOT: p.iconUrl varsa (canlı API'den gelmiş gerçek ikon) o kullanılır, dil değişince kaybolmaz
         const iconSrc = p.iconUrl || p.icon || ICON_PLACEHOLDER;
+        const hasRealIcon = !!(p.iconUrl || p.icon);
+        const hoverBgHtml = p.detail !== 'sculks'
+            ? `<div class="mod-hover-bg"${hasRealIcon ? ` style="background-image:url('${esc(iconSrc)}')"` : ''}></div>`
+            : '';
         return `
         <article class="project-item${p.detail === 'sculks' ? ' project-item-showcase' : ''}" data-key="${esc(projectKey(p))}">
-            ${p.detail === 'sculks' ? sculksShowcaseHtml() : ''}
+            ${p.detail === 'sculks' ? sculksShowcaseHtml() : hoverBgHtml}
             <div class="project-info">
                 <img class="project-icon" src="${esc(iconSrc)}" alt="${esc(p.name)} icon" width="76" height="76" decoding="async" data-fallback="${esc(iconSrc)}" onerror="if(this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}else if(!this.dataset.gaveUp){this.dataset.gaveUp='1';this.src='${ICON_PLACEHOLDER}';}">
                 <h2 class="project-name">${esc(p.name)}${badge}</h2>
@@ -595,6 +599,8 @@
                 delete img.dataset.gaveUp;
                 p.iconUrl = url;
                 applyProjectColor(item, url);
+                const hoverBg = $('.mod-hover-bg', item);
+                if (hoverBg) hoverBg.style.backgroundImage = `url('${url}')`;
             };
             test.src = url;
         }
