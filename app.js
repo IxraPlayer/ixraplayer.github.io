@@ -323,29 +323,29 @@
 
     // Sculks kartında hover'da arkada dönen ekran görüntüleri
     const SCULKS_SHOWCASE = [
-        { src: 'assets/sculks-showcase/01-sculk-blocks.webp', alt: "Arda's Sculks — glowing sculk blocks in a deep dark cave" },
-        { src: 'assets/sculks-showcase/02-shadow-hunter.webp', alt: "Arda's Sculks — Shadow Hunter boss in the ancient arena" },
-        { src: 'assets/sculks-showcase/03-radioactive-warden.webp', alt: "Arda's Sculks — Radioactive Warden boss arena" },
-        { src: 'assets/sculks-showcase/04-sculk-golem.webp', alt: "Arda's Sculks — Sculk Golem with glowing chest core" },
-        { src: 'assets/sculks-showcase/05-sculk-flowers.webp', alt: "Arda's Sculks — decorative sculk flowers and light sources" },
-        { src: 'assets/sculks-showcase/06-yellow-glow-forest.webp', alt: "Arda's Sculks — glowing yellow sculk forest at night" },
-        { src: 'assets/sculks-showcase/07-sculk-plains.webp', alt: "Arda's Sculks — glowing Sculk Plains biome landscape" },
-        { src: 'assets/sculks-showcase/08-dangerous-biome.webp', alt: "Arda's Sculks — dangerous biome with tall sculk plants" },
-        { src: 'assets/sculks-showcase/09-crystal-cave.webp', alt: "Arda's Sculks — colorful crystal cave chamber" },
-        { src: 'assets/sculks-showcase/10-pillar-forest.webp', alt: "Arda's Sculks — eerie glowing pillar forest at night" },
-        { src: 'assets/sculks-showcase/11-golem-shrine.webp', alt: "Arda's Sculks — glowing golem shrine chamber" },
-        { src: 'assets/sculks-showcase/12-purple-biome.webp', alt: "Arda's Sculks — purple glowing biome at night" },
-        { src: 'assets/sculks-showcase/13-ancient-vault.webp', alt: "Arda's Sculks — symmetrical ancient vault chamber from above" },
-        { src: 'assets/sculks-showcase/14-symmetric-chamber.webp', alt: "Arda's Sculks — symmetrical green ancient chamber from above" },
-        { src: 'assets/sculks-showcase/15-circular-structure.webp', alt: "Arda's Sculks — symmetrical ancient city structure from above" },
-        { src: 'assets/sculks-showcase/16-mushroom-forest.webp', alt: "Arda's Sculks — glowing giant mushroom forest" },
-        { src: 'assets/sculks-showcase/17-glowing-forest.webp', alt: "Arda's Sculks — glowing forest biome at dusk" },
-        { src: 'assets/sculks-showcase/18-glowing-build.webp', alt: "Arda's Sculks — glowing sculk house build at sunset" }
+        { src: 'assets/sculks-showcase/01-sculk-blocks.webp', alt: "Arda's Sculks — glowing sculk blocks in a deep dark cave", pos: '45% 55%' },
+        { src: 'assets/sculks-showcase/02-shadow-hunter.webp', alt: "Arda's Sculks — Shadow Hunter boss in the ancient arena", pos: '58% 28%' },
+        { src: 'assets/sculks-showcase/03-radioactive-warden.webp', alt: "Arda's Sculks — Radioactive Warden boss arena", pos: '50% 62%' },
+        { src: 'assets/sculks-showcase/04-sculk-golem.webp', alt: "Arda's Sculks — Sculk Golem with glowing chest core", pos: '50% 32%' },
+        { src: 'assets/sculks-showcase/05-sculk-flowers.webp', alt: "Arda's Sculks — decorative sculk flowers and light sources", pos: '50% 40%' },
+        { src: 'assets/sculks-showcase/06-yellow-glow-forest.webp', alt: "Arda's Sculks — glowing yellow sculk forest at night", pos: '50% 65%' },
+        { src: 'assets/sculks-showcase/07-sculk-plains.webp', alt: "Arda's Sculks — glowing Sculk Plains biome landscape", pos: '50% 60%' },
+        { src: 'assets/sculks-showcase/08-dangerous-biome.webp', alt: "Arda's Sculks — dangerous biome with tall sculk plants", pos: '35% 60%' },
+        { src: 'assets/sculks-showcase/09-crystal-cave.webp', alt: "Arda's Sculks — colorful crystal cave chamber", pos: '50% 55%' },
+        { src: 'assets/sculks-showcase/10-pillar-forest.webp', alt: "Arda's Sculks — eerie glowing pillar forest at night", pos: '50% 70%' },
+        { src: 'assets/sculks-showcase/11-golem-shrine.webp', alt: "Arda's Sculks — glowing golem shrine chamber", pos: '45% 35%' },
+        { src: 'assets/sculks-showcase/12-purple-biome.webp', alt: "Arda's Sculks — purple glowing biome at night", pos: '50% 65%' },
+        { src: 'assets/sculks-showcase/13-ancient-vault.webp', alt: "Arda's Sculks — symmetrical ancient vault chamber from above", pos: '50% 50%' },
+        { src: 'assets/sculks-showcase/14-symmetric-chamber.webp', alt: "Arda's Sculks — symmetrical green ancient chamber from above", pos: '50% 50%' },
+        { src: 'assets/sculks-showcase/15-circular-structure.webp', alt: "Arda's Sculks — symmetrical ancient city structure from above", pos: '50% 50%' },
+        { src: 'assets/sculks-showcase/16-mushroom-forest.webp', alt: "Arda's Sculks — glowing giant mushroom forest", pos: '50% 60%' },
+        { src: 'assets/sculks-showcase/17-glowing-forest.webp', alt: "Arda's Sculks — glowing forest biome at dusk", pos: '50% 45%' },
+        { src: 'assets/sculks-showcase/18-glowing-build.webp', alt: "Arda's Sculks — glowing sculk house build at sunset", pos: '40% 65%' }
     ];
     const SCULKS_SLOT_SECONDS = 1; // her görsel ~1 saniye görünür kalır
     function sculksShowcaseHtml() {
         const imgsHtml = SCULKS_SHOWCASE.map((img) =>
-            `<img src="${esc(img.src)}" alt="${esc(img.alt)}" decoding="async">`
+            `<img src="${esc(img.src)}" alt="${esc(img.alt)}" decoding="async" style="object-position:${esc(img.pos)}">`
         ).join('');
         return `<div class="sculks-permanent-bg"><img src="assets/sculks-showcase/bg-warden-shrine.webp" alt="Arda's Sculks — ancient warden shrine artwork" decoding="async"></div><div class="sculks-showcase" aria-hidden="true"><div class="sculks-gradient"></div>${imgsHtml}</div>`;
     }
