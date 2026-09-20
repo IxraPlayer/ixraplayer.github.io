@@ -399,6 +399,34 @@
         fadeEl(gradient, parseFloat(gradient.style.opacity) || 0, 0, 400);
         $$('img', showcase).forEach((im) => fadeEl(im, parseFloat(im.style.opacity) || 0, 0, 400));
     }
+
+    // Diğer mod kartları: tek görsel, Sculks'taki gibi JS tabanlı yumuşak fade + hafif zoom-in
+    function fadeZoomEl(el, fromOpacity, toOpacity, fromScale, toScale, duration) {
+        if (!el) return;
+        cancelAnimationFrame(el._fadeRaf);
+        const start = performance.now();
+        function step(now) {
+            const t = Math.min(1, (now - start) / duration);
+            const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+            el.style.opacity = String(fromOpacity + (toOpacity - fromOpacity) * eased);
+            el.style.transform = `scale(${fromScale + (toScale - fromScale) * eased})`;
+            if (t < 1) el._fadeRaf = requestAnimationFrame(step);
+        }
+        el._fadeRaf = requestAnimationFrame(step);
+    }
+    function wireModHoverBg(container) {
+        $$('.project-item:not(.project-item-showcase)', container).forEach((card) => {
+            const bg = $('.mod-hover-bg', card);
+            if (!bg || bg.dataset.wired === '1') return;
+            bg.dataset.wired = '1';
+            card.addEventListener('mouseenter', () => {
+                fadeZoomEl(bg, parseFloat(bg.style.opacity) || 0, 1, 1, 1.1, 500);
+            });
+            card.addEventListener('mouseleave', () => {
+                fadeZoomEl(bg, parseFloat(bg.style.opacity) || 0, 0, 1.1, 1, 400);
+            });
+        });
+    }
     function wireSculksShowcase(container) {
         const card = $('.project-item-showcase', container);
         if (!card) return;
@@ -414,6 +442,21 @@
             card._touchHideTimer = setTimeout(() => stopSculksShowcase(card), 6000);
         });
     }
+
+    // Kullanıcının yüklediği kaliteli mod görselleri (slug -> dosya)
+    const MOD_SHOWCASE_IMAGES = {
+        'ardas-advanced-items': 'assets/mod-showcase/ardas-advanced-items.webp',
+        'ardas-backpack': 'assets/mod-showcase/ardas-backpack.webp',
+        'ardas-hammer': 'assets/mod-showcase/ardas-hammer.webp',
+        'ardas-ores': 'assets/mod-showcase/ardas-ores.webp',
+        'ardas-cobblestone-generator': 'assets/mod-showcase/ardas-cobblestone-generator.webp',
+        'ardas-omega-golem': 'assets/mod-showcase/ardas-omega-golem.webp',
+        'shadow-of-the-soul': 'assets/mod-showcase/shadow-of-the-soul.webp',
+        'ardas-special-abilities': 'assets/mod-showcase/ardas-special-abilities.webp',
+        'ardas-ultimate-golem': 'assets/mod-showcase/ardas-ultimate-golem.webp',
+        'ardas-uncrafting-table': 'assets/mod-showcase/ardas-uncrafting-table.webp',
+        'uyghur-language-pack': 'assets/mod-showcase/uyghur-language-pack.webp'
+    };
 
     function projectCardHtml(p, i) {
         const badge = p.badge === 'popular' ? `<span class="project-badge badge-popular">${t('badge_popular')}</span>`
@@ -445,8 +488,10 @@
         // NOT: p.iconUrl varsa (canlı API'den gelmiş gerçek ikon) o kullanılır, dil değişince kaybolmaz
         const iconSrc = p.iconUrl || p.icon || ICON_PLACEHOLDER;
         const hasRealIcon = !!(p.iconUrl || p.icon);
+        const showcaseOverride = MOD_SHOWCASE_IMAGES[p.modrinthSlug] || MOD_SHOWCASE_IMAGES[p.curseforgeSlug];
+        const hoverBgSrc = showcaseOverride || (hasRealIcon ? iconSrc : null);
         const hoverBgHtml = p.detail !== 'sculks'
-            ? `<div class="mod-hover-bg"${hasRealIcon ? ` style="background-image:url('${esc(iconSrc)}')"` : ''}></div>`
+            ? `<div class="mod-hover-bg"${hoverBgSrc ? ` style="background-image:url('${esc(hoverBgSrc)}')"` : ''}${showcaseOverride ? ' data-override="1"' : ''}></div>`
             : '';
         return `
         <article class="project-item${p.detail === 'sculks' ? ' project-item-showcase' : ''}" data-key="${esc(projectKey(p))}">
@@ -565,6 +610,7 @@
         });
 
         wireSculksShowcase(container);
+        wireModHoverBg(container);
 
         // Dil değişince kartları (rozet, buton, açıklama metinleri) yeniden çiz
         if (window.I18N) {
@@ -572,6 +618,7 @@
                 container.innerHTML = projects.map(projectCardHtml).join('');
                 items = $$('.project-item', container); // eskiyi (DOM'dan kopmuş) değil, yeni kartları referansla
                 wireSculksShowcase(container);
+        wireModHoverBg(container);
                 projects.forEach((p, i) => { if (p.icon || p.iconUrl) applyProjectColor(items[i], p.iconUrl || p.icon); });
                 const dlEls = $$('.project-downloads', container);
                 projects.forEach((p, i) => {
@@ -600,7 +647,7 @@
                 p.iconUrl = url;
                 applyProjectColor(item, url);
                 const hoverBg = $('.mod-hover-bg', item);
-                if (hoverBg) hoverBg.style.backgroundImage = `url('${url}')`;
+                if (hoverBg && hoverBg.dataset.override !== '1') hoverBg.style.backgroundImage = `url('${url}')`;
             };
             test.src = url;
         }
