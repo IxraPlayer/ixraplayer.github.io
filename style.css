@@ -349,8 +349,8 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(135deg, rgba(var(--project-color), 0.22) 0%, rgba(var(--project-color), 0.07) 45%, #1b2532 100%);
-    border: 1px solid rgba(var(--project-color), 0.28);
+    background: linear-gradient(135deg, rgba(var(--project-color), 0.55) 0%, rgba(var(--project-color), 0.26) 45%, #1b2532 100%);
+    border: 1px solid rgba(var(--project-color), 0.5);
     padding: 14px 20px;
     border-radius: 18px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -366,7 +366,7 @@ body::before {
     position: absolute;
     top: -50%; right: -10%;
     width: 45%; height: 200%;
-    background: radial-gradient(circle at center, rgba(var(--project-color), 0.18) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(var(--project-color), 0.32) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
 }

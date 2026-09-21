@@ -285,12 +285,37 @@
         });
     }
 
+    // Ortalama renk genelde soluk/gri çıkıyor; kart zemini daha canlı görünsün diye doygunluğu artırır
+    function saturateRgb(str) {
+        const [r0, g0, b0] = str.split(',').map((v) => parseInt(v, 10) / 255);
+        const max = Math.max(r0, g0, b0), min = Math.min(r0, g0, b0);
+        let l = (max + min) / 2, h = 0, sat = 0;
+        const d = max - min;
+        if (d > 0) {
+            sat = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            if (max === r0) h = ((g0 - b0) / d + (g0 < b0 ? 6 : 0)) / 6;
+            else if (max === g0) h = ((b0 - r0) / d + 2) / 6;
+            else h = ((r0 - g0) / d + 4) / 6;
+        }
+        sat = Math.min(1, sat * 1.6 + 0.2);   // doygunluk artışı
+        l = Math.min(0.58, Math.max(0.36, l)); // çok koyu/açık renkler de canlı kalsın
+        const q = l < 0.5 ? l * (1 + sat) : l + sat - l * sat, p = 2 * l - q;
+        const f = (t) => {
+            if (t < 0) t += 1; if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        };
+        return [f(h + 1 / 3), f(h), f(h - 1 / 3)].map((v) => Math.round(v * 255)).join(', ');
+    }
+
     const colorCache = new Map();
     async function applyProjectColor(item, url) {
         if (!item || !url) return;
         if (!colorCache.has(url)) colorCache.set(url, getAverageColor(url).then((c) => (c ? c.join(', ') : null)));
         const color = await colorCache.get(url);
-        if (color) item.style.setProperty('--project-color', color);
+        if (color) item.style.setProperty('--project-color', saturateRgb(color));
     }
 
     /* =========================================================
@@ -457,6 +482,21 @@
         'ardas-uncrafting-table': 'assets/mod-showcase/ardas-uncrafting-table.webp',
         'uyghur-language-pack': 'assets/mod-showcase/uyghur-language-pack.webp'
     };
+    // Kartlar çok yatay (~7:1) olduğu için görsel 'center' ile kırpılınca konu kaçıyor.
+    // Her görselin asıl konusunun göründüğü kadraj (background-position: x% y%).
+    const MOD_SHOWCASE_POS = {
+        'ardas-advanced-items': '50% 14%',
+        'ardas-backpack': '50% 20%',
+        'ardas-hammer': '40% 42%',
+        'ardas-ores': '58% 55%',
+        'ardas-cobblestone-generator': '50% 22%',
+        'ardas-omega-golem': '46% 26%',
+        'shadow-of-the-soul': '50% 45%',
+        'ardas-special-abilities': '50% 45%',
+        'ardas-ultimate-golem': '60% 50%',
+        'ardas-uncrafting-table': '50% 3%',
+        'uyghur-language-pack': '55% 42%'
+    };
 
     function projectCardHtml(p, i) {
         const badge = p.badge === 'popular' ? `<span class="project-badge badge-popular">${t('badge_popular')}</span>`
@@ -490,8 +530,9 @@
         const hasRealIcon = !!(p.iconUrl || p.icon);
         const showcaseOverride = MOD_SHOWCASE_IMAGES[p.modrinthSlug] || MOD_SHOWCASE_IMAGES[p.curseforgeSlug];
         const hoverBgSrc = showcaseOverride || (hasRealIcon ? iconSrc : null);
+        const hoverBgPos = MOD_SHOWCASE_POS[p.modrinthSlug] || MOD_SHOWCASE_POS[p.curseforgeSlug];
         const hoverBgHtml = p.detail !== 'sculks'
-            ? `<div class="mod-hover-bg"${hoverBgSrc ? ` style="background-image:url('${esc(hoverBgSrc)}')"` : ''}${showcaseOverride ? ' data-override="1"' : ''}></div>`
+            ? `<div class="mod-hover-bg"${hoverBgSrc ? ` style="background-image:url('${esc(hoverBgSrc)}')${hoverBgPos ? `;background-position:${hoverBgPos}` : ''}"` : ''}${showcaseOverride ? ' data-override="1"' : ''}></div>`
             : '';
         return `
         <article class="project-item${p.detail === 'sculks' ? ' project-item-showcase' : ''}" data-key="${esc(projectKey(p))}">
