@@ -44,8 +44,8 @@ body {
     overflow-x: hidden;
 }
 
-/* Arkaplan: sadece statik gradyanlar (animasyon yok, resim yok = kasma yok).
-   Sabit bir katman olduğu için sayfa kayarken yeniden çizilmez. */
+/* Arkaplan: Sculk Golem görseli + üstünde koyu/teal gradyan katmanı (yazılar okunsun diye).
+   Sabit (fixed) tek bir katman olduğu için sayfa kayarken yeniden çizilmez, animasyon yok. */
 body::before {
     content: '';
     position: fixed;
@@ -53,10 +53,11 @@ body::before {
     z-index: -1;
     pointer-events: none;
     background:
-        radial-gradient(ellipse 65% 50% at 6% 0%,    rgba(74, 155, 181, 0.17), transparent 70%),
-        radial-gradient(ellipse 50% 45% at 100% 6%,  rgba(88, 80, 180, 0.10),  transparent 70%),
-        radial-gradient(ellipse 65% 55% at 94% 100%, rgba(30, 100, 140, 0.17), transparent 70%),
-        radial-gradient(ellipse 45% 40% at 0% 100%,  rgba(20, 70, 100, 0.10),  transparent 70%);
+        radial-gradient(ellipse 65% 50% at 6% 0%,    rgba(74, 155, 181, 0.16), transparent 70%),
+        radial-gradient(ellipse 65% 55% at 94% 100%, rgba(30, 100, 140, 0.16), transparent 70%),
+        linear-gradient(180deg, rgba(7, 10, 16, 0.55) 0%, rgba(7, 10, 16, 0.78) 100%),
+        url('assets/sculks-showcase/04-sculk-golem.webp') center 35% / cover no-repeat;
+    background-color: var(--bg-body);
 }
 
 .page-wrapper { max-width: 980px; width: 100%; margin: 0 auto; }
