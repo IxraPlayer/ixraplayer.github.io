@@ -1,7 +1,8 @@
 /* =========================================================
    Ixra portfolio - loader.js
-   Yükleme ekranı: logo, avatar GIF, arka plan görseli, fontlar ve
-   ilk ekranda görünen resimler hazır olunca perdeyi kaldırır.
+   Sayfadaki TÜM resim/GIF/logolar (sonradan eklenenler dahil), proje
+   kartları, arka plan görseli ve fontlar yüklenene kadar perdeyi tutar.
+   %100 olunca HOLD_AFTER_100 kadar daha bekler, sonra kapanır.
    ========================================================= */
 (function () {
     'use strict';
@@ -13,22 +14,24 @@
     var bar = loader.querySelector('.loader-bar-fill');
     var pct = loader.querySelector('.loader-percent');
 
-    var HOLD_AFTER_100 = 2000; // ms - %100 olduktan sonra perdenin açık kalma süresi
-    var MAX_WAIT = 8000;     // ms - yavaş/bozuk bağlantıda yüklemeyi zorla bitir
-    var startedAt = Date.now();
-    var total = 0, done = 0, finished = false, completing = false;
+    var HOLD_AFTER_100 = 2000;  // ms - %100 olduktan sonra perdenin açık kalma süresi
+    var STABLE_FOR = 400;       // ms - hiçbir şey beklemiyorsa bu süre boyunca sabit kalmalı
+    var MAX_WAIT = 12000;       // ms - takılırsa yüklemeyi zorla bitir
+    var BG_URL = 'assets/sculks-showcase/04-sculk-golem.webp';
 
-    function paint() {
-        var p = total ? Math.round((done / total) * 100) : 100;
+    var bgDone = false, fontsDone = false;
+    var lastPercent = 0, readySince = 0, completing = false, hidden = false;
+
+    function setPercent(p) {
+        if (p < lastPercent) p = lastPercent;      // geri gitmesin
+        lastPercent = p;
         if (bar) bar.style.width = p + '%';
         if (pct) pct.textContent = p + '%';
     }
 
     function hide() {
-        if (finished) return;
-        finished = true;
-        if (bar) bar.style.width = '100%';
-        if (pct) pct.textContent = '100%';
+        if (hidden) return;
+        hidden = true;
         loader.classList.add('is-done');
         root.classList.remove('is-loading');
         setTimeout(function () {
@@ -36,80 +39,66 @@
         }, 600);
     }
 
-    // %100'e ulaşınca 2 saniye bekleyip perdeyi kaldırır
     function complete() {
         if (completing) return;
         completing = true;
-        if (bar) bar.style.width = '100%';
-        if (pct) pct.textContent = '100%';
+        clearInterval(timer);
+        setPercent(100);
         setTimeout(hide, HOLD_AFTER_100);
     }
 
-    function maybeHide() {
-        if (done >= total) complete();
+    // Arka plan görseli (CSS'te olduğu için elle)
+    var bg = new Image();
+    bg.onload = bg.onerror = function () { bgDone = true; };
+    bg.src = BG_URL;
+    if (bg.complete) bgDone = true;
+
+    // Fontlar
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () { fontsDone = true; }, function () { fontsDone = true; });
+    } else {
+        fontsDone = true;
     }
 
-    function track(promise) {
-        total++;
-        var once = false;
-        function tick() {
-            if (once) return;
-            once = true;
-            done++;
-            paint();
-            maybeHide();
-        }
-        promise.then(tick, tick);   // hata olsa da bekleme (resim kırıksa sayfayı kilitleme)
-    }
-
-    function loadImage(src) {
-        return new Promise(function (resolve) {
-            var img = new Image();
-            img.onload = img.onerror = function () { resolve(); };
-            img.src = src;
-            if (img.complete) resolve();
-        });
-    }
-
-    function trackElementImage(img) {
-        if (img.complete && img.naturalWidth > 0) return;
-        track(new Promise(function (resolve) {
-            img.addEventListener('load', resolve, { once: true });
-            img.addEventListener('error', resolve, { once: true });
-        }));
-    }
-
-    function inViewport(el) {
-        var r = el.getBoundingClientRect();
-        return r.top < (window.innerHeight || 800) * 1.2 && r.bottom > 0;
-    }
-
-    function init() {
-        // 1) CSS'teki arka plan görseli (img etiketi olmadığı için elle)
-        track(loadImage('assets/sculks-showcase/04-sculk-golem.webp'));
-
-        // 2) Sayfadaki resimler/GIF'ler (lazy olanlardan sadece ilk ekrandakiler)
+    function check() {
+        // Tüm resimler: lazy olanları da hemen yüklemeye zorla (gizli sekmedekiler dahil)
         var imgs = document.querySelectorAll('img');
+        var seen = 0, loaded = 0;
         for (var i = 0; i < imgs.length; i++) {
             var img = imgs[i];
             if (loader.contains(img)) continue;
-            if (img.loading === 'lazy' && !inViewport(img)) continue;
-            trackElementImage(img);
+            if (img.loading === 'lazy') img.loading = 'eager';
+            if (!img.getAttribute('src')) continue;      // src'si henüz atanmamış
+            seen++;
+            if (img.complete) loaded++;                  // hata verenler de "bitti" sayılır
         }
 
-        // 3) Fontlar
-        if (document.fonts && document.fonts.ready) track(document.fonts.ready);
+        // Proje kartları gelmiş mi? (iskelet kutular gidip kartlar veya hata mesajı gelmeli)
+        var box = document.getElementById('projects-container');
+        var cardsDone = !box || (!box.querySelector('.project-skeleton') &&
+            (box.querySelector('.project-item') || box.querySelector('.load-error')));
 
-        // Takip edilecek bir şey yoksa
-        if (total === 0) complete(); else { paint(); maybeHide(); }
+        // İlerleme: resimler + arka plan + font + kartlar
+        var total = seen + 3;
+        var done = loaded + (bgDone ? 1 : 0) + (fontsDone ? 1 : 0) + (cardsDone ? 1 : 0);
+        var p = Math.floor((done / total) * 100);
+
+        var ready = bgDone && fontsDone && cardsDone && loaded === seen;
+        if (ready) {
+            if (!readySince) readySince = Date.now();
+            // Bir an sakin kalsın ki sonradan eklenen resimler de yakalansın
+            if (Date.now() - readySince >= STABLE_FOR) { complete(); return; }
+            p = Math.min(p, 99);
+        } else {
+            readySince = 0;
+            p = Math.min(p, 99);
+        }
+        setPercent(p);
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
+    var timer = setInterval(check, 100);
+    check();
 
-    // Güvenlik ağı: ne olursa olsun MAX_WAIT sonunda perdeyi kaldır
+    // Güvenlik ağı
     setTimeout(complete, MAX_WAIT);
 })();
