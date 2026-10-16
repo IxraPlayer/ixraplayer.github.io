@@ -13,10 +13,10 @@
     var bar = loader.querySelector('.loader-bar-fill');
     var pct = loader.querySelector('.loader-percent');
 
-    var MIN_SHOW = 600;      // ms - çok hızlı yanıp sönmesin
-    var MAX_WAIT = 8000;     // ms - yavaş/bozuk bağlantıda sonsuza kadar bekleme
+    var HOLD_AFTER_100 = 2000; // ms - %100 olduktan sonra perdenin açık kalma süresi
+    var MAX_WAIT = 8000;     // ms - yavaş/bozuk bağlantıda yüklemeyi zorla bitir
     var startedAt = Date.now();
-    var total = 0, done = 0, finished = false;
+    var total = 0, done = 0, finished = false, completing = false;
 
     function paint() {
         var p = total ? Math.round((done / total) * 100) : 100;
@@ -36,10 +36,17 @@
         }, 600);
     }
 
+    // %100'e ulaşınca 2 saniye bekleyip perdeyi kaldırır
+    function complete() {
+        if (completing) return;
+        completing = true;
+        if (bar) bar.style.width = '100%';
+        if (pct) pct.textContent = '100%';
+        setTimeout(hide, HOLD_AFTER_100);
+    }
+
     function maybeHide() {
-        if (done < total) return;
-        var wait = Math.max(0, MIN_SHOW - (Date.now() - startedAt));
-        setTimeout(hide, wait);
+        if (done >= total) complete();
     }
 
     function track(promise) {
@@ -94,7 +101,7 @@
         if (document.fonts && document.fonts.ready) track(document.fonts.ready);
 
         // Takip edilecek bir şey yoksa
-        if (total === 0) hide(); else { paint(); maybeHide(); }
+        if (total === 0) complete(); else { paint(); maybeHide(); }
     }
 
     if (document.readyState === 'loading') {
@@ -104,5 +111,5 @@
     }
 
     // Güvenlik ağı: ne olursa olsun MAX_WAIT sonunda perdeyi kaldır
-    setTimeout(hide, MAX_WAIT);
+    setTimeout(complete, MAX_WAIT);
 })();
