@@ -107,8 +107,20 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"></noscript>
 
     <link rel="stylesheet" href="style.css">
+    <script>document.documentElement.classList.add('is-loading');</script>
+    <noscript><style>#site-loader{display:none!important}</style></noscript>
 </head>
 <body>
+
+    <!-- ============ Yükleme ekranı ============ -->
+    <div id="site-loader" role="status" aria-live="polite" aria-label="Loading">
+        <div class="loader-inner">
+            <img class="loader-logo" src="sitelogo.png" alt="" width="96" height="96">
+            <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+            <div class="loader-percent">0%</div>
+        </div>
+    </div>
+    <script src="loader.js"></script>
 
     <div class="page-wrapper">
         <div class="profile-card">
